@@ -1,0 +1,74 @@
+<Mod ID="UltimateCheatmenu">
+  <Compatible>0.62</Compatible>
+  <Button Standard="F1" ID="OpenMenu">
+    <Name>
+      <EN>OpenMenu</EN>
+    </Name>
+    <Description>
+      <EN>Toggle Cheatmenu</EN>
+    </Description>
+  </Button>
+  <Button Standard="X" ID="MassTree">
+    <Name>
+      <EN>Sphere</EN>
+    </Name>
+    <Description>
+      <EN>Create a sphere. Use the scrollwheel to change the radius</EN>
+    </Description>
+  </Button>
+  <Button Standard="F4" ID="FreezeTime">
+    <Name>
+      <EN>Freeze Time</EN>
+    </Name>
+    <Description>
+      <EN>Freezes Time</EN>
+    </Description>
+  </Button>
+  <Button Standard="F" ID="InstaBuild">
+    <Name>
+      <EN>InstaBuild</EN>
+    </Name>
+    <Description>
+      <EN>Instant build Ghost Buildings</EN>
+    </Description>
+  </Button>
+  <Button Standard="F3" ID="FreeCam">
+    <Name>
+      <EN>FreeCam</EN>
+    </Name>
+    <Description>
+      <EN>Toggle FreeCam</EN>
+    </Description>
+  </Button>
+  <Button Standard="LeftShift+R" ID="InstaRepair">
+    <Name>
+      <EN>InstaRepair</EN>
+    </Name>
+    <Description>
+      <EN>Repair all Buildings</EN>
+    </Description>
+  </Button>
+  <Button Standard="F6" ID="Fly">
+    <Name>
+      <EN>Fly</EN>
+    </Name>
+    <Description>
+      <EN>Toggle Fly mode</EN>
+    </Description>
+  </Button>
+  <Button Standard="F7" ID="Noclip">
+    <Name>
+      <EN>Noclip</EN>
+    </Name>
+    <Description>
+      <EN>toggle noclip</EN>
+    </Description>
+  </Button>
+  <Name>
+    <EN>Ultimate Cheatmenu</EN>
+  </Name>
+  <Description>
+    <EN>Ultimate Cheatmenu</EN>
+  </Description>
+  <Version>1.1.0.10</Version>
+</Mod>
