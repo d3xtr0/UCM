@@ -34,7 +34,9 @@ namespace UltimateCheatmenu
         public static bool UnlimitedFuel = false;
 
         public static bool InfFire = false;
-        
+
+        public static bool FastFlint = false;
+
         public static bool InstBuild = false;
 
         public static bool Fog = true;
@@ -307,8 +309,23 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Infinite Fire:", this.labelStyle);
                     UCheatmenu.InfFire = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InfFire, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "SleepTimer :", this.labelStyle);
-                    UCheatmenu.SleepTimer = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SleepTimer, "");
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Fast Flintlock/Bow:", this.labelStyle);
+                    UCheatmenu.FastFlint = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FastFlint, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Sleep :", this.labelStyle);
+                    if (UnityEngine.GUI.Button(new Rect(170f, num, 150f, 20f), "Sleep"))
+                    {
+                        this.visible = false;
+                        LocalPlayer.FpCharacter.UnLockView();
+                        UCheatmenu.SleepTimer = true;
+                    }
+                    if (UnityEngine.GUI.Button(new Rect(340f, num, 150f, 20f), "Sleep & Save"))
+                    {
+                        this.visible = false;
+                        LocalPlayer.FpCharacter.UnLockView();
+                        UCheatmenu.SleepTimer = true;
+                        LocalPlayer.Stats.Invoke("JustSave",3.5f);
+                    }
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Free cam:", this.labelStyle);
@@ -1325,7 +1342,10 @@ namespace UltimateCheatmenu
                         else if (UCheatmenu.SphereBushes && 
                             (raycastHit.collider.GetComponent<CutSappling>() != null || 
                             raycastHit.collider.GetComponent<CutBush>() != null ||
-                            raycastHit.collider.GetComponent<CutBush2>() != null
+                            raycastHit.collider.GetComponent<CutBush2>() != null ||
+                            raycastHit.collider.GetComponent<CutPlant>() != null ||
+                            raycastHit.collider.GetComponent<CutStalactite>() != null ||
+                            raycastHit.collider.GetComponent<CutTreeSmall>() != null
                             ))
                         {
                             raycastHit.collider.gameObject.SendMessage("CutDown");
@@ -1407,7 +1427,7 @@ namespace UltimateCheatmenu
             }
             if (UCheatmenu.InstBuild)
             {
-                InstaBuild.exec();
+                //InstaBuild.exec();
             }
             if (UCheatmenu.FixBodyTemp)
             {
@@ -1480,6 +1500,8 @@ namespace UltimateCheatmenu
                 if (!ChatBox.IsChatOpen)
                 {
                     UCheatmenu.InstBuild = true;
+                    InstaBuild.exec();
+                    
                 }
                 
             }
@@ -2471,7 +2493,6 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "ForceWeather",       UCheatmenu.ForceWeather.ToString());
             iniw.Write("UCM", "FreezeWeather",      UCheatmenu.FreezeWeather.ToString());
             iniw.Write("UCM", "AutoBuild",          UCheatmenu.AutoBuild.ToString());
-            iniw.Write("UCM", "SleepTimer",         UCheatmenu.SleepTimer.ToString());
             iniw.Write("UCM", "InstaKill",          UCheatmenu.InstaKill.ToString());
             iniw.Write("UCM", "Rebreather",         UCheatmenu.Rebreather.ToString());
             iniw.Write("UCM", "FixHealth",          UCheatmenu.FixHealth.ToString());
@@ -2506,8 +2527,9 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "SphereBushes",       UCheatmenu.SphereBushes.ToString());
             iniw.Write("UCM", "SphereCrates",       UCheatmenu.SphereCrates.ToString());
             iniw.Write("UCM", "SphereSuitcases",    UCheatmenu.SphereSuitcases.ToString());
-            iniw.Write("UCM", "SphereFires",        UCheatmenu.SphereSuitcases.ToString());
-            iniw.Write("UCM", "InfFire",            UCheatmenu.SphereSuitcases.ToString());
+            iniw.Write("UCM", "SphereFires",        UCheatmenu.SphereFires.ToString());
+            iniw.Write("UCM", "InfFire",            UCheatmenu.InfFire.ToString());
+            iniw.Write("UCM", "FastFlint",          UCheatmenu.FastFlint.ToString());
         }
         private void readIni(string path)
         {
@@ -2526,7 +2548,6 @@ namespace UltimateCheatmenu
             UCheatmenu.ForceWeather = Convert.ToInt32(inir.Read("UCM", "ForceWeather"));
             UCheatmenu.FreezeWeather = Convert.ToBoolean(inir.Read("UCM", "FreezeWeather"));
             UCheatmenu.AutoBuild = Convert.ToBoolean(inir.Read("UCM", "AutoBuild"));
-            UCheatmenu.SleepTimer = Convert.ToBoolean(inir.Read("UCM", "SleepTimer"));
             UCheatmenu.InstaKill = Convert.ToBoolean(inir.Read("UCM", "InstaKill"));
             UCheatmenu.Rebreather = Convert.ToBoolean(inir.Read("UCM", "Rebreather"));
             UCheatmenu.FixHealth = Convert.ToBoolean(inir.Read("UCM", "FixHealth"));
@@ -2567,6 +2588,8 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.SphereFires = false; }
             try { UCheatmenu.InfFire = Convert.ToBoolean(inir.Read("UCM", "InfFire")); }
             catch { UCheatmenu.InfFire = false; }
+            try { UCheatmenu.FastFlint = Convert.ToBoolean(inir.Read("UCM", "FastFlint")); }
+            catch { UCheatmenu.FastFlint = false; }
 
 
             this.DestroyTree = Convert.ToBoolean(inir.Read("UCM", "DestroyTree"));

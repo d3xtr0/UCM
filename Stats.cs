@@ -115,6 +115,27 @@ namespace UltimateCheatmenu
 
         protected override void Update()
         {
+            if (UCheatmenu.SleepTimer)
+            {
+                if (!BoltNetwork.isClient && TheForest.Utils.Scene.SceneTracker.allPlayers.Count >= 1)
+                {
+                    TheForest.Utils.Scene.MutantSpawnManager.offsetSleepAmounts();
+                    TheForest.Utils.Scene.MutantControler.startSetupFamilies();
+                    TheForest.Tools.EventRegistry.Player.Publish(TheForest.Tools.TfEvent.Slept, null);
+                    this.NextSleepTime = TheForest.Utils.Scene.Clock.ElapsedGameTime;
+                    base.Invoke("TurnOffSleepCam", 3f);
+                    this.Tired = 0f;
+                    this.Atmos.TimeLapse();
+                    TheForest.Utils.Scene.HudGui.GuiCam.SetActive(false);
+                    TheForest.Utils.Scene.Cams.SleepCam.SetActive(true);
+                    this.Energy += 100f;
+                    UCheatmenu.SleepTimer = false;
+                    return;
+                }
+                this.Wake();
+                UCheatmenu.SleepTimer = false;
+            }
+
             if (UCheatmenu.GodMode)
             {
                 base.IsBloody = false;
@@ -163,6 +184,11 @@ namespace UltimateCheatmenu
             {
                 base.HitFoodDelayed(damage);
             }
+        }
+
+        public void LetMeSleep()
+        {
+            
         }
     }
 }

@@ -30,7 +30,7 @@ namespace UltimateCheatmenu
                             ReceipeIngredient receipeIngredient = structure.GetPresentIngredients()[i];
                             if (receipeIngredient._amount < buildIngredients._amount)
                             {
-                                for (int j = 0; j < buildIngredients._amount /*- receipeIngredient._amount*/; j++)
+                                for (int j = 0; j < buildIngredients._amount - receipeIngredient._amount; j++)
                                 {
                                     if (BoltNetwork.isRunning)
                                     {
@@ -74,10 +74,12 @@ namespace UltimateCheatmenu
             }
             else
             {
+                if (UCheatmenu.InstBuild)
+                {
+                    RaycastHit[] array = Physics.SphereCastAll(TheForest.Utils.LocalPlayer.GameObject.transform.position, UCheatmenu.ARadius, new Vector3(1f, 0f, 0f));
 
-                RaycastHit[] array = Physics.SphereCastAll(TheForest.Utils.LocalPlayer.GameObject.transform.position, UCheatmenu.ARadius, new Vector3(1f, 0f, 0f));
-
-                cstruct(array);
+                    cstruct(array);
+                }
                 UCheatmenu.InstBuild = false;
             }
         }
