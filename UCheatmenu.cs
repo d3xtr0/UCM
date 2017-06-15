@@ -35,6 +35,8 @@ namespace UltimateCheatmenu
 
         public static bool InfFire = false;
 
+        public static bool InstLighter = false;
+
         public static bool FastFlint = false;
 
         public static bool InstBuild = false;
@@ -197,8 +199,14 @@ namespace UltimateCheatmenu
         protected static bool Mutant_BBaby = false;
         protected static bool Mutant_Dynamite = false;
 
+        private Transform pooled;
 
-         [ExecuteOnGameStart]
+        public static bool instgrow = false;
+        public static float instgrowspeed = 1;
+        public static int seedtype = -1;
+
+
+        [ExecuteOnGameStart]
         private static void AddMeToScene()
         {
             new GameObject("__UCheatmenu__").AddComponent<UCheatmenu>();
@@ -308,6 +316,9 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Infinite Fire:", this.labelStyle);
                     UCheatmenu.InfFire = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InfFire, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Auto Lighter:", this.labelStyle);
+                    UCheatmenu.InstLighter = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InstLighter, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Fast Flintlock/Bow:", this.labelStyle);
                     UCheatmenu.FastFlint = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FastFlint, "");
@@ -465,13 +476,41 @@ namespace UltimateCheatmenu
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Garden:", this.labelStyle);
                     num += 30f;
-                    if (UnityEngine.GUI.Button(new Rect(20f, num, 180f, 20f), "Plant"))
+
+                    Garden[] gardens = GameObject.FindObjectsOfType<Garden>();
+                    foreach (Garden garden in gardens)
                     {
-                        this._plantallgardens();
+                        int i = 0;
+                        foreach (Garden.SeedTypes seedid in garden._seeds)
+                        {
+                            string seedname;
+                            switch (seedid._itemId)
+                            {
+                                case 103: seedname = "Aloe"; break;
+                                case 206: seedname = "Blueberry"; break;
+                                case 205: seedname = "Coneflower"; break;
+                                default: seedname = seedid._itemId.ToString(); break;
+                            }
+                            if (UnityEngine.GUI.Button(new Rect(20f+(i*120f), num, 100f, 20f), seedname))
+                            {
+                                this._plantallgardens(i);
+                            }
+                            i++;
+                        }
+                        break;
                     }
-                    if (UnityEngine.GUI.Button(new Rect(220f, num, 180f, 20f), "Grow"))
+                    num += 30f;
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 100f, 20f), "Grow 1"))
                     {
-                        this._growalldirtpiles();
+                        this._growalldirtpiles(1);
+                    }
+                    if (UnityEngine.GUI.Button(new Rect(140f, num, 100f, 20f), "Grow 2"))
+                    {
+                        this._growalldirtpiles(2);
+                    }
+                    if (UnityEngine.GUI.Button(new Rect(260f, num, 100f, 20f), "Grow 3"))
+                    {
+                        this._growalldirtpiles(3);
                     }
                     num += 30f;
 
@@ -786,7 +825,6 @@ namespace UltimateCheatmenu
                         }
                         if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), name))
                         {
-                            
                             GameObject.Instantiate(AnimalPrefabs[animal], LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f, Quaternion.identity);
                         }
                         num += 30f; this.scroller += 30;
@@ -1056,9 +1094,6 @@ namespace UltimateCheatmenu
                     this.scroller = 25;
                     num = 10;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), "This tab is in beta!", this.labelStyle);
-                    num += 30f; this.scroller += 30;
-
                     if (PlayerManager.Players.Count == 0)
                     {
                         UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), "No players found", labelStyle);
@@ -1070,12 +1105,26 @@ namespace UltimateCheatmenu
                         {
                             UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), player.Name, labelStyle);
 
-                            if (UnityEngine.GUI.Button(new Rect(210f, num, 100f, 20f), "Teleport"))
+                            if (UnityEngine.GUI.Button(new Rect(210f, num, 80f, 20f), "Teleport"))
                             {
                                 LocalPlayer.Transform.position = player.Position;
                             }
 
-                            if (UnityEngine.GUI.Button(new Rect(330f, num, 100f, 20f), "Steam"))
+                            if (UnityEngine.GUI.Button(new Rect(410f, num, 80f, 20f), "Revive"))
+                            {
+                                GameObject deadTriggerObject = player.DeadTriggerObject;
+                                if (deadTriggerObject != null && deadTriggerObject.activeSelf)
+                                {
+                                    RespawnDeadTrigger component = deadTriggerObject.GetComponent<RespawnDeadTrigger>();
+                                    PlayerHealed phealed = PlayerHealed.Create(GlobalTargets.Others);
+                                    phealed.HealingItemId = component._healItemId;
+                                    phealed.HealTarget = player.Entity;
+                                    phealed.Send();
+                                    component.SendMessage("SetActive", false);
+                                }
+                            }
+
+                            if (UnityEngine.GUI.Button(new Rect(310f, num, 80f, 20f), "Profile"))
                             {
                                 SteamFriends.ActivateGameOverlayToUser("steamid", new CSteamID(player.SteamId));
                             }
@@ -1131,6 +1180,7 @@ namespace UltimateCheatmenu
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 210f, 20f), "Set"))
                     {
                         this._setCurrentDay(setCurDay);
+                        TheForest.Utils.LocalPlayer.Stats.DaySurvived = Convert.ToSingle(setCurDay);
                     }
                     num += 30f;
 
@@ -1409,7 +1459,7 @@ namespace UltimateCheatmenu
                             if (BoltNetwork.isRunning)
                             {
                                 LightEffigy lightEffigy = LightEffigy.Create(GlobalTargets.OnlyServer);
-                                lightEffigy.Effigy = raycastHit.collider.GetComponent<Fire2>().entity;
+                                lightEffigy.Effigy = raycastHit.collider.GetComponentInParent<BoltEntity>();
                                 lightEffigy.Send();
                             }
                             else
@@ -2292,8 +2342,9 @@ namespace UltimateCheatmenu
             }
         }
 
-        private void _plantallgardens()
+        private void _plantallgardens(int seed = -1)
         {
+            UCheatmenu.seedtype = seed;
             Garden[] array = UnityEngine.Object.FindObjectsOfType<Garden>();
             if (array != null && array.Length > 0)
             {
@@ -2312,13 +2363,15 @@ namespace UltimateCheatmenu
             }
         } 
 
-        private void _growalldirtpiles()
+        private void _growalldirtpiles(float speed = 1)
         {
             TheForest.Buildings.World.GardenDirtPile[] array = UnityEngine.Object.FindObjectsOfType<TheForest.Buildings.World.GardenDirtPile>();
             if (array != null && array.Length > 0)
             {
                 for (int i = 0; i < array.Length; i++)
                 {
+                    UCheatmenu.instgrow = true;
+                    UCheatmenu.instgrowspeed = speed;
                     array[i].Growth();
                 }
             }
@@ -2529,6 +2582,7 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "SphereSuitcases",    UCheatmenu.SphereSuitcases.ToString());
             iniw.Write("UCM", "SphereFires",        UCheatmenu.SphereFires.ToString());
             iniw.Write("UCM", "InfFire",            UCheatmenu.InfFire.ToString());
+            iniw.Write("UCM", "InstLighter",        UCheatmenu.InstLighter.ToString());
             iniw.Write("UCM", "FastFlint",          UCheatmenu.FastFlint.ToString());
         }
         private void readIni(string path)
@@ -2588,6 +2642,8 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.SphereFires = false; }
             try { UCheatmenu.InfFire = Convert.ToBoolean(inir.Read("UCM", "InfFire")); }
             catch { UCheatmenu.InfFire = false; }
+            try { UCheatmenu.InstLighter = Convert.ToBoolean(inir.Read("UCM", "InstLighter")); }
+            catch { UCheatmenu.InstLighter = false; }
             try { UCheatmenu.FastFlint = Convert.ToBoolean(inir.Read("UCM", "FastFlint")); }
             catch { UCheatmenu.FastFlint = false; }
 

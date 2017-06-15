@@ -185,10 +185,5 @@ namespace UltimateCheatmenu
                 base.HitFoodDelayed(damage);
             }
         }
-
-        public void LetMeSleep()
-        {
-            
-        }
     }
 }

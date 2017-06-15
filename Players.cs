@@ -38,6 +38,24 @@ namespace UltimateCheatmenu
         public BoltPlayerSetup PlayerSetup => Entity.GetComponent<BoltPlayerSetup>();
         public CoopPlayerRemoteSetup CoopPlayer => Entity.GetComponent<CoopPlayerRemoteSetup>();
 
+        public GameObject DeadTriggerObject
+        {
+            get
+            {
+                var playerSetup = PlayerSetup;
+                if (playerSetup != null)
+                {
+                    var fieldInfo = typeof(BoltPlayerSetup).GetField("RespawnDeadTrigger", BindingFlags.NonPublic | BindingFlags.Instance);
+                    var gameObject = fieldInfo?.GetValue(playerSetup) as GameObject;
+                    if (gameObject != null)
+                    {
+                        return gameObject;
+                    }
+                }
+                return null;
+            }
+        }
+
         public Transform Transform => Entity.transform;
         public Vector3 Position => Transform.position;
         public NetworkId NetworkId => Entity.networkId;

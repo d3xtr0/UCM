@@ -57,46 +57,29 @@ namespace UltimateCheatmenu
 
         public static void exec()
         {
-            if (UCheatmenu.ARadiusGlobal)
+
+            Craft_Structure[] structures = UnityEngine.Object.FindObjectsOfType<Craft_Structure>();
+            
+            if (structures != null && structures.Length != 0)
             {
-                Craft_Structure[] structures = UnityEngine.Object.FindObjectsOfType<Craft_Structure>();
-                if (structures != null && structures.Length != 0)
+                for (int y = 0; y < 10; y++)
                 {
                     for (int i = 0; i < structures.Length; i++)
                     {
-                        InstaBuild.InstantBuilder(structures[i]);
+                        float distance = Vector3.Distance(TheForest.Utils.LocalPlayer.Transform.position, structures[i].transform.position);
+                        if (distance <= UCheatmenu.ARadius || UCheatmenu.ARadiusGlobal)
+                        {
+                            InstaBuild.InstantBuilder(structures[i]);
+                        }
                     }
-                }
-                else
-                {
-                    UCheatmenu.InstBuild = false;
+                    if (BoltNetwork.isRunning) break;
                 }
             }
             else
             {
-                if (UCheatmenu.InstBuild)
-                {
-                    RaycastHit[] array = Physics.SphereCastAll(TheForest.Utils.LocalPlayer.GameObject.transform.position, UCheatmenu.ARadius, new Vector3(1f, 0f, 0f));
-
-                    cstruct(array);
-                }
                 UCheatmenu.InstBuild = false;
             }
-        }
 
-        private static void cstruct(RaycastHit[] array)
-        {
-
-            for (int i = 0; i < array.Length; i++)
-            {
-                RaycastHit raycastHit = array[i];
-
-                if (raycastHit.collider.GetComponent<Craft_Structure>() != null)
-                {
-                    InstaBuild.InstantBuilder(raycastHit.collider.GetComponent<Craft_Structure>());
-                }
-            }
-            
         }
 
         public static void repairAll()
@@ -108,19 +91,24 @@ namespace UltimateCheatmenu
                 {
                     foreach (BuildingRepair component in buildings)
                     {
-                        for (int i = 0; i < component._target.CalcMissingRepairLogs(); i++)
+                        float distance = Vector3.Distance(TheForest.Utils.LocalPlayer.Transform.position, component.transform.position);
+                        if (distance <= UCheatmenu.ARadius || UCheatmenu.ARadiusGlobal)
                         {
-                            component._target.AddRepairMaterial(true);
-                        }
-                        for (int j = 0; j < component._target.CalcMissingRepairMaterial(); j++)
-                        {
-                            component._target.AddRepairMaterial(false);
+                            for (int i = 0; i < component._target.CalcMissingRepairLogs(); i++)
+                            {
+                                component._target.AddRepairMaterial(true);
+                            }
+                            for (int j = 0; j < component._target.CalcMissingRepairMaterial(); j++)
+                            {
+                                component._target.AddRepairMaterial(false);
+                            }
                         }
                     }
                 }
                 catch (Exception e)
                 {
                 }
+                if (BoltNetwork.isRunning) break;
             }
         }
     }
