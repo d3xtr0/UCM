@@ -72,6 +72,7 @@ namespace UltimateCheatmenu
         public static bool SphereCrates = false;
         public static bool SphereSuitcases = false;
         public static bool SphereFires = false;
+        public static bool SphereTraps = false;
 
 
         public static bool AutoBuild = false;
@@ -204,6 +205,10 @@ namespace UltimateCheatmenu
         public static bool instgrow = false;
         public static float instgrowspeed = 1;
         public static int seedtype = -1;
+
+        public static string lastObject = "";
+        public static string lastObjectType = "";
+        public static PrefabId lastObjectPrefab;
 
 
         [ExecuteOnGameStart]
@@ -405,6 +410,9 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Light Fires:", this.labelStyle);
                     UCheatmenu.SphereFires = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereFires, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Reset Traps:", this.labelStyle);
+                    UCheatmenu.SphereTraps = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereTraps, "");
                     num += 30f; this.scroller += 30;
 
 
@@ -825,6 +833,8 @@ namespace UltimateCheatmenu
                         }
                         if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), name))
                         {
+                            UCheatmenu.lastObjectType = "animal";
+                            UCheatmenu.lastObject = animal;
                             GameObject.Instantiate(AnimalPrefabs[animal], LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f, Quaternion.identity);
                         }
                         num += 30f; this.scroller += 30;
@@ -965,6 +975,8 @@ namespace UltimateCheatmenu
                                 UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), curName, labelStyle);
                                 if (UnityEngine.GUI.Button(new Rect(190f, num, 130f, 20f), "Spawn"))
                                 {
+                                    UCheatmenu.lastObjectType = "spawnitem";
+                                    UCheatmenu.lastObject = current.ToString();
                                     LocalPlayer.Inventory.FakeDrop(current, null);
                                 }
                                 num += 30f; this.scroller += 30;
@@ -1002,6 +1014,8 @@ namespace UltimateCheatmenu
                                     UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), "[MP]"+prop.Key.ToString(), labelStyle);
                                     if (UnityEngine.GUI.Button(new Rect(200f, num, 130f, 20f), "Spawn"))
                                     {
+                                        UCheatmenu.lastObjectType = "spawnmp";
+                                        UCheatmenu.lastObjectPrefab = prop.Value;
                                         BoltNetwork.Instantiate(prop.Value, LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f, Quaternion.identity);
                                     }
                                     num += 30f; this.scroller2 += 30;
@@ -1022,6 +1036,8 @@ namespace UltimateCheatmenu
                                 UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), prop, labelStyle);
                                 if (UnityEngine.GUI.Button(new Rect(200f, num, 130f, 20f), "Spawn"))
                                 {
+                                    UCheatmenu.lastObjectType = "spawnprop";
+                                    UCheatmenu.lastObject = prop;
                                     GameObject.Instantiate(PropPrefabs[prop], LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f, Quaternion.identity);
                                 }
                                 num += 30f; this.scroller2 += 30;
@@ -1395,7 +1411,8 @@ namespace UltimateCheatmenu
                             raycastHit.collider.GetComponent<CutBush2>() != null ||
                             raycastHit.collider.GetComponent<CutPlant>() != null ||
                             raycastHit.collider.GetComponent<CutStalactite>() != null ||
-                            raycastHit.collider.GetComponent<CutTreeSmall>() != null
+                            raycastHit.collider.GetComponent<CutTreeSmall>() != null ||
+                            raycastHit.collider.GetComponent<BushDamage>() != null
                             ))
                         {
                             raycastHit.collider.gameObject.SendMessage("CutDown");
@@ -1465,6 +1482,20 @@ namespace UltimateCheatmenu
                             else
                             {
                                 raycastHit.collider.gameObject.SendMessage("lightEffigyReal");
+                            }
+                        }
+                        /* SphereTraps */
+                        else if (UCheatmenu.SphereTraps && raycastHit.collider.GetComponent<ResetTraps>() != null)
+                        {
+                            if (BoltNetwork.isRunning)
+                            {
+                                ResetTrap resetTrap = ResetTrap.Create(GlobalTargets.OnlyServer);
+                                resetTrap.TargetTrap = raycastHit.collider.GetComponentInParent<ResetTraps>().entity;
+                                resetTrap.Send();
+                            }
+                            else
+                            {
+                                raycastHit.collider.GetComponentInParent<ResetTraps>().RestoreSafe();
                             }
                         }
                     }
@@ -1563,7 +1594,37 @@ namespace UltimateCheatmenu
                 }
             }
 
-            
+            if (ModAPI.Input.GetButtonDown("Respawn") || ModAPI.Input.GetButton("RespawnInfinite"))
+            {
+                if (!ChatBox.IsChatOpen)
+                {
+                    if (UCheatmenu.lastObjectType == "animal")
+                    {
+                        GameObject.Instantiate(AnimalPrefabs[UCheatmenu.lastObject], LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f, Quaternion.identity);
+                    }
+                    else if (UCheatmenu.lastObjectType == "mutant")
+                    {
+                        _spawnmutant(UCheatmenu.lastObject);
+                    }
+                    else if (UCheatmenu.lastObjectType == "item")
+                    {
+                        _additem(UCheatmenu.lastObject, 1);
+                    }
+                    else if (UCheatmenu.lastObjectType == "spawnprop")
+                    {
+                        GameObject.Instantiate(PropPrefabs[UCheatmenu.lastObject], LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f, Quaternion.identity);
+                    }
+                    else if (UCheatmenu.lastObjectType == "spawnmp")
+                    {
+                        BoltNetwork.Instantiate(UCheatmenu.lastObjectPrefab, LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f, Quaternion.identity);
+                    }
+                    else if (UCheatmenu.lastObjectType == "spawnitem")
+                    {
+                        LocalPlayer.Inventory.FakeDrop(Int32.Parse(UCheatmenu.lastObject), null);
+                    }
+                }
+            }
+
 
         }
 
@@ -1657,6 +1718,8 @@ namespace UltimateCheatmenu
 
         private void _spawnmutant(string type)
         {
+            UCheatmenu.lastObjectType = "mutant";
+            UCheatmenu.lastObject = type;
             GameObject gameObject = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<GameObject>("instantMutantSpawner"), LocalPlayer.Transform.position + new Vector3(0f, 1f, 2f), Quaternion.identity) as GameObject;
             switch (type)
             {
@@ -1826,6 +1889,8 @@ namespace UltimateCheatmenu
             {
                 Item item;
                 int itemId;
+                UCheatmenu.lastObjectType = "item";
+                UCheatmenu.lastObject = nameOrId;
                 if (int.TryParse(nameOrId, out itemId))
                 {
                     item = ItemDatabase.Items.FirstOrDefault((Item i) => i._id == itemId);
@@ -2581,6 +2646,7 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "SphereCrates",       UCheatmenu.SphereCrates.ToString());
             iniw.Write("UCM", "SphereSuitcases",    UCheatmenu.SphereSuitcases.ToString());
             iniw.Write("UCM", "SphereFires",        UCheatmenu.SphereFires.ToString());
+            iniw.Write("UCM", "SphereTraps",        UCheatmenu.SphereTraps.ToString());
             iniw.Write("UCM", "InfFire",            UCheatmenu.InfFire.ToString());
             iniw.Write("UCM", "InstLighter",        UCheatmenu.InstLighter.ToString());
             iniw.Write("UCM", "FastFlint",          UCheatmenu.FastFlint.ToString());
@@ -2640,6 +2706,8 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.SphereSuitcases = false; }
             try { UCheatmenu.SphereFires = Convert.ToBoolean(inir.Read("UCM", "SphereFires")); }
             catch { UCheatmenu.SphereFires = false; }
+            try { UCheatmenu.SphereTraps = Convert.ToBoolean(inir.Read("UCM", "SphereTraps")); }
+            catch { UCheatmenu.SphereTraps = false; }
             try { UCheatmenu.InfFire = Convert.ToBoolean(inir.Read("UCM", "InfFire")); }
             catch { UCheatmenu.InfFire = false; }
             try { UCheatmenu.InstLighter = Convert.ToBoolean(inir.Read("UCM", "InstLighter")); }
