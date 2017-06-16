@@ -74,6 +74,7 @@ namespace UltimateCheatmenu
         public static bool SphereFires = false;
         public static bool SphereTraps = false;
 
+        public static bool EnableGarden = false;
 
         public static bool AutoBuild = false;
 
@@ -482,45 +483,49 @@ namespace UltimateCheatmenu
                     }
                     num += 30f;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Garden:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Enable Garden:", this.labelStyle);
+                    UCheatmenu.EnableGarden = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.EnableGarden, "");
                     num += 30f;
 
-                    Garden[] gardens = GameObject.FindObjectsOfType<Garden>();
-                    foreach (Garden garden in gardens)
+                    if (UCheatmenu.EnableGarden)
                     {
-                        int i = 0;
-                        foreach (Garden.SeedTypes seedid in garden._seeds)
+                        Garden[] gardens = GameObject.FindObjectsOfType<Garden>();
+                        foreach (Garden garden in gardens)
                         {
-                            string seedname;
-                            switch (seedid._itemId)
+                            int i = 0;
+                            foreach (Garden.SeedTypes seedid in garden._seeds)
                             {
-                                case 103: seedname = "Aloe"; break;
-                                case 206: seedname = "Blueberry"; break;
-                                case 205: seedname = "Coneflower"; break;
-                                default: seedname = seedid._itemId.ToString(); break;
+                                string seedname;
+                                switch (seedid._itemId)
+                                {
+                                    case 103: seedname = "Aloe"; break;
+                                    case 206: seedname = "Blueberry"; break;
+                                    case 205: seedname = "Coneflower"; break;
+                                    default: seedname = seedid._itemId.ToString(); break;
+                                }
+                                if (UnityEngine.GUI.Button(new Rect(20f + (i * 120f), num, 100f, 20f), seedname))
+                                {
+                                    this._plantallgardens(i);
+                                }
+                                i++;
                             }
-                            if (UnityEngine.GUI.Button(new Rect(20f+(i*120f), num, 100f, 20f), seedname))
-                            {
-                                this._plantallgardens(i);
-                            }
-                            i++;
+                            break;
                         }
-                        break;
+                        num += 30f;
+                        if (UnityEngine.GUI.Button(new Rect(20f, num, 100f, 20f), "Grow 1"))
+                        {
+                            this._growalldirtpiles(1);
+                        }
+                        if (UnityEngine.GUI.Button(new Rect(140f, num, 100f, 20f), "Grow 2"))
+                        {
+                            this._growalldirtpiles(2);
+                        }
+                        if (UnityEngine.GUI.Button(new Rect(260f, num, 100f, 20f), "Grow 3"))
+                        {
+                            this._growalldirtpiles(3);
+                        }
+                        num += 30f;
                     }
-                    num += 30f;
-                    if (UnityEngine.GUI.Button(new Rect(20f, num, 100f, 20f), "Grow 1"))
-                    {
-                        this._growalldirtpiles(1);
-                    }
-                    if (UnityEngine.GUI.Button(new Rect(140f, num, 100f, 20f), "Grow 2"))
-                    {
-                        this._growalldirtpiles(2);
-                    }
-                    if (UnityEngine.GUI.Button(new Rect(260f, num, 100f, 20f), "Grow 3"))
-                    {
-                        this._growalldirtpiles(3);
-                    }
-                    num += 30f;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Trees (x|x%):", this.labelStyle);
                     setCutTrees = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), setCutTrees, UnityEngine.GUI.skin.textField);

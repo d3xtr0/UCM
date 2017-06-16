@@ -1,6 +1,9 @@
 # Ultimate Cheatmenu
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 
+## v1.12.1
+- Added enable garden toggle, so the menu won't lag
+
 ## v1.1.0.12
 - cut more bushes with sphere
 - Sphere: Reset Traps
