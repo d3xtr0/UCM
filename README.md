@@ -1,6 +1,15 @@
 # Ultimate Cheatmenu
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 
+## v1.14.0
+- Sphere: Fill Holders (Sap, Water Collector, Bone,Arrow,Stick,Rabbit... Holders, Sled (toggle between Log/Rock/Stick))
+
+## v1.13.0
+- Spawn stuff where you are looking at or in front of you
+
+## v1.12.2
+- Kill all animals kills birds
+
 ## v1.12.1
 - Added enable garden toggle, so the menu won't lag
 

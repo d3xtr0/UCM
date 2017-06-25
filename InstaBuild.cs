@@ -112,4 +112,18 @@ namespace UltimateCheatmenu
             }
         }
     }
+
+    class LogHolderOv : LogHolder
+    {
+        public void addLogs()
+        {
+            this.Logs++;
+        }
+        public void ResetLogs()
+        {
+            this.Logs = 0;
+        }
+    }
+
+    
 }

@@ -12,6 +12,7 @@ using TheForest.Utils;
 using TheForest.Player;
 using TheForest.Items;
 using TheForest.Buildings.Creation;
+using TheForest.Buildings.World;
 using TheForest.World;
 using TheForest.UI.Multiplayer;
 using TheForest.Networking;
@@ -73,6 +74,12 @@ namespace UltimateCheatmenu
         public static bool SphereSuitcases = false;
         public static bool SphereFires = false;
         public static bool SphereTraps = false;
+        public static bool SphereHolders = false;
+        public static int SphereHoldersType = 0;
+
+        public string[] SphereHolderOptions = new string[] { "Log", "Rock", "Stick" };
+
+        public static bool SpawnLookAt = false;
 
         public static bool EnableGarden = false;
 
@@ -415,7 +422,11 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Reset Traps:", this.labelStyle);
                     UCheatmenu.SphereTraps = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereTraps, "");
                     num += 30f; this.scroller += 30;
-
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Fill Holder:", this.labelStyle);
+                    UCheatmenu.SphereHolders = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereHolders, "");
+                    //num += 30f; this.scroller += 30;
+                    UCheatmenu.SphereHoldersType = UnityEngine.GUI.SelectionGrid(new Rect(200f, num, 300f, 30f), UCheatmenu.SphereHoldersType, SphereHolderOptions, SphereHolderOptions.Length, UnityEngine.GUI.skin.toggle);
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.EndScrollView();
                     UnityEngine.GUI.matrix = matrix;
@@ -1008,6 +1019,12 @@ namespace UltimateCheatmenu
 
                     pItem = UnityEngine.GUI.TextField(new Rect(20f, num, 170f, 30f), pItem, UnityEngine.GUI.skin.textField);
                     num += 40f; this.scroller2 += 40;
+
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Spawn looking at", labelStyle);
+                    UCheatmenu.SpawnLookAt = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SpawnLookAt, "");
+                    num += 30f; this.scroller2 += 30;
+                    
+
                     if (BoltNetwork.isRunning)
                     {
                         foreach (var prop in BoltPrefabsDict.OrderBy(key => key.Key))
@@ -1019,9 +1036,18 @@ namespace UltimateCheatmenu
                                     UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), "[MP]"+prop.Key.ToString(), labelStyle);
                                     if (UnityEngine.GUI.Button(new Rect(200f, num, 130f, 20f), "Spawn"))
                                     {
+                                        Vector3 spawnposition;
+                                        if (UCheatmenu.SpawnLookAt)
+                                        {
+                                            spawnposition = getRayPoint();
+                                        }
+                                        else
+                                        {
+                                            spawnposition = LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f;
+                                        }
                                         UCheatmenu.lastObjectType = "spawnmp";
                                         UCheatmenu.lastObjectPrefab = prop.Value;
-                                        BoltNetwork.Instantiate(prop.Value, LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f, Quaternion.identity);
+                                        BoltNetwork.Instantiate(prop.Value, spawnposition, Quaternion.identity);
                                     }
                                     num += 30f; this.scroller2 += 30;
                                 }
@@ -1041,9 +1067,18 @@ namespace UltimateCheatmenu
                                 UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), prop, labelStyle);
                                 if (UnityEngine.GUI.Button(new Rect(200f, num, 130f, 20f), "Spawn"))
                                 {
+                                    Vector3 spawnposition;
+                                    if (UCheatmenu.SpawnLookAt)
+                                    {
+                                        spawnposition = getRayPoint();
+                                    }
+                                    else
+                                    {
+                                        spawnposition = LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f;
+                                    }
                                     UCheatmenu.lastObjectType = "spawnprop";
                                     UCheatmenu.lastObject = prop;
-                                    GameObject.Instantiate(PropPrefabs[prop], LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f, Quaternion.identity);
+                                    GameObject.Instantiate(PropPrefabs[prop], spawnposition, Quaternion.identity);
                                 }
                                 num += 30f; this.scroller2 += 30;
                             }
@@ -1160,14 +1195,18 @@ namespace UltimateCheatmenu
                 }
                 if (this.Tab == 8) // Dev
                 {
+                    this.scrollPosition = UnityEngine.GUI.BeginScrollView(new Rect(10f, 50f, 690f, 540f), this.scrollPosition, new Rect(0f, 0f, 670f, this.scroller));
+                    this.scroller = 25;
+                    num = 10;
+
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Teleport:", labelStyle);
                     Teleport = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), Teleport, UnityEngine.GUI.skin.textField);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 210f, 20f), "Go"))
                     {
                         LocalPlayer.GameObject.transform.localPosition = Vector3FromString(Teleport);
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Where am i?"))
                     {
@@ -1183,7 +1222,7 @@ namespace UltimateCheatmenu
                         }
                         
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Go in cave"))
                     {
@@ -1193,7 +1232,7 @@ namespace UltimateCheatmenu
                     {
                         this.GotoCave(false);
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Set current day ("+ Clock.Day.ToString() + "):", labelStyle);
                     setCurDay = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), setCurDay, UnityEngine.GUI.skin.textField);
@@ -1203,7 +1242,30 @@ namespace UltimateCheatmenu
                         this._setCurrentDay(setCurDay);
                         TheForest.Utils.LocalPlayer.Stats.DaySurvived = Convert.ToSingle(setCurDay);
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
+
+                    /*
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Game Stats:", labelStyle);
+                    num += 30f; this.scroller += 30;
+                    GameStats gameStats = UnityEngine.Object.FindObjectOfType<GameStats>();
+                    if (gameStats)
+                    {
+                        GameStats.Stats stats = gameStats._stats;
+                        System.Reflection.FieldInfo[] fields = stats.GetType().GetFields();
+                        if (fields != null && fields.Length > 0)
+                        {
+                            for (int i = 0; i < fields.Length; i++)
+                            {
+                                UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), fields[i].Name+":", labelStyle);
+                                UnityEngine.GUI.Label(new Rect(180f, num, 150f, 20f), fields[i].GetValue(stats).ToString(), labelStyle);
+                                num += 30f; this.scroller += 30;
+                            }
+                        }
+                    }
+                    */
+
+                    UnityEngine.GUI.EndScrollView();
+                    UnityEngine.GUI.matrix = matrix;
 
                 }
                 if (this.Tab == 9) // Game
@@ -1410,8 +1472,8 @@ namespace UltimateCheatmenu
                             raycastHit.collider.gameObject.SendMessage("LocalizedHit", new LocalizedHitData(raycastHit.collider.gameObject.transform.position, 1000f));
                         }
                         /* SphereBushes */
-                        else if (UCheatmenu.SphereBushes && 
-                            (raycastHit.collider.GetComponent<CutSappling>() != null || 
+                        else if (UCheatmenu.SphereBushes &&
+                            (raycastHit.collider.GetComponent<CutSappling>() != null ||
                             raycastHit.collider.GetComponent<CutBush>() != null ||
                             raycastHit.collider.GetComponent<CutBush2>() != null ||
                             raycastHit.collider.GetComponent<CutPlant>() != null ||
@@ -1502,6 +1564,168 @@ namespace UltimateCheatmenu
                             {
                                 raycastHit.collider.GetComponentInParent<ResetTraps>().RestoreSafe();
                             }
+                        }
+                        /* SphereHolders */
+                        else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<LogHolder>() != null)
+                        {
+                            raycastHit.collider.gameObject.SendMessage("ResetLogs");
+                            for (int y = 0; y < 7; y++)
+                            {
+                                if (BoltNetwork.isRunning)
+                                {
+                                    ItemHolderAddItem itemHolderAddItem = ItemHolderAddItem.Create(GlobalTargets.OnlyServer);
+                                    itemHolderAddItem.Target = raycastHit.collider.GetComponent<LogHolder>().entity;
+                                    itemHolderAddItem.Send();
+                                }
+                                else
+                                {
+
+                                    raycastHit.collider.GetComponent<LogHolder>().SendMessage("addLogs");
+                                    raycastHit.collider.GetComponent<LogHolder>().LogRender[y].SetActive(true);
+                                    raycastHit.collider.gameObject.SendMessage("RefreshMassAndDrag");
+                                }
+                            }
+                        }
+                        /*stick holders / rock holders / log holders / arrow baskets / bone baskets / log sleds / tree sap collectors / water collector
+                         UCheatmenu.SphereHoldersType
+                         */
+                        else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<MultiHolder>() != null)
+                        {
+                            int content = raycastHit.collider.GetComponent<MultiHolder>()._contentActual;
+
+                            /* reset content */
+                            raycastHit.collider.GetComponent<MultiHolder>()._contentActual = 0;
+                            for (int y = 0; y < raycastHit.collider.GetComponent<MultiHolder>().LogRender.Length; y++)
+                            {
+                                if (BoltNetwork.isRunning)
+                                {
+                                    raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual = MultiHolder.ContentTypes.Log;
+                                    ItemHolderTakeItem itemHolderTakeItem = ItemHolderTakeItem.Create(GlobalTargets.OnlyServer);
+                                    itemHolderTakeItem.ContentType = (int)raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual;
+                                    itemHolderTakeItem.Target = raycastHit.collider.GetComponent<MultiHolder>().entity;
+                                    itemHolderTakeItem.Player = null;
+                                    itemHolderTakeItem.Send();
+                                }
+                                raycastHit.collider.GetComponent<MultiHolder>().LogRender[y].SetActive(false);
+                            }
+                            for (int y = 0; y < raycastHit.collider.GetComponent<MultiHolder>().RockRender.Length; y++)
+                            {
+                                if (BoltNetwork.isRunning)
+                                {
+                                    raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual = MultiHolder.ContentTypes.Rock;
+                                    ItemHolderTakeItem itemHolderTakeItem = ItemHolderTakeItem.Create(GlobalTargets.OnlyServer);
+                                    itemHolderTakeItem.ContentType = (int)raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual;
+                                    itemHolderTakeItem.Target = raycastHit.collider.GetComponent<MultiHolder>().entity;
+                                    itemHolderTakeItem.Player = null;
+                                    itemHolderTakeItem.Send();
+                                }
+                                raycastHit.collider.GetComponent<MultiHolder>().RockRender[y].SetActive(false);
+                            }
+                            for (int y = 0; y < raycastHit.collider.GetComponent<MultiHolder>().StickRender.Length; y++)
+                            {
+                                if (BoltNetwork.isRunning)
+                                {
+                                    raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual = MultiHolder.ContentTypes.Stick;
+                                    ItemHolderTakeItem itemHolderTakeItem = ItemHolderTakeItem.Create(GlobalTargets.OnlyServer);
+                                    itemHolderTakeItem.ContentType = (int)raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual;
+                                    itemHolderTakeItem.Target = raycastHit.collider.GetComponent<MultiHolder>().entity;
+                                    itemHolderTakeItem.Player = null;
+                                    itemHolderTakeItem.Send();
+                                }
+                                raycastHit.collider.GetComponent<MultiHolder>().StickRender[y].SetActive(false);
+                            }
+
+                            content = 0;
+
+                            if (UCheatmenu.SphereHoldersType == 0) // LOG
+                            {
+                                raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual = MultiHolder.ContentTypes.Log;
+                                for (int y = content; y < raycastHit.collider.GetComponent<MultiHolder>().LogRender.Length; y++)
+                                {
+                                    if (BoltNetwork.isRunning)
+                                    {
+                                        ItemHolderAddItem itemHolderAddItem = ItemHolderAddItem.Create(GlobalTargets.OnlyServer);
+                                        itemHolderAddItem.ContentType = 1;
+                                        itemHolderAddItem.Target = raycastHit.collider.GetComponent<MultiHolder>().entity;
+                                        itemHolderAddItem.Send();
+                                    }
+                                    else
+                                    {
+                                        raycastHit.collider.GetComponent<MultiHolder>()._contentActual++;
+                                        raycastHit.collider.GetComponent<MultiHolder>().LogRender[y].SetActive(true);
+                                        raycastHit.collider.gameObject.SendMessage("RefreshMassAndDrag");
+                                    }
+                                }
+                            }
+                            else if (UCheatmenu.SphereHoldersType == 1) // ROCK
+                            {
+                                raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual = MultiHolder.ContentTypes.Rock;
+                                for (int y = content; y < raycastHit.collider.GetComponent<MultiHolder>().RockRender.Length; y++)
+                                {
+                                    if (BoltNetwork.isRunning)
+                                    {
+                                        ItemHolderAddItem itemHolderAddItem = ItemHolderAddItem.Create(GlobalTargets.OnlyServer);
+                                        itemHolderAddItem.ContentType = 3;
+                                        itemHolderAddItem.Target = raycastHit.collider.GetComponent<MultiHolder>().entity;
+                                        itemHolderAddItem.Send();
+                                    }
+                                    else
+                                    {
+                                        raycastHit.collider.GetComponent<MultiHolder>()._contentActual++;
+                                        raycastHit.collider.GetComponent<MultiHolder>().RockRender[y].SetActive(true);
+                                        raycastHit.collider.gameObject.SendMessage("RefreshMassAndDrag");
+                                    }
+                                }
+                            }
+                            else if (UCheatmenu.SphereHoldersType == 2) // STICK
+                            {
+                                raycastHit.collider.GetComponent<MultiHolder>()._contentTypeActual = MultiHolder.ContentTypes.Stick;
+                                for (int y = content; y < raycastHit.collider.GetComponent<MultiHolder>().StickRender.Length; y++)
+                                {
+                                    if (BoltNetwork.isRunning)
+                                    {
+                                        ItemHolderAddItem itemHolderAddItem = ItemHolderAddItem.Create(GlobalTargets.OnlyServer);
+                                        itemHolderAddItem.ContentType = 4;
+                                        itemHolderAddItem.Target = raycastHit.collider.GetComponent<MultiHolder>().entity;
+                                        itemHolderAddItem.Send();
+                                    }
+                                    else
+                                    {
+                                        raycastHit.collider.GetComponent<MultiHolder>()._contentActual++;
+                                        raycastHit.collider.GetComponent<MultiHolder>().StickRender[y].SetActive(true);
+                                        raycastHit.collider.gameObject.SendMessage("RefreshMassAndDrag");
+                                    }
+                                }
+                            }
+                        }
+                        else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<ItemHolder>() != null)
+                        {
+                            for (int y = raycastHit.collider.GetComponent<ItemHolder>().Items; y < raycastHit.collider.GetComponent<ItemHolder>().ItemsRender.Length; y++)
+                            {
+                                if (BoltNetwork.isRunning)
+                                {
+                                    ItemHolderAddItem itemHolderAddItem = ItemHolderAddItem.Create(GlobalTargets.OnlyServer);
+                                    itemHolderAddItem.Target = raycastHit.collider.GetComponent<ItemHolder>().entity;
+                                    itemHolderAddItem.Send();
+                                }
+                                else
+                                {
+                                    raycastHit.collider.GetComponent<ItemHolder>().Items++;
+                                    raycastHit.collider.GetComponent<ItemHolder>().ItemsRender[raycastHit.collider.GetComponent<ItemHolder>().Items - 1].SetActive(true);
+                                }
+                            }
+                        }
+                        else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<RainCollector>() != null)
+                        {
+                            raycastHit.collider.GetComponent<RainCollector>()._source.AddWater(10);
+                        }
+                        else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<TreesapSource>() != null)
+                        {
+                            raycastHit.collider.GetComponent<TreesapSource>().AddTreesap(30f);
+                        }
+                        else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<RabbitCage>() != null)
+                        {
+                            raycastHit.collider.GetComponent<RabbitCage>().SendMessage("AddRabbit");
                         }
                     }
 
@@ -1603,6 +1827,16 @@ namespace UltimateCheatmenu
             {
                 if (!ChatBox.IsChatOpen)
                 {
+                    Vector3 spawnposition;
+                    if (UCheatmenu.SpawnLookAt)
+                    {
+                        spawnposition = getRayPoint();
+                    }
+                    else
+                    {
+                        spawnposition = LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f;
+                    }
+
                     if (UCheatmenu.lastObjectType == "animal")
                     {
                         GameObject.Instantiate(AnimalPrefabs[UCheatmenu.lastObject], LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f, Quaternion.identity);
@@ -1617,11 +1851,11 @@ namespace UltimateCheatmenu
                     }
                     else if (UCheatmenu.lastObjectType == "spawnprop")
                     {
-                        GameObject.Instantiate(PropPrefabs[UCheatmenu.lastObject], LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f, Quaternion.identity);
+                        GameObject.Instantiate(PropPrefabs[UCheatmenu.lastObject], spawnposition, Quaternion.identity);
                     }
                     else if (UCheatmenu.lastObjectType == "spawnmp")
                     {
-                        BoltNetwork.Instantiate(UCheatmenu.lastObjectPrefab, LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f, Quaternion.identity);
+                        BoltNetwork.Instantiate(UCheatmenu.lastObjectPrefab, spawnposition, Quaternion.identity);
                     }
                     else if (UCheatmenu.lastObjectType == "spawnitem")
                     {
@@ -1631,6 +1865,19 @@ namespace UltimateCheatmenu
             }
 
 
+        }
+
+        private Vector3 getRayPoint()
+        {
+            Camera camera = LocalPlayer.MainCam;
+            Ray ray = camera.ScreenPointToRay(new Vector3((float)Screen.width / 2f, (float)Screen.height / 2f, 0f));
+            ray.origin += camera.transform.forward * 1f;
+            RaycastHit raycastHit;
+            if (Physics.Raycast(ray, out raycastHit, 1000f))
+            {
+                return raycastHit.point;
+            }
+            return LocalPlayer.MainCam.transform.position + LocalPlayer.MainCam.transform.forward * 2f + LocalPlayer.MainCam.transform.up * -3f;
         }
 
         [ExecuteOnGameStart]
@@ -2323,6 +2570,17 @@ namespace UltimateCheatmenu
                     animalHealth.SendMessage("Die");
                 }
             }
+
+            lb_Bird[] arrayB = UnityEngine.Object.FindObjectsOfType<lb_Bird>();
+            lb_Bird[] arrayB2 = arrayB;
+            for (int i = 0; i < arrayB2.Length; i++)
+            {
+                lb_Bird birdHealth = arrayB2[i];
+                if (birdHealth.gameObject.activeInHierarchy)
+                {
+                    birdHealth.SendMessage("die");
+                }
+            }
         }
 
         private void _killEndBoss()
@@ -2652,9 +2910,12 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "SphereSuitcases",    UCheatmenu.SphereSuitcases.ToString());
             iniw.Write("UCM", "SphereFires",        UCheatmenu.SphereFires.ToString());
             iniw.Write("UCM", "SphereTraps",        UCheatmenu.SphereTraps.ToString());
+            iniw.Write("UCM", "SphereHolders",      UCheatmenu.SphereHolders.ToString());
+            iniw.Write("UCM", "SphereHoldersType",  UCheatmenu.SphereHoldersType.ToString());
             iniw.Write("UCM", "InfFire",            UCheatmenu.InfFire.ToString());
             iniw.Write("UCM", "InstLighter",        UCheatmenu.InstLighter.ToString());
             iniw.Write("UCM", "FastFlint",          UCheatmenu.FastFlint.ToString());
+            iniw.Write("UCM", "SpawnLookAt",        UCheatmenu.SpawnLookAt.ToString());
         }
         private void readIni(string path)
         {
@@ -2713,14 +2974,18 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.SphereFires = false; }
             try { UCheatmenu.SphereTraps = Convert.ToBoolean(inir.Read("UCM", "SphereTraps")); }
             catch { UCheatmenu.SphereTraps = false; }
+            try { UCheatmenu.SphereHolders = Convert.ToBoolean(inir.Read("UCM", "SphereHolders")); }
+            catch { UCheatmenu.SphereHolders = false; }
+            try { UCheatmenu.SphereHoldersType = Convert.ToInt32(inir.Read("UCM", "SphereHoldersType")); }
+            catch { UCheatmenu.SphereHoldersType = 0; }
             try { UCheatmenu.InfFire = Convert.ToBoolean(inir.Read("UCM", "InfFire")); }
             catch { UCheatmenu.InfFire = false; }
             try { UCheatmenu.InstLighter = Convert.ToBoolean(inir.Read("UCM", "InstLighter")); }
             catch { UCheatmenu.InstLighter = false; }
             try { UCheatmenu.FastFlint = Convert.ToBoolean(inir.Read("UCM", "FastFlint")); }
             catch { UCheatmenu.FastFlint = false; }
-
-
+            try { UCheatmenu.SpawnLookAt = Convert.ToBoolean(inir.Read("UCM", "SpawnLookAt")); }
+            catch { UCheatmenu.SpawnLookAt = false; }
             this.DestroyTree = Convert.ToBoolean(inir.Read("UCM", "DestroyTree"));
             this.Teleport = inir.Read("UCM", "Teleport");
             this.tItem = inir.Read("UCM", "tItem");
