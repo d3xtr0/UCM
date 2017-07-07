@@ -17,4 +17,13 @@ namespace UltimateCheatmenu
             return new LocalizedHitData(data._position, 100000f);
         }
     }
+
+    public class ExplodeOv : Explode
+    {
+        protected override void RunExplode()
+        {
+            radius = UCheatmenu.ExplosionRadius;
+            base.RunExplode();
+        }
+    }
 }

@@ -14,6 +14,7 @@ namespace UltimateCheatmenu
             Shader.SetGlobalFloat("CaveAmount", UCheatmenu.CaveLight);
             Shader.SetGlobalFloat("_ForestCaveSetting", Mathf.Lerp(1f, -1f, UCheatmenu.CaveLight));
 
+
             if (UCheatmenu.NightLightOriginal < this.MoonBrightness)
             {
                 UCheatmenu.NightLightOriginal += 0.01f * Time.deltaTime;

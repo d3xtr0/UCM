@@ -145,5 +145,23 @@ namespace UltimateCheatmenu
                 base.FixedUpdate();
             }
         }
+
+       
+    }
+
+    class EnemyhealthOv : EnemyHealth
+    {
+        public override void Hit(int damage)
+        {
+            if (UCheatmenu.InstaKill)
+            {
+                this.Die();
+                return;
+            }
+
+            this.HitReal(damage);
+        }
+
     }
 }
+

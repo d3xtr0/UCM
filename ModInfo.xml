@@ -1,5 +1,5 @@
 <Mod ID="UltimateCheatmenu">
-  <Compatible>0.62</Compatible>
+  <Compatible>0.63</Compatible>
   <Button Standard="F1" ID="OpenMenu">
     <Name>
       <EN>OpenMenu</EN>
@@ -86,5 +86,5 @@
   <Description>
     <EN>Ultimate Cheatmenu</EN>
   </Description>
-  <Version>1.14.0</Version>
+  <Version>1.17</Version>
 </Mod>

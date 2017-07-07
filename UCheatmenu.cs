@@ -119,6 +119,12 @@ namespace UltimateCheatmenu
 
         protected static bool FixBodyTemp = false;
 
+        protected static bool FixSanity = false;
+
+        protected static bool FixWeight = false;
+
+        protected static bool FixStrength = false;
+
         protected static float FixedHealth = -1f;
 
         protected static float FixedBatteryCharge = -1f;
@@ -134,6 +140,14 @@ namespace UltimateCheatmenu
         protected static float FixedStarvation = -1f;
 
         protected static float FixedBodyTemp = -1f;
+
+        protected static float FixedSanity = -1f;
+
+        protected static float FixedWeight = -1f;
+
+        protected static float FixedStrength = -1f;
+
+        public static float ExplosionRadius = 15f;
 
         public static bool FreeCam = false;
 
@@ -217,6 +231,14 @@ namespace UltimateCheatmenu
         public static string lastObject = "";
         public static string lastObjectType = "";
         public static PrefabId lastObjectPrefab;
+
+        public static bool TorchToggle = false;
+        public static int TorchR = 1;
+        public static int TorchG = 1;
+        public static int TorchB = 1;
+        public static float TorchI = 1.0f;
+
+        public static float WaterLevel = 41.5f;
 
 
         [ExecuteOnGameStart]
@@ -359,6 +381,15 @@ namespace UltimateCheatmenu
                     UCheatmenu.FreezeTime = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FreezeTime, "");
                     num += 30f; this.scroller += 30;
 
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Explosion radius (" + Math.Round(UCheatmenu.ExplosionRadius).ToString() + "m):", this.labelStyle);
+                    num += 30f; this.scroller += 30;
+                    UCheatmenu.ExplosionRadius = UnityEngine.GUI.HorizontalSlider(new Rect(20f, num + 3f, 150f, 30f), UCheatmenu.ExplosionRadius, 0f, 200f);
+                    if (UnityEngine.GUI.Button(new Rect(190f, num, 150f, 20f), "Reset"))
+                    {
+                        UCheatmenu.ExplosionRadius = 15f;
+                    }
+                    num += 30f; this.scroller += 30;
+
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Action radius ("+ Math.Round(UCheatmenu.ARadius).ToString() + "m):", this.labelStyle);
                     UnityEngine.GUI.Label(new Rect(190f, num, 100f, 20f), "Global", this.labelStyle);
                     num += 30f; this.scroller += 30;
@@ -434,29 +465,48 @@ namespace UltimateCheatmenu
                 }
                 if (this.Tab == 1) // Environment
                 {
+                    this.scrollPosition = UnityEngine.GUI.BeginScrollView(new Rect(10f, 50f, 690f, 540f), this.scrollPosition, new Rect(0f, 0f, 670f, this.scroller));
+                    this.scroller = 25;
+                    num = 10;
+
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Speed of time:", this.labelStyle);
                     TheForestAtmosphere.Instance.RotationSpeed = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), TheForestAtmosphere.Instance.RotationSpeed, 0.1f, 10f);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(280f, num, 100f, 20f), "Reset"))
                     {
                         TheForestAtmosphere.Instance.RotationSpeed = 0.13f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Time:", this.labelStyle);
                     TheForestAtmosphere.Instance.TimeOfDay = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), TheForestAtmosphere.Instance.TimeOfDay, 1f, 360f);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Night light:", this.labelStyle);
                     UCheatmenu.NightLight = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), UCheatmenu.NightLight, 1f, 10f);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Cave light:", this.labelStyle);
                     UCheatmenu.CaveLight = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), UCheatmenu.CaveLight, 0f, 1f);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
+
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Torch:", this.labelStyle);
+                    UCheatmenu.TorchToggle = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.TorchToggle, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 50f, 20f), "R", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(80f, num, 50f, 20f), "G", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(140f, num, 50f, 20f), "B", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(200f, num, 100f, 20f), "Intensity ("+ UCheatmenu.TorchI.ToString("0.0") + ")", this.labelStyle);
+                    num += 30f; this.scroller += 30;
+                    UCheatmenu.TorchR = Convert.ToInt32(UnityEngine.GUI.TextField(new Rect(20f, num, 50f, 30f), UCheatmenu.TorchR.ToString(), UnityEngine.GUI.skin.textField));
+                    UCheatmenu.TorchG = Convert.ToInt32(UnityEngine.GUI.TextField(new Rect(80f, num, 50f, 30f), UCheatmenu.TorchG.ToString(), UnityEngine.GUI.skin.textField));
+                    UCheatmenu.TorchB = Convert.ToInt32(UnityEngine.GUI.TextField(new Rect(140f, num, 50f, 30f), UCheatmenu.TorchB.ToString(), UnityEngine.GUI.skin.textField));
+                    UCheatmenu.TorchI = UnityEngine.GUI.HorizontalSlider(new Rect(200f, num + 3f, 150f, 30f), UCheatmenu.TorchI, 0f, 2f);
+                    num += 40f; this.scroller += 40;
+
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Fog:", this.labelStyle);
                     UCheatmenu.Fog = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.Fog, "");
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "FreezeWeather:", this.labelStyle);
                     UCheatmenu.FreezeWeather = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FreezeWeather, "");
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 180f, 20f), "Clear Weather"))
                     {
                         UCheatmenu.ForceWeather = 0;
@@ -465,7 +515,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.ForceWeather = 4;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 180f, 20f), "Light rain"))
                     {
                         UCheatmenu.ForceWeather = 1;
@@ -474,7 +524,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.ForceWeather = 5;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 180f, 20f), "Medium rain"))
                     {
                         UCheatmenu.ForceWeather = 2;
@@ -483,7 +533,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.ForceWeather = 6;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 180f, 20f), "Heavy rain"))
                     {
                         UCheatmenu.ForceWeather = 3;
@@ -492,11 +542,11 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.ForceWeather = 7;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Enable Garden:", this.labelStyle);
                     UCheatmenu.EnableGarden = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.EnableGarden, "");
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     if (UCheatmenu.EnableGarden)
                     {
@@ -522,7 +572,7 @@ namespace UltimateCheatmenu
                             }
                             break;
                         }
-                        num += 30f;
+                        num += 30f; this.scroller += 30;
                         if (UnityEngine.GUI.Button(new Rect(20f, num, 100f, 20f), "Grow 1"))
                         {
                             this._growalldirtpiles(1);
@@ -535,12 +585,12 @@ namespace UltimateCheatmenu
                         {
                             this._growalldirtpiles(3);
                         }
-                        num += 30f;
+                        num += 30f; this.scroller += 30;
                     }
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Trees (x|x%):", this.labelStyle);
                     setCutTrees = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), setCutTrees, UnityEngine.GUI.skin.textField);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 95f, 20f), "Cut"))
                     {
                         this._cutdowntrees(setCutTrees);
@@ -549,11 +599,11 @@ namespace UltimateCheatmenu
                     {
                         this._cutdowntrees("-"+setCutTrees);
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Grass:", this.labelStyle);
                     setCGrowGrass = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), setCGrowGrass, UnityEngine.GUI.skin.textField);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     /*if (UnityEngine.GUI.Button(new Rect(170f, num, 210f, 20f), "Grow (radius)"))
                     {
                         this._growgrass(setCGrowGrass);
@@ -563,12 +613,19 @@ namespace UltimateCheatmenu
                     {
                         this._cutgrass(setCGrowGrass);
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
+
+                    UnityEngine.GUI.EndScrollView();
+                    UnityEngine.GUI.matrix = matrix;
                 }
                 if (this.Tab == 2) // Player
                 {
+                    this.scrollPosition = UnityEngine.GUI.BeginScrollView(new Rect(10f, 50f, 690f, 540f), this.scrollPosition, new Rect(0f, 0f, 670f, this.scroller));
+                    this.scroller = 25;
+                    num = 10;
+
                     UnityEngine.GUI.Label(new Rect(370f, num, 150f, 20f), "Fix", this.labelStyle);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Health:", this.labelStyle);
                     if (!UCheatmenu.FixHealth)
                     {
@@ -591,7 +648,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.FixedHealth = -1f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Battery charge:", this.labelStyle);
                     if (!UCheatmenu.FixBatteryCharge)
                     {
@@ -614,7 +671,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.FixedBatteryCharge = -1f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Fullness:", this.labelStyle);
                     if (!UCheatmenu.FixFullness)
                     {
@@ -637,7 +694,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.FixedFullness = -1f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Stamina:", this.labelStyle);
                     if (!UCheatmenu.FixStamina)
                     {
@@ -660,7 +717,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.FixedStamina = -1f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Energy:", this.labelStyle);
                     if (!UCheatmenu.FixEnergy)
                     {
@@ -683,7 +740,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.FixedEnergy = -1f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Thirst:", this.labelStyle);
                     if (!UCheatmenu.FixThirst)
                     {
@@ -706,7 +763,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.FixedThirst = -1f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Starvation:", this.labelStyle);
                     if (!UCheatmenu.FixStarvation)
                     {
@@ -729,7 +786,7 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.FixedStarvation = -1f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Body Temp:", this.labelStyle);
                     if (!UCheatmenu.FixBodyTemp)
                     {
@@ -752,48 +809,128 @@ namespace UltimateCheatmenu
                     {
                         UCheatmenu.FixedBodyTemp = -1f;
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Sanity:", this.labelStyle);
+                    if (!UCheatmenu.FixSanity)
+                    {
+                        LocalPlayer.Stats.Sanity.CurrentSanity = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 160f, 30f), LocalPlayer.Stats.Sanity.CurrentSanity, 0f, 100f);
+                    }
+                    else
+                    {
+                        UCheatmenu.FixedSanity = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 160f, 30f), UCheatmenu.FixedSanity, 0f, 100f);
+                    }
+                    UnityEngine.GUI.Label(new Rect(340f, num, 40f, 20f), string.Concat((float)Mathf.RoundToInt(LocalPlayer.Stats.Sanity.CurrentSanity * 10f) / 10f));
+                    UCheatmenu.FixSanity = UnityEngine.GUI.Toggle(new Rect(370f, num, 20f, 20f), UCheatmenu.FixSanity, "");
+                    if (UCheatmenu.FixSanity)
+                    {
+                        if (UCheatmenu.FixedSanity == -1f)
+                        {
+                            UCheatmenu.FixedSanity = LocalPlayer.Stats.Sanity.CurrentSanity;
+                        }
+                    }
+                    else
+                    {
+                        UCheatmenu.FixedSanity = -1f;
+                    }
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Weight:", this.labelStyle);
+                    if (!UCheatmenu.FixWeight)
+                    {
+                        LocalPlayer.Stats.PhysicalStrength.CurrentWeight = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 160f, 30f), LocalPlayer.Stats.PhysicalStrength.CurrentWeight, LocalPlayer.Stats.PhysicalStrength.MinWeight, LocalPlayer.Stats.PhysicalStrength.MaxWeight);
+                    }
+                    else
+                    {
+                        UCheatmenu.FixedWeight = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 160f, 30f), UCheatmenu.FixedWeight, LocalPlayer.Stats.PhysicalStrength.MinWeight, LocalPlayer.Stats.PhysicalStrength.MaxWeight);
+                    }
+                    UnityEngine.GUI.Label(new Rect(340f, num, 40f, 20f), string.Concat((float)Mathf.RoundToInt(LocalPlayer.Stats.PhysicalStrength.CurrentWeight * 10f) / 10f));
+                    UCheatmenu.FixWeight = UnityEngine.GUI.Toggle(new Rect(370f, num, 20f, 20f), UCheatmenu.FixWeight, "");
+                    if (UCheatmenu.FixWeight)
+                    {
+                        if (UCheatmenu.FixedWeight == -1f)
+                        {
+                            UCheatmenu.FixedWeight = LocalPlayer.Stats.PhysicalStrength.CurrentWeight;
+                        }
+                    }
+                    else
+                    {
+                        UCheatmenu.FixedWeight = -1f;
+                    }
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Strength:", this.labelStyle);
+                    if (!UCheatmenu.FixStrength)
+                    {
+                        LocalPlayer.Stats.PhysicalStrength.CurrentStrength = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 160f, 30f), LocalPlayer.Stats.PhysicalStrength.CurrentStrength, LocalPlayer.Stats.PhysicalStrength.MinStrength, LocalPlayer.Stats.PhysicalStrength.MaxStrength);
+                    }
+                    else
+                    {
+                        UCheatmenu.FixedStrength = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 160f, 30f), UCheatmenu.FixedStrength, LocalPlayer.Stats.PhysicalStrength.MinStrength, LocalPlayer.Stats.PhysicalStrength.MaxStrength);
+                    }
+                    UnityEngine.GUI.Label(new Rect(340f, num, 40f, 20f), string.Concat((float)Mathf.RoundToInt(LocalPlayer.Stats.PhysicalStrength.CurrentStrength * 10f) / 10f));
+                    UCheatmenu.FixStrength = UnityEngine.GUI.Toggle(new Rect(370f, num, 20f, 20f), UCheatmenu.FixStrength, "");
+                    if (UCheatmenu.FixStrength)
+                    {
+                        if (UCheatmenu.FixedStrength == -1f)
+                        {
+                            UCheatmenu.FixedStrength = LocalPlayer.Stats.PhysicalStrength.CurrentStrength;
+                        }
+                    }
+                    else
+                    {
+                        UCheatmenu.FixedStrength = -1f;
+                    }
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Speed:", this.labelStyle);
                     UCheatmenu.SpeedMultiplier = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), UCheatmenu.SpeedMultiplier, 1f, 10f);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Jump power:", this.labelStyle);
                     UCheatmenu.JumpMultiplier = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), UCheatmenu.JumpMultiplier, 1f, 10f);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Invisible:", this.labelStyle);
                     if (UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InvisibleToggle, "") != UCheatmenu.InvisibleToggle)
                     {
                         UCheatmenu.InvisibleToggle = !UCheatmenu.InvisibleToggle;
                         this._invisible();
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Player:", this.labelStyle);
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 150f, 20f), "Kill me")) { this._killlocalplayer(); }
                     if (UnityEngine.GUI.Button(new Rect(340f, num, 150f, 20f), "Revive me")) { this._revivelocalplayer(); }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Set (number)", labelStyle);
                     setNumVar = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), setNumVar, UnityEngine.GUI.skin.textField);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 210f, 20f), "Player Variation"))
                     {
                         this._setPlayerVariation(setNumVar);
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 210f, 20f), "Player Body"))
                     {
                         this._setPlayerBody(setNumVar);
                     }
-                    num += 30f;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Player Variation Extra:", labelStyle);
-                    if (UnityEngine.GUI.Button(new Rect(170f, num, 150f, 20f), "None"))
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Player Clothing:", labelStyle);
+                    num += 30f; this.scroller += 30;
+                    int i = 0;
+                    foreach (PlayerCloting cloth in Enum.GetValues(typeof(PlayerCloting)))
                     {
-                        this._setVariationExtra("None");
+                        if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), cloth.ToString()))
+                        {
+                            this._setVariationExtra(cloth.ToString());
+                        }
+                        i++;
+                        if (i == 6)
+                        {
+                            num += 30f; this.scroller += 30; i = 0;
+                        }
+                        
+                        
                     }
-                    if (UnityEngine.GUI.Button(new Rect(340f, num, 150f, 20f), "Jacket"))
-                    {
-                        this._setVariationExtra("Jacket");
-                    }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
+
+                    UnityEngine.GUI.EndScrollView();
+                    UnityEngine.GUI.matrix = matrix;
                 }
                 if (this.Tab == 3) // Animals
                 {
@@ -1263,6 +1400,10 @@ namespace UltimateCheatmenu
                         }
                     }
                     */
+                    
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Water level: "+ GameObject.FindWithTag("OceanHeight").transform.position.y.ToString()+ "m", this.labelStyle);
+                    num += 30f; this.scroller += 30;
+
 
                     UnityEngine.GUI.EndScrollView();
                     UnityEngine.GUI.matrix = matrix;
@@ -1743,6 +1884,18 @@ namespace UltimateCheatmenu
             {
                 LocalPlayer.Stats.BodyTemp = UCheatmenu.FixedBodyTemp;
             }
+            if (UCheatmenu.FixSanity)
+            {
+                LocalPlayer.Stats.Sanity.CurrentSanity = UCheatmenu.FixedSanity;
+            }
+            if (UCheatmenu.FixStrength)
+            {
+                LocalPlayer.Stats.PhysicalStrength.CurrentStrength = UCheatmenu.FixedStrength;
+            }
+            if (UCheatmenu.FixWeight)
+            {
+                LocalPlayer.Stats.PhysicalStrength.CurrentWeight = UCheatmenu.FixedWeight;
+            }
             if (UCheatmenu.FixBatteryCharge)
             {
                 LocalPlayer.Stats.BatteryCharge = UCheatmenu.FixedBatteryCharge;
@@ -1863,7 +2016,6 @@ namespace UltimateCheatmenu
                     }
                 }
             }
-
 
         }
 
@@ -2884,6 +3036,9 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "FixThirst",          UCheatmenu.FixThirst.ToString());
             iniw.Write("UCM", "FixStarvation",      UCheatmenu.FixStarvation.ToString());
             iniw.Write("UCM", "FixBodyTemp",        UCheatmenu.FixBodyTemp.ToString());
+            iniw.Write("UCM", "FixSanity",          UCheatmenu.FixSanity.ToString());
+            iniw.Write("UCM", "FixWeight",          UCheatmenu.FixWeight.ToString());
+            iniw.Write("UCM", "FixStrength",        UCheatmenu.FixStrength.ToString());
             iniw.Write("UCM", "FixedHealth",        UCheatmenu.FixedHealth.ToString());
             iniw.Write("UCM", "FixedBatteryCharge", UCheatmenu.FixedBatteryCharge.ToString());
             iniw.Write("UCM", "FixedFullness",      UCheatmenu.FixedFullness.ToString());
@@ -2892,6 +3047,9 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "FixedThirst",        UCheatmenu.FixedThirst.ToString());
             iniw.Write("UCM", "FixedStarvation",    UCheatmenu.FixedStarvation.ToString());
             iniw.Write("UCM", "FixedBodyTemp",      UCheatmenu.FixedBodyTemp.ToString());
+            iniw.Write("UCM", "FixedSanity",        UCheatmenu.FixedSanity.ToString());
+            iniw.Write("UCM", "FixedWeight",        UCheatmenu.FixedWeight.ToString());
+            iniw.Write("UCM", "FixedStrength",      UCheatmenu.FixedStrength.ToString());
             iniw.Write("UCM", "DestroyBuildings",   UCheatmenu.DestroyBuildings.ToString());
             iniw.Write("UCM", "ARadius",            UCheatmenu.ARadius.ToString());
             iniw.Write("UCM", "ARadiusGlobal",      UCheatmenu.ARadiusGlobal.ToString());
@@ -2916,6 +3074,12 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "InstLighter",        UCheatmenu.InstLighter.ToString());
             iniw.Write("UCM", "FastFlint",          UCheatmenu.FastFlint.ToString());
             iniw.Write("UCM", "SpawnLookAt",        UCheatmenu.SpawnLookAt.ToString());
+            iniw.Write("UCM", "ExplosionRadius",    UCheatmenu.ExplosionRadius.ToString());
+            iniw.Write("UCM", "TorchToggle",        UCheatmenu.TorchToggle.ToString());
+            iniw.Write("UCM", "TorchR",             UCheatmenu.TorchR.ToString());
+            iniw.Write("UCM", "TorchG",             UCheatmenu.TorchG.ToString());
+            iniw.Write("UCM", "TorchB",             UCheatmenu.TorchB.ToString());
+            iniw.Write("UCM", "TorchI",             UCheatmenu.TorchI.ToString());
         }
         private void readIni(string path)
         {
@@ -2952,7 +3116,19 @@ namespace UltimateCheatmenu
             UCheatmenu.FixedThirst = Convert.ToSingle(inir.Read("UCM", "FixedThirst"));
             UCheatmenu.FixedStarvation = Convert.ToSingle(inir.Read("UCM", "FixedStarvation"));
             UCheatmenu.FixedBodyTemp = Convert.ToSingle(inir.Read("UCM", "FixedBodyTemp"));
-            try{ UCheatmenu.DestroyBuildings = Convert.ToBoolean(inir.Read("UCM", "DestroyBuildings")); }
+            try { UCheatmenu.FixSanity = Convert.ToBoolean(inir.Read("UCM", "FixSanity")); }
+            catch { UCheatmenu.FixSanity = false; }
+            try { UCheatmenu.FixWeight = Convert.ToBoolean(inir.Read("UCM", "FixWeight")); }
+            catch { UCheatmenu.FixWeight = false; }
+            try { UCheatmenu.FixStrength = Convert.ToBoolean(inir.Read("UCM", "FixStrength")); }
+            catch { UCheatmenu.FixStrength = false; }
+            try { UCheatmenu.FixedSanity = Convert.ToSingle(inir.Read("UCM", "FixedSanity")); }
+            catch { UCheatmenu.FixedSanity = LocalPlayer.Stats.Sanity.CurrentSanity; }
+            try { UCheatmenu.FixedWeight = Convert.ToSingle(inir.Read("UCM", "FixedWeight")); }
+            catch { UCheatmenu.FixedWeight = LocalPlayer.Stats.PhysicalStrength.CurrentWeight; }
+            try { UCheatmenu.FixedStrength = Convert.ToSingle(inir.Read("UCM", "FixedStrength")); }
+            catch { UCheatmenu.FixedStrength = LocalPlayer.Stats.PhysicalStrength.CurrentStrength; }
+            try { UCheatmenu.DestroyBuildings = Convert.ToBoolean(inir.Read("UCM", "DestroyBuildings")); }
             catch{ UCheatmenu.DestroyBuildings = false; }
             try{ UCheatmenu.ARadius = Convert.ToSingle(inir.Read("UCM", "ARadius")); }
             catch{ UCheatmenu.ARadius = 10f; }
@@ -2994,6 +3170,18 @@ namespace UltimateCheatmenu
             this.setCutTrees = inir.Read("UCM", "setCutTrees");
             this.setCGrowGrass = inir.Read("UCM", "setCGrowGrass");
             TheForestAtmosphere.Instance.RotationSpeed = Convert.ToSingle(inir.Read("UCM", "RotationSpeed"));
+            try { UCheatmenu.ExplosionRadius = Convert.ToSingle(inir.Read("UCM", "ExplosionRadius")); }
+            catch { UCheatmenu.ExplosionRadius = 15f; }
+            try { UCheatmenu.TorchToggle = Convert.ToBoolean(inir.Read("UCM", "TorchToggle")); }
+            catch { UCheatmenu.TorchToggle = false; }
+            try { UCheatmenu.TorchR = Convert.ToInt32(inir.Read("UCM", "TorchR")); }
+            catch { UCheatmenu.TorchR = 1; }
+            try { UCheatmenu.TorchG = Convert.ToInt32(inir.Read("UCM", "TorchG")); }
+            catch { UCheatmenu.TorchG = 1; }
+            try { UCheatmenu.TorchB = Convert.ToInt32(inir.Read("UCM", "TorchB")); }
+            catch { UCheatmenu.TorchB = 1; }
+            try { UCheatmenu.TorchI = Convert.ToSingle(inir.Read("UCM", "TorchI")); }
+            catch { UCheatmenu.TorchI = 1.0f; }
         }
 
         private void saveSettings()

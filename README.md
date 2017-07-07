@@ -1,6 +1,19 @@
 # Ultimate Cheatmenu
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 
+## v1.17.0
+-v0.64 compatibility
+-Player Clothing
+-Infinite Zipline length
+
+## v1.16.0
+-Explosion radius
+-Torch Color + Intensity
+
+## v1.15.0
+-Added Stats: Sanity, Weight, Strength
+-Fixed Instant Kill
+
 ## v1.14.0
 - Sphere: Fill Holders (Sap, Water Collector, Bone,Arrow,Stick,Rabbit... Holders, Sled (toggle between Log/Rock/Stick))
 

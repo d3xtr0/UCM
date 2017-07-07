@@ -14,4 +14,25 @@ namespace UltimateCheatmenu
             base.LocalizedHit(DestroyBuildings.GetLocalizedHitData(data));
         }
     }
+    class BuildingHealthChunkHitRelayOv : BuildingHealthChunkHitRelay
+    {
+        public override void LocalizedHit(LocalizedHitData data)
+        {
+            base.LocalizedHit(DestroyBuildings.GetLocalizedHitData(data));
+        }
+    }
+    class FoundationChunkTierOv : FoundationChunkTier
+    {
+        public override void LocalizedHit(LocalizedHitData data)
+        {
+            base.LocalizedHit(DestroyBuildings.GetLocalizedHitData(data));
+        }
+    }
+    class BuildingHealthOv : BuildingHealth
+    {
+        public override void LocalizedHit(LocalizedHitData data)
+        {
+            base.LocalizedHit(DestroyBuildings.GetLocalizedHitData(data));
+        }
+    }
 }
