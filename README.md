@@ -1,6 +1,22 @@
 # Ultimate Cheatmenu
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 
+## v1.18.1/2
+-added tooltips to most options
+-garden features don't lag now
+-fixed difficulty mode + added description what is active
+-added "No item consume" (Items will not be removed from your inventory (in crafting or when consumed))
+
+## v1.18.0
+-infinite garden size
+-infinite building height
+-toggle building collision
+
+## v1.17.1/2/3/4
+-Sphere: Call Crane (sets platform to player position)
+-Changed player variation input to buttons
+-fixed sleep hud disappearing
+
 ## v1.17.0
 -v0.64 compatibility
 -Player Clothing

@@ -126,7 +126,7 @@ namespace UltimateCheatmenu
                     base.Invoke("TurnOffSleepCam", 3f);
                     this.Tired = 0f;
                     this.Atmos.TimeLapse();
-                    TheForest.Utils.Scene.HudGui.GuiCam.SetActive(false);
+                    TheForest.Utils.Scene.HudGui.ToggleAllHud(false);
                     TheForest.Utils.Scene.Cams.SleepCam.SetActive(true);
                     this.Energy += 100f;
                     UCheatmenu.SleepTimer = false;

@@ -11,6 +11,7 @@ using TheForest;
 using TheForest.Utils;
 using TheForest.Player;
 using TheForest.Items;
+using TheForest.Items.Special;
 using TheForest.Buildings.Creation;
 using TheForest.Buildings.World;
 using TheForest.World;
@@ -74,6 +75,7 @@ namespace UltimateCheatmenu
         public static bool SphereSuitcases = false;
         public static bool SphereFires = false;
         public static bool SphereTraps = false;
+        public static bool SphereCrane = false;
         public static bool SphereHolders = false;
         public static int SphereHoldersType = 0;
 
@@ -241,6 +243,10 @@ namespace UltimateCheatmenu
         public static float WaterLevel = 41.5f;
 
 
+        public static bool BuildingCollision = true;
+        public static bool ItemConsume = false;
+
+
         [ExecuteOnGameStart]
         private static void AddMeToScene()
         {
@@ -324,38 +330,38 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "God mode:", this.labelStyle);
                     UCheatmenu.GodMode = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.GodMode, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Flymode:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Flymode:", "Default: F6"), this.labelStyle);
                     UCheatmenu.FlyMode = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FlyMode, "");
                     num += 30f; this.scroller += 30;
                     if (UCheatmenu.FlyMode)
                     {
-                        UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "No clip:", this.labelStyle);
+                        UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("No clip:", "Default: F7"), this.labelStyle);
                         UCheatmenu.NoClip = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.NoClip, "");
                         num += 30f; this.scroller += 30;
                     }
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Instant Tree:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Instant Tree:", "Chop trees with 1 hit"), this.labelStyle);
                     UCheatmenu.InstantTree = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InstantTree, "");
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Instant Building Destroy:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Instant Building Destroy:", "Destroy buildings with 1 hit"), this.labelStyle);
                     UCheatmenu.DestroyBuildings = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.DestroyBuildings, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Instant Kill:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Instant Kill:", "Kill enemies with 1 hit"), this.labelStyle);
                     UCheatmenu.InstaKill = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InstaKill, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Use Rebreather:", this.labelStyle);
                     UCheatmenu.Rebreather = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.Rebreather, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Unlimited Fuel:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Unlimited Fuel:", "Unlimited fuel for the chainsaw"), this.labelStyle);
                     UCheatmenu.UnlimitedFuel = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.UnlimitedFuel, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Infinite Fire:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Infinite Fire:", "Never ending fire for fireplaces and effigies"), this.labelStyle);
                     UCheatmenu.InfFire = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InfFire, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Auto Lighter:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Auto Lighter:", "Automatically light dynamite or molotovs"), this.labelStyle);
                     UCheatmenu.InstLighter = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InstLighter, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Fast Flintlock/Bow:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Fast Flintlock/Bow:", "Even faster with Item Hack \nEquip bow first, then enable \nFlintlock shoots faster when running faster"), this.labelStyle);
                     UCheatmenu.FastFlint = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FastFlint, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Sleep :", this.labelStyle);
@@ -374,14 +380,14 @@ namespace UltimateCheatmenu
                     }
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Free cam:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Free cam:", "Default: F3"), this.labelStyle);
                     UCheatmenu.FreeCam = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FreeCam, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Freeze time:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Freeze time:", "Default: F4"), this.labelStyle);
                     UCheatmenu.FreezeTime = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FreezeTime, "");
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Explosion radius (" + Math.Round(UCheatmenu.ExplosionRadius).ToString() + "m):", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Explosion radius (" + Math.Round(UCheatmenu.ExplosionRadius).ToString() + "m):", "Changes the explosion radius of dynamite/bombs"), this.labelStyle);
                     num += 30f; this.scroller += 30;
                     UCheatmenu.ExplosionRadius = UnityEngine.GUI.HorizontalSlider(new Rect(20f, num + 3f, 150f, 30f), UCheatmenu.ExplosionRadius, 0f, 200f);
                     if (UnityEngine.GUI.Button(new Rect(190f, num, 150f, 20f), "Reset"))
@@ -390,8 +396,8 @@ namespace UltimateCheatmenu
                     }
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Action radius ("+ Math.Round(UCheatmenu.ARadius).ToString() + "m):", this.labelStyle);
-                    UnityEngine.GUI.Label(new Rect(190f, num, 100f, 20f), "Global", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Action radius (" + Math.Round(UCheatmenu.ARadius).ToString() + "m):","Used by InstaBuild (F) and InstaRepair (SHIFT + R)"), this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(190f, num, 100f, 20f), new GUIContent("Global","May crash your game, when too much built"), this.labelStyle);
                     num += 30f; this.scroller += 30;
                     UCheatmenu.ARadius = UnityEngine.GUI.HorizontalSlider(new Rect(20f, num + 3f, 150f, 30f), UCheatmenu.ARadius, 10f, 200f);
                     UCheatmenu.ARadiusGlobal = UnityEngine.GUI.Toggle(new Rect(190f, num, 20f, 30f), UCheatmenu.ARadiusGlobal, "");
@@ -406,23 +412,28 @@ namespace UltimateCheatmenu
                     {
                         InstaBuild.repairAll();
                     }
+                    UnityEngine.GUI.Label(new Rect(500f, num, 70f, 20f), new GUIContent("Collision:", "Build anywhere \nWill not work for structures where collision is important (e.g. zipline)"), this.labelStyle);
+                    UCheatmenu.BuildingCollision = UnityEngine.GUI.Toggle(new Rect(580f, num, 20f, 30f), UCheatmenu.BuildingCollision, "");
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Log Hack", labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Log Hack", "Hold infinite logs in your hand"), labelStyle);
                     if(UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), LocalPlayer.Inventory.Logs._infiniteLogHack, "") != LocalPlayer.Inventory.Logs._infiniteLogHack)
                     {
                         LocalPlayer.Inventory.Logs._infiniteLogHack = !LocalPlayer.Inventory.Logs._infiniteLogHack;
                         this._loghack();
                     }
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Item Hack", labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Item Hack", "Infinite number of owned items"), labelStyle);
                     if (UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.ItemHack, "") != UCheatmenu.ItemHack)
                     {
                         UCheatmenu.ItemHack = !UCheatmenu.ItemHack;
                         this._itemhack();
                     }
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Build Hack", labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("No item consume", "Items will not be removed from your inventory (in crafting or when consumed)"), labelStyle);
+                    UCheatmenu.ItemConsume = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.ItemConsume, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Build Hack", "Enable creative mode"), labelStyle);
                     if (UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.BuildHack, "") != UCheatmenu.BuildHack)
                     {
                         UCheatmenu.BuildHack = !UCheatmenu.BuildHack;
@@ -430,7 +441,7 @@ namespace UltimateCheatmenu
                     }
                     num += 30f; this.scroller += 30;
                     
-                    UnityEngine.GUI.Label(new Rect(20f, num, 410f, 20f), "Sphere (use scrollwheel to change radius)", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 410f, 20f), new GUIContent("Sphere", "Default: X \nUse scrollwheel to change the radius \nToggled options below will be executed inside the sphere"), this.labelStyle);
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Cut trees:", this.labelStyle);
                     UCheatmenu.SphereTreeCut = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereTreeCut, "");
@@ -438,7 +449,7 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Cut tree stumps:", this.labelStyle);
                     UCheatmenu.SphereTreeStumps = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereTreeStumps, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Cut bushes:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Cut bushes:", "Works only in a small radius around the player \nIncludes gardens, aloe, ..."), this.labelStyle);
                     UCheatmenu.SphereBushes = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereBushes, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Break crates:", this.labelStyle);
@@ -453,7 +464,10 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Reset Traps:", this.labelStyle);
                     UCheatmenu.SphereTraps = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereTraps, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Fill Holder:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Call Crane:","Change the crane position to where you are standing"), this.labelStyle);
+                    UCheatmenu.SphereCrane = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereCrane, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Fill Holder:", "Includes Sap Collector, Water Collector, Bone, Arrow, Stick, Rabbit... Holders, Sled (toggle between Log/Rock/Stick)"), this.labelStyle);
                     UCheatmenu.SphereHolders = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.SphereHolders, "");
                     //num += 30f; this.scroller += 30;
                     UCheatmenu.SphereHoldersType = UnityEngine.GUI.SelectionGrid(new Rect(200f, num, 300f, 30f), UCheatmenu.SphereHoldersType, SphereHolderOptions, SphereHolderOptions.Length, UnityEngine.GUI.skin.toggle);
@@ -487,7 +501,7 @@ namespace UltimateCheatmenu
                     UCheatmenu.CaveLight = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), UCheatmenu.CaveLight, 0f, 1f);
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Torch:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Torch:","Enable to change color/intensity of the plastic torch"), this.labelStyle);
                     UCheatmenu.TorchToggle = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.TorchToggle, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 50f, 20f), "R", this.labelStyle);
@@ -544,51 +558,67 @@ namespace UltimateCheatmenu
                     }
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Enable Garden:", this.labelStyle);
-                    UCheatmenu.EnableGarden = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.EnableGarden, "");
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Garden",""), this.labelStyle);
+                    //UCheatmenu.EnableGarden = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.EnableGarden, "");
                     num += 30f; this.scroller += 30;
 
                     if (UCheatmenu.EnableGarden)
                     {
-                        Garden[] gardens = GameObject.FindObjectsOfType<Garden>();
-                        foreach (Garden garden in gardens)
+                    }
+                    /*
+                    Garden[] gardens = GameObject.FindObjectsOfType<Garden>();
+                    foreach (Garden garden in gardens)
+                    {
+                        int i = 0;
+                        foreach (Garden.SeedTypes seedid in garden._seeds)
                         {
-                            int i = 0;
-                            foreach (Garden.SeedTypes seedid in garden._seeds)
+                            string seedname;
+                            switch (seedid._itemId)
                             {
-                                string seedname;
-                                switch (seedid._itemId)
-                                {
-                                    case 103: seedname = "Aloe"; break;
-                                    case 206: seedname = "Blueberry"; break;
-                                    case 205: seedname = "Coneflower"; break;
-                                    default: seedname = seedid._itemId.ToString(); break;
-                                }
-                                if (UnityEngine.GUI.Button(new Rect(20f + (i * 120f), num, 100f, 20f), seedname))
-                                {
-                                    this._plantallgardens(i);
-                                }
-                                i++;
+                                case 103: seedname = "Aloe"; break;
+                                case 206: seedname = "Blueberry"; break;
+                                case 205: seedname = "Coneflower"; break;
+                                default: seedname = seedid._itemId.ToString(); break;
                             }
-                            break;
+                            if (UnityEngine.GUI.Button(new Rect(20f + (i * 120f), num, 100f, 20f), seedname))
+                            {
+                                this._plantallgardens(i);
+                            }
+                            i++;
                         }
-                        num += 30f; this.scroller += 30;
-                        if (UnityEngine.GUI.Button(new Rect(20f, num, 100f, 20f), "Grow 1"))
-                        {
-                            this._growalldirtpiles(1);
-                        }
-                        if (UnityEngine.GUI.Button(new Rect(140f, num, 100f, 20f), "Grow 2"))
-                        {
-                            this._growalldirtpiles(2);
-                        }
-                        if (UnityEngine.GUI.Button(new Rect(260f, num, 100f, 20f), "Grow 3"))
-                        {
-                            this._growalldirtpiles(3);
-                        }
-                        num += 30f; this.scroller += 30;
+                        break;
+                    }
+                    */
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 100f, 20f), "Aloe"))
+                    {
+                        this._plantallgardens(0);
+                    }
+                    if (UnityEngine.GUI.Button(new Rect(140f, num, 100f, 20f), "Coneflower"))
+                    {
+                        this._plantallgardens(1);
+                    }
+                    if (UnityEngine.GUI.Button(new Rect(260f, num, 100f, 20f), "Blueberry"))
+                    {
+                        this._plantallgardens(2);
                     }
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Trees (x|x%):", this.labelStyle);
+                    num += 30f; this.scroller += 30;
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 100f, 20f), "Grow 1"))
+                    {
+                        this._growalldirtpiles(1);
+                    }
+                    if (UnityEngine.GUI.Button(new Rect(140f, num, 100f, 20f), "Grow 2"))
+                    {
+                        this._growalldirtpiles(2);
+                    }
+                    if (UnityEngine.GUI.Button(new Rect(260f, num, 100f, 20f), "Grow 3"))
+                    {
+                        this._growalldirtpiles(3);
+                    }
+                    num += 30f; this.scroller += 30;
+                    
+
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Trees (x|x%):", "Examples: \n10 - Cut/Grow 10 trees\n100% - Cut/Grow all(100%) trees"), this.labelStyle);
                     setCutTrees = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), setCutTrees, UnityEngine.GUI.skin.textField);
                     num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 95f, 20f), "Cut"))
@@ -601,7 +631,7 @@ namespace UltimateCheatmenu
                     }
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Grass:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Grass:","Example: \n10 - Cuts grass 10 meters around you"), this.labelStyle);
                     setCGrowGrass = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), setCGrowGrass, UnityEngine.GUI.skin.textField);
                     num += 30f; this.scroller += 30;
                     /*if (UnityEngine.GUI.Button(new Rect(170f, num, 210f, 20f), "Grow (radius)"))
@@ -885,7 +915,7 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Jump power:", this.labelStyle);
                     UCheatmenu.JumpMultiplier = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), UCheatmenu.JumpMultiplier, 1f, 10f);
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Invisible:", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Invisible:","Invisible to enemies. Mutants will not attack you."), this.labelStyle);
                     if (UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InvisibleToggle, "") != UCheatmenu.InvisibleToggle)
                     {
                         UCheatmenu.InvisibleToggle = !UCheatmenu.InvisibleToggle;
@@ -896,7 +926,7 @@ namespace UltimateCheatmenu
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 150f, 20f), "Kill me")) { this._killlocalplayer(); }
                     if (UnityEngine.GUI.Button(new Rect(340f, num, 150f, 20f), "Revive me")) { this._revivelocalplayer(); }
                     num += 30f; this.scroller += 30;
-
+                    /*
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Set (number)", labelStyle);
                     setNumVar = UnityEngine.GUI.TextField(new Rect(170f, num, 210f, 30f), setNumVar, UnityEngine.GUI.skin.textField);
                     num += 30f; this.scroller += 30;
@@ -910,9 +940,48 @@ namespace UltimateCheatmenu
                         this._setPlayerBody(setNumVar);
                     }
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Player Clothing:", labelStyle);
+                    */
+
+                    /* skin color */
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Player Variation:","Changes skin color"), labelStyle);
                     num += 30f; this.scroller += 30;
                     int i = 0;
+                    try
+                    {
+                        foreach (var variation in LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>().Variations)
+                        {
+                            if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), i.ToString()))
+                            {
+                                this._setPlayerVariation(i.ToString());
+                            }
+                            i++;
+                        }
+                    }
+                    catch (Exception e) { }
+                    num += 30f; this.scroller += 30;
+
+                    /* T-shirt */
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Player Body:","Changes T-Shirt"), labelStyle);
+                    num += 30f; this.scroller += 30;
+                    i = 0;
+                    try
+                    {
+                        foreach (var body in LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>().Variations[0].BodyMaterialsClean)
+                        {
+                            if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), body.name.ToString()))
+                            {
+                                this._setPlayerBody(i.ToString());
+                            }
+                            i++;
+                        }
+                    }
+                    catch (Exception e) { }
+                    num += 30f; this.scroller += 30;
+
+                    /* clothes */
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Player Clothing:", labelStyle);
+                    num += 30f; this.scroller += 30;
+                    i = 0;
                     foreach (PlayerCloting cloth in Enum.GetValues(typeof(PlayerCloting)))
                     {
                         if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), cloth.ToString()))
@@ -924,8 +993,6 @@ namespace UltimateCheatmenu
                         {
                             num += 30f; this.scroller += 30; i = 0;
                         }
-                        
-                        
                     }
                     num += 30f; this.scroller += 30;
 
@@ -1125,7 +1192,7 @@ namespace UltimateCheatmenu
                             string curName = ItemDatabase.ItemById(current)._name;
                             if (iItem == "" || curName.ToLower().Contains(iItem.ToLower()))
                             {
-                                UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), curName, labelStyle);
+                                UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), new GUIContent(curName, curName), labelStyle);
                                 if (UnityEngine.GUI.Button(new Rect(190f, num, 130f, 20f), "Spawn"))
                                 {
                                     UCheatmenu.lastObjectType = "spawnitem";
@@ -1170,7 +1237,7 @@ namespace UltimateCheatmenu
                             {
                                 if (prop.Key != "" && (pItem == "" || prop.Key.ToLower().Contains(pItem.ToLower())))
                                 {
-                                    UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), "[MP]"+prop.Key.ToString(), labelStyle);
+                                    UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), new GUIContent("[MP]" +prop.Key.ToString(), prop.Key.ToString()), labelStyle);
                                     if (UnityEngine.GUI.Button(new Rect(200f, num, 130f, 20f), "Spawn"))
                                     {
                                         Vector3 spawnposition;
@@ -1201,7 +1268,7 @@ namespace UltimateCheatmenu
                         {
                             if (pItem == "" || prop.ToLower().Contains(pItem.ToLower()))
                             {
-                                UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), prop, labelStyle);
+                                UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), new GUIContent(prop, prop), labelStyle);
                                 if (UnityEngine.GUI.Button(new Rect(200f, num, 130f, 20f), "Spawn"))
                                 {
                                     Vector3 spawnposition;
@@ -1264,7 +1331,7 @@ namespace UltimateCheatmenu
                     {
                         if (tItem == "" || current._name.ToLower().Contains(tItem.ToLower()) || current._id.ToString().Contains(tItem))
                         {
-                            UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), current._name + " [" + current._id + "]", labelStyle);
+                            UnityEngine.GUI.Label(new Rect(20f, num, 170f, 20f), new GUIContent(current._name + " [" + current._id + "]", current._name + " [" + current._id + "]"), labelStyle);
                             if (UnityEngine.GUI.Button(new Rect(190f, num, 100f, 20f), "Add 1"))
                             {
                                 this._additem(current._id.ToString(), 1);
@@ -1345,7 +1412,7 @@ namespace UltimateCheatmenu
                     }
                     num += 30f; this.scroller += 30;
 
-                    if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Where am i?"))
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), new GUIContent("Where am i?","Opens your browser with http://theforestmap.com")))
                     {
                         float x = LocalPlayer.GameObject.transform.position.x;
                         float y = LocalPlayer.GameObject.transform.position.z;
@@ -1405,6 +1472,7 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
 
 
+
                     UnityEngine.GUI.EndScrollView();
                     UnityEngine.GUI.matrix = matrix;
 
@@ -1422,11 +1490,11 @@ namespace UltimateCheatmenu
                     Cheats.NoEnemies = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), Cheats.NoEnemies, "");
                     num += 30f;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Survival features", labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "No survival features", labelStyle);
                     Cheats.NoSurvival = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), Cheats.NoSurvival, "");
                     num += 30f;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Game Mode", labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Game Mode ("+ GameSetup.Game.ToString() + ")", labelStyle);
                     num += 30f;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Standard"))
                     {
@@ -1442,19 +1510,28 @@ namespace UltimateCheatmenu
                     }
                     num += 30f;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Difficulty Mode", labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Difficulty Mode (" + GameSetup.Difficulty.ToString() + ")", labelStyle);
                     num += 30f;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Peaceful"))
                     {
-                        this._setGameMode("peaceful");
+                        this._setDifficultyMode("peaceful");
+                        TheForest.Utils.Settings.GameSettings.Survival.Refresh();
+                        TheForest.Utils.Settings.GameSettings.Animals.Refresh();
+                        TheForest.Utils.Settings.GameSettings.Ai.Refresh();
                     }
                     if (UnityEngine.GUI.Button(new Rect(190f, num, 150f, 20f), "Normal"))
                     {
-                        this._setGameMode("normal");
+                        this._setDifficultyMode("normal");
+                        TheForest.Utils.Settings.GameSettings.Survival.Refresh();
+                        TheForest.Utils.Settings.GameSettings.Animals.Refresh();
+                        TheForest.Utils.Settings.GameSettings.Ai.Refresh();
                     }
                     if (UnityEngine.GUI.Button(new Rect(360f, num, 150f, 20f), "Hard"))
                     {
-                        this._setGameMode("hard");
+                        this._setDifficultyMode("hard");
+                        TheForest.Utils.Settings.GameSettings.Survival.Refresh();
+                        TheForest.Utils.Settings.GameSettings.Animals.Refresh();
+                        TheForest.Utils.Settings.GameSettings.Ai.Refresh();
                     }
                     num += 30f;
 
@@ -1477,6 +1554,16 @@ namespace UltimateCheatmenu
 
 
 
+                }
+                /* Tooltips */
+                if (UnityEngine.GUI.tooltip != "")
+                {
+                    UnityEngine.GUI.skin.label.wordWrap = true;
+                    float tsize = UnityEngine.GUI.skin.label.CalcHeight(new GUIContent(UnityEngine.GUI.tooltip), 680f);
+                    UnityEngine.GUI.Box(new Rect(10f, 610f, 700f, (30f + tsize + 10f)), "", UnityEngine.GUI.skin.window);
+                    UnityEngine.GUI.Label(new Rect(20f, 615f, 680f, 20f), "Tooltip");
+                    UnityEngine.GUI.Label(new Rect(20f, 640f, 680f, tsize), UnityEngine.GUI.tooltip);
+                    UnityEngine.GUI.skin.label.wordWrap = false;
                 }
             }
         }
@@ -1705,6 +1792,30 @@ namespace UltimateCheatmenu
                             {
                                 raycastHit.collider.GetComponentInParent<ResetTraps>().RestoreSafe();
                             }
+                        }
+                        /* SphereCrane */
+                        else if (UCheatmenu.SphereCrane && raycastHit.collider.GetComponent<CraneTrigger>() != null)
+                        {
+                            float direction;
+                            float playerheight = (LocalPlayer.GameObject.transform.position.y);
+                            float craneheight = raycastHit.collider.GetComponent<CraneTrigger>().transform.position.y;
+                            direction = playerheight - craneheight;
+
+                            for (int h = 0; h <= 250; h++)
+                            {
+                                craneheight = raycastHit.collider.GetComponent<CraneTrigger>().transform.position.y;
+                                if (BoltNetwork.isRunning)
+                                {
+                                    raycastHit.collider.GetComponent<CraneTrigger>().SendMessage("TryMove", direction);
+                                    raycastHit.collider.GetComponent<CraneTrigger>().SendMessage("TryMoveMp", direction);
+                                }
+                                else
+                                {
+                                    raycastHit.collider.GetComponent<CraneTrigger>().SendMessage("TryMove", direction);
+                                }
+                                if (Convert.ToInt32(playerheight) == Convert.ToInt32(craneheight)) break;
+                            }
+
                         }
                         /* SphereHolders */
                         else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<LogHolder>() != null)
@@ -2531,7 +2642,7 @@ namespace UltimateCheatmenu
                 CoopPlayerVariations component = LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>();
                 try
                 {
-                    component.SetVariation(LocalPlayer.Stats.PlayerVariation, LocalPlayer.Stats.PlayerVariationBody, LocalPlayer.Stats.PlayerVariationHair, LocalPlayer.Stats.PlayerVariationExtras, LocalPlayer.Stats.PlayerClothingVariation);
+                    component.SetVariation(num, LocalPlayer.Stats.PlayerVariationBody, LocalPlayer.Stats.PlayerVariationHair, LocalPlayer.Stats.PlayerVariationExtras, LocalPlayer.Stats.PlayerClothingVariation);
                     component.UpdateSkinVariation(LocalPlayer.Stats.IsBloody, LocalPlayer.Stats.IsMuddy, LocalPlayer.Stats.IsRed, LocalPlayer.Stats.IsCold);
                     LocalPlayer.Stats.PlayerVariation = num;
                     if (BoltNetwork.isRunning)
@@ -2757,9 +2868,14 @@ namespace UltimateCheatmenu
             else
             {
                 Scene.MutantControler.StartCoroutine("removeAllEnemies");
-                base.Invoke("disableMutantController", 0.5f);
+                this.Invoke("disableMutantController", 0.5f);
             }
 
+        }
+
+        private void disableMutantController()
+        {
+            Scene.MutantControler.enabled = false;
         }
 
         private void _invisible()
@@ -3068,6 +3184,7 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "SphereSuitcases",    UCheatmenu.SphereSuitcases.ToString());
             iniw.Write("UCM", "SphereFires",        UCheatmenu.SphereFires.ToString());
             iniw.Write("UCM", "SphereTraps",        UCheatmenu.SphereTraps.ToString());
+            iniw.Write("UCM", "SphereCrane",        UCheatmenu.SphereCrane.ToString());
             iniw.Write("UCM", "SphereHolders",      UCheatmenu.SphereHolders.ToString());
             iniw.Write("UCM", "SphereHoldersType",  UCheatmenu.SphereHoldersType.ToString());
             iniw.Write("UCM", "InfFire",            UCheatmenu.InfFire.ToString());
@@ -3080,6 +3197,7 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "TorchG",             UCheatmenu.TorchG.ToString());
             iniw.Write("UCM", "TorchB",             UCheatmenu.TorchB.ToString());
             iniw.Write("UCM", "TorchI",             UCheatmenu.TorchI.ToString());
+            iniw.Write("UCM", "BuildingCollision",  UCheatmenu.BuildingCollision.ToString());
         }
         private void readIni(string path)
         {
@@ -3150,6 +3268,8 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.SphereFires = false; }
             try { UCheatmenu.SphereTraps = Convert.ToBoolean(inir.Read("UCM", "SphereTraps")); }
             catch { UCheatmenu.SphereTraps = false; }
+            try { UCheatmenu.SphereCrane = Convert.ToBoolean(inir.Read("UCM", "SphereCrane")); }
+            catch { UCheatmenu.SphereCrane = false; }
             try { UCheatmenu.SphereHolders = Convert.ToBoolean(inir.Read("UCM", "SphereHolders")); }
             catch { UCheatmenu.SphereHolders = false; }
             try { UCheatmenu.SphereHoldersType = Convert.ToInt32(inir.Read("UCM", "SphereHoldersType")); }
@@ -3182,6 +3302,8 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.TorchB = 1; }
             try { UCheatmenu.TorchI = Convert.ToSingle(inir.Read("UCM", "TorchI")); }
             catch { UCheatmenu.TorchI = 1.0f; }
+            try { UCheatmenu.BuildingCollision = Convert.ToBoolean(inir.Read("UCM", "BuildingCollision")); }
+            catch { UCheatmenu.BuildingCollision = true; }
         }
 
         private void saveSettings()
