@@ -30,9 +30,14 @@ namespace UltimateCheatmenu
 
         protected new Collider[] AllColliders;
 
+        protected bool[] AllChildCollidersEnabled;
+
+        protected bool[] AllCollidersEnabled;
+
         protected new bool LastNoClip;
 
         protected new bool LastFlyMode;
+
 
         protected new void BaseValues()
         {
@@ -52,6 +57,19 @@ namespace UltimateCheatmenu
         {
             this.AllChildColliders = base.gameObject.GetComponentsInChildren<Collider>();
             this.AllColliders = base.gameObject.GetComponents<Collider>();
+
+            this.AllChildCollidersEnabled = new bool[this.AllChildColliders.Length];
+            this.AllCollidersEnabled = new bool[this.AllColliders.Length];
+
+            for (int i = 0; i < this.AllColliders.Length; i++)
+            {
+                this.AllCollidersEnabled[i] = this.AllColliders[i].enabled;
+            }
+            for (int j = 0; j < this.AllChildColliders.Length; j++)
+            {
+                this.AllChildCollidersEnabled[j] = this.AllChildColliders[j].enabled;
+            }
+
             base.Start();
             this.BaseValues();
         }
@@ -65,8 +83,10 @@ namespace UltimateCheatmenu
             this.strafeSpeed = this.baseStrafeSpeed * UCheatmenu.SpeedMultiplier;
             this.swimmingSpeed = this.baseSwimmingSpeed * UCheatmenu.SpeedMultiplier;
             this.maxSwimVelocity = this.baseMaxSwimVelocity * UCheatmenu.SpeedMultiplier;
+
             if (!UCheatmenu.FreeCam)
             {
+ 
                 if (UCheatmenu.FlyMode && !this.PushingSled)
                 {
                     this.rb.useGravity = false;
@@ -89,11 +109,11 @@ namespace UltimateCheatmenu
                     {
                         for (int k = 0; k < this.AllColliders.Length; k++)
                         {
-                            this.AllColliders[k].enabled = true;
+                            this.AllColliders[k].enabled = this.AllCollidersEnabled[k];
                         }
                         for (int l = 0; l < this.AllChildColliders.Length; l++)
                         {
-                            this.AllChildColliders[l].enabled = true;
+                            this.AllChildColliders[l].enabled = this.AllChildCollidersEnabled[l];
                         }
                         this.LastNoClip = false;
                     }
@@ -132,11 +152,11 @@ namespace UltimateCheatmenu
                     {
                         for (int m = 0; m < this.AllColliders.Length; m++)
                         {
-                            this.AllColliders[m].enabled = true;
+                            this.AllColliders[m].enabled = this.AllCollidersEnabled[m];
                         }
                         for (int n = 0; n < this.AllChildColliders.Length; n++)
                         {
-                            this.AllChildColliders[n].enabled = true;
+                            this.AllChildColliders[n].enabled = this.AllChildCollidersEnabled[n];
                         }
                         this.LastNoClip = false;
                     }

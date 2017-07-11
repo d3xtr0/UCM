@@ -1,5 +1,6 @@
 ﻿using ModAPI.Attributes;
 using System;
+using TheForest.Utils;
 
 namespace UltimateCheatmenu
 {
@@ -186,4 +187,5 @@ namespace UltimateCheatmenu
             }
         }
     }
+
 }

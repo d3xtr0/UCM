@@ -1,11 +1,14 @@
 # Ultimate Cheatmenu
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 
-## v1.18.1/2
+## v1.18.1/2/3
 -added tooltips to most options
 -garden features don't lag now
 -fixed difficulty mode + added description what is active
 -added "No item consume" (Items will not be removed from your inventory (in crafting or when consumed))
+-fixed Sphere Suitcases
+-fixed collision after disabling noclip
+-added ItemConsume to UCM save
 
 ## v1.18.0
 -infinite garden size

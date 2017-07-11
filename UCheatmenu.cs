@@ -246,6 +246,8 @@ namespace UltimateCheatmenu
         public static bool BuildingCollision = true;
         public static bool ItemConsume = false;
 
+        public static int gstats;
+
 
         [ExecuteOnGameStart]
         private static void AddMeToScene()
@@ -1467,7 +1469,7 @@ namespace UltimateCheatmenu
                         }
                     }
                     */
-                    
+
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Water level: "+ GameObject.FindWithTag("OceanHeight").transform.position.y.ToString()+ "m", this.labelStyle);
                     num += 30f; this.scroller += 30;
 
@@ -1721,7 +1723,7 @@ namespace UltimateCheatmenu
                             raycastHit.collider.gameObject.SendMessage("Hit", 10000);
                         }
                         /* SphereSuitcases */
-                        else if (UCheatmenu.SphereFires && raycastHit.collider.GetComponent<SuitCase>() != null)
+                        else if (UCheatmenu.SphereSuitcases && raycastHit.collider.GetComponent<SuitCase>() != null)
                         {
                             raycastHit.collider.gameObject.SendMessage("Open");
                             raycastHit.collider.gameObject.SendMessage("Open_Perform");
@@ -3198,6 +3200,7 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "TorchB",             UCheatmenu.TorchB.ToString());
             iniw.Write("UCM", "TorchI",             UCheatmenu.TorchI.ToString());
             iniw.Write("UCM", "BuildingCollision",  UCheatmenu.BuildingCollision.ToString());
+            iniw.Write("UCM", "ItemConsume",        UCheatmenu.ItemConsume.ToString());
         }
         private void readIni(string path)
         {
@@ -3304,6 +3307,8 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.TorchI = 1.0f; }
             try { UCheatmenu.BuildingCollision = Convert.ToBoolean(inir.Read("UCM", "BuildingCollision")); }
             catch { UCheatmenu.BuildingCollision = true; }
+            try { UCheatmenu.ItemConsume = Convert.ToBoolean(inir.Read("UCM", "ItemConsume")); }
+            catch { UCheatmenu.ItemConsume = false; }
         }
 
         private void saveSettings()
