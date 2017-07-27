@@ -242,6 +242,8 @@ namespace UltimateCheatmenu
 
         public static float WaterLevel = 41.5f;
 
+        public static bool UnlimitedUpgrade = false;
+
 
         public static bool BuildingCollision = true;
         public static bool ItemConsume = false;
@@ -435,6 +437,11 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("No item consume", "Items will not be removed from your inventory (in crafting or when consumed)"), labelStyle);
                     UCheatmenu.ItemConsume = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.ItemConsume, "");
                     num += 30f; this.scroller += 30;
+                    /*
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Unlimited Craft Upgrade", "Unlimited amount of items can be used for item upgrades"), labelStyle);
+                    UCheatmenu.UnlimitedUpgrade = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.UnlimitedUpgrade, "");
+                    num += 30f; this.scroller += 30;
+                    */              
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Build Hack", "Enable creative mode"), labelStyle);
                     if (UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.BuildHack, "") != UCheatmenu.BuildHack)
                     {
@@ -3124,7 +3131,6 @@ namespace UltimateCheatmenu
             int num = int.Parse(radiusArg);
            // GrassCutterOv.GrowEdit(LocalPlayer.Transform.position, (float)num);
         }
-
 
         private void writeIni(string path)
         {

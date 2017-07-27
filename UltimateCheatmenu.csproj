@@ -180,6 +180,7 @@
     <Compile Include="FPController.cs" />
     <Compile Include="GardenOv.cs" />
     <Compile Include="GrassCutterOv.cs" />
+    <Compile Include="HoleCutter.cs" />
     <Compile Include="IniHelper.cs" />
     <Compile Include="InstaBuild.cs" />
     <Compile Include="LightableOv.cs" />

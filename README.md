@@ -1,7 +1,7 @@
 # Ultimate Cheatmenu
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 
-## v1.18.1/2/3
+## v1.18.1/2/3/4/5
 -added tooltips to most options
 -garden features don't lag now
 -fixed difficulty mode + added description what is active
@@ -9,6 +9,7 @@ http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 -fixed Sphere Suitcases
 -fixed collision after disabling noclip
 -added ItemConsume to UCM save
+-use scrollwheel with hole cutter
 
 ## v1.18.0
 -infinite garden size
