@@ -8,128 +8,7 @@ using TheForest.Utils;
 
 namespace UltimateCheatmenu
 {
-    class ZiplineArchitectOv : ZiplineTreeArchitect
-    {
-        [ModAPI.Attributes.Priority(200)]
-        protected virtual bool CheckLockGateOv()
-        {
-            bool flag = this.CheckLockOnTree();
-            bool flag2 = !this._gate1.transform.parent;
-            Transform transform = (!flag2) ? this._gate1.transform : this._gate2.transform;
-            if (flag)
-            {
-                float num = Terrain.activeTerrain.SampleHeight(transform.position);
-                if (LocalPlayer.Create.TargetTree)
-                {
-                    transform.position = new Vector3(LocalPlayer.Create.TargetTree.position.x, Mathf.Clamp(LocalPlayer.Create.BuildingPlacer.AirBorneHeight, num + 5f, num + 2000f), LocalPlayer.Create.TargetTree.position.z);
-                }
-                else
-                {
-                    transform.position = new Vector3(transform.position.x, num - 1f, transform.position.z);
-                }
-            }
-            else if (transform.transform.parent)
-            {
-                transform.localPosition = Vector3.zero;
-            }
-            return flag;
-        }
-    }
-    class ZiplineArchitect2Ov : ZiplineArchitect
-    {
-        // TheForest.Buildings.Creation.ZiplineArchitect
-        protected bool CheckLockGateOv()
-        {
-            bool flag = this._gate2.transform.parent && LocalPlayer.Create.BuildingPlacer.ClearOfCollision;
-            if (flag)
-            {
-                bool flag2 = !this._gate1.transform.parent;
-                if (flag2)
-                {
-                    float num = Vector3.Distance(this._gate1.transform.position, this._gate2.transform.position);
-                    
-                    RaycastHit raycastHit;
-                    if (Physics.SphereCast(this.Gate1RopePosition + Vector3.down, 1.5f, this.Gate2RopePosition - this.Gate1RopePosition, out raycastHit, num, LocalPlayer.Create.BuildingPlacer.FloorLayers | 1 << LayerMask.NameToLayer("treeMid")))
-                    {
-                        if (UCheatmenu.BuildingCollision)
-                        {
-                            return false;
-                        }
-                    }
-                    
-                }
-                if (TheForest.Utils.Input.GetButtonDown("Fire1"))
-                {
-                    if (!flag2)
-                    {
-                        this._gate1.transform.parent = null;
-                    }
-                    else
-                    {
-                        this._gate2.transform.parent = null;
-                        if (this._ziplineRoot)
-                        {
-                            UnityEngine.Object.Destroy(this._ziplineRoot.gameObject);
-                        }
-                        this._ziplineRoot = this.CreateZipline(this.Gate1RopePosition, this.Gate2RopePosition);
-                    }
-                }
-            }
-            return flag;
-        }
-        protected override void Update()
-        {
-            bool flag = !this._gate1.transform.parent;
-            bool flag2 = !this._gate2.transform.parent;
-            if (flag)
-            {
-                if (!flag2)
-                {
-                    Vector3 gate2RopePosition = this.Gate2RopePosition;
-                    if (Vector3.Distance(this.Gate1RopePosition, gate2RopePosition) > 1f)
-                    {
-                        Transform ziplineRoot = this.CreateZipline(this.Gate1RopePosition, gate2RopePosition);
-                        if (this._ziplineRoot)
-                        {
-                            UnityEngine.Object.Destroy(this._ziplineRoot.gameObject);
-                        }
-                        this._ziplineRoot = ziplineRoot;
-                        if (!this._gate2.activeSelf)
-                        {
-                            this._gate2.SetActive(true);
-                        }
-                        this._gate1.transform.LookAt(new Vector3(this._gate2.transform.position.x, this._gate1.transform.position.y, this._gate2.transform.position.z));
-                        this._gate2.transform.LookAt(this.Gate2LookAtTarget);
-                    }
-                    else if (this._gate2.activeSelf)
-                    {
-                        this._gate2.SetActive(false);
-                    }
-                }
-            }
-            else if (this._ziplineRoot)
-            {
-                UnityEngine.Object.Destroy(this._ziplineRoot.gameObject);
-                this._ziplineRoot = null;
-                this._ropePool.Clear();
-            }
-            bool flag3 = this.CheckLockGateOv();
-            this.CheckUnlockGate();
-            bool flag4 = flag2;
-            if (LocalPlayer.Create.BuildingPlacer.Clear != flag4 || Scene.HudGui.RotateIcon.activeSelf == flag)
-            {
-                Scene.HudGui.RotateIcon.SetActive(!flag);
-                LocalPlayer.Create.BuildingPlacer.Clear = flag4;
-            }
-            this._ropeMat.SetColor("_TintColor", (!flag3 && !flag4) ? LocalPlayer.Create.BuildingPlacer.RedMat.GetColor("_TintColor") : LocalPlayer.Create.BuildingPlacer.ClearMat.GetColor("_TintColor"));
-            bool showManualfillLockIcon = !flag && flag3;
-            bool canLock = flag && flag3;
-            bool canUnlock = flag;
-            Scene.HudGui.RoofConstructionIcons.Show(showManualfillLockIcon, false, false, flag4, canLock, canUnlock, false);
-        }
-    }
-
-        
+            
     class CraneArchitectOv : CraneArchitect
     {
 
@@ -209,6 +88,7 @@ namespace UltimateCheatmenu
 
         }
 
+        /*
         protected override Vector3 GetSegmentPointFloorPosition(Vector3 segmentPoint)
         {
             try
@@ -225,26 +105,8 @@ namespace UltimateCheatmenu
                 return segmentPoint;
             }
         }
-
-
-    }
-
-
-    class playerZipLineActionOv : playerZipLineAction
-    {
-        /*
-        protected override void EnterZipLine(Transform trn)
-        {
-            base.EnterZipLine(trn);
-        }
-
-
-        protected override bool CheckCloseToGround()
-        {
-            RaycastHit raycastHit;
-            return Physics.Raycast(LocalPlayer.Transform.position, Vector3.down, out raycastHit, 10f, this._collideMask) && (raycastHit.distance < 1.5f && !raycastHit.collider.isTrigger) && (raycastHit.transform.gameObject.name != "SinkHoleEntrance");
-        }
         */
+
     }
 
 }

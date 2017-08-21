@@ -17,9 +17,12 @@ namespace UltimateCheatmenu
             }
             else
             {
-                this.AudioOff();
-                this.DepthParameter = null;
-                base.ScreenCoverage = 0f;
+                this.UnderwaterInstance = null;
+                this.Bubbles.SetActive(false);
+                if (!this.lightOffRoutineActive && base.gameObject.activeInHierarchy && this.LightGO.activeSelf)
+                {
+                    base.StartCoroutine("OutOfWaterTurnOffLights");
+                }
             }
             base.Update();
         }

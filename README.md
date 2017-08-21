@@ -1,6 +1,11 @@
 # Ultimate Cheatmenu
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 
+## v1.19.0
+- support for new modapi version
+- removed infinite zipline (standalone mod)
+- fixed underwater sound
+
 ## v1.18.1/2/3/4/5
 - added tooltips to most options
 - garden features don't lag now

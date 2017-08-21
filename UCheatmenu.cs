@@ -1,4 +1,6 @@
-﻿using ModAPI;
+﻿extern alias ACS;
+
+using ModAPI;
 using ModAPI.Attributes;
 using System;
 using System.Collections;
@@ -269,11 +271,11 @@ namespace UltimateCheatmenu
         private void OnGUI()
         {
             // Only in Multiplayer
-            if (BoltNetwork.isRunning && Scene.SceneTracker != null && Scene.SceneTracker.allPlayerEntities != null)
+            if (BoltNetwork.isRunning && TheForest.Utils.Scene.SceneTracker != null && TheForest.Utils.Scene.SceneTracker.allPlayerEntities != null)
             {
                 // Refresh players
                 PlayerManager.Players.Clear();
-                PlayerManager.Players.AddRange(Scene.SceneTracker.allPlayerEntities
+                PlayerManager.Players.AddRange(TheForest.Utils.Scene.SceneTracker.allPlayerEntities
                     .Where(o => o.isAttached &&
                                 o.StateIs<IPlayerState>() &&
                                 LocalPlayer.Entity != o &&
@@ -301,7 +303,7 @@ namespace UltimateCheatmenu
                 string posZ = LocalPlayer.GameObject.transform.position.z.ToString();
                 UnityEngine.GUI.Label(new Rect(10, 620, 300f, 20f), "("+posX + ", " + posY + ", " + posZ + ")", labelStylePos);
 
-                UnityEngine.GUI.skin = ModAPI.GUI.Skin;
+                UnityEngine.GUI.skin = ModAPI.Gui.Skin;
                 Matrix4x4 matrix = UnityEngine.GUI.matrix;
                 Matrix4x4 matrix2 = UnityEngine.GUI.matrix;
                 if (this.labelStyle == null)
@@ -391,7 +393,7 @@ namespace UltimateCheatmenu
                     UCheatmenu.FreezeTime = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.FreezeTime, "");
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Explosion radius (" + Math.Round(UCheatmenu.ExplosionRadius).ToString() + "m):", "Changes the explosion radius of dynamite/bombs"), this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Explosion radius (" + System.Math.Round(UCheatmenu.ExplosionRadius).ToString() + "m):", "Changes the explosion radius of dynamite/bombs"), this.labelStyle);
                     num += 30f; this.scroller += 30;
                     UCheatmenu.ExplosionRadius = UnityEngine.GUI.HorizontalSlider(new Rect(20f, num + 3f, 150f, 30f), UCheatmenu.ExplosionRadius, 0f, 200f);
                     if (UnityEngine.GUI.Button(new Rect(190f, num, 150f, 20f), "Reset"))
@@ -400,7 +402,7 @@ namespace UltimateCheatmenu
                     }
                     num += 30f; this.scroller += 30;
 
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Action radius (" + Math.Round(UCheatmenu.ARadius).ToString() + "m):","Used by InstaBuild (F) and InstaRepair (SHIFT + R)"), this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Action radius (" + System.Math.Round(UCheatmenu.ARadius).ToString() + "m):","Used by InstaBuild (F) and InstaRepair (SHIFT + R)"), this.labelStyle);
                     UnityEngine.GUI.Label(new Rect(190f, num, 100f, 20f), new GUIContent("Global","May crash your game, when too much built"), this.labelStyle);
                     num += 30f; this.scroller += 30;
                     UCheatmenu.ARadius = UnityEngine.GUI.HorizontalSlider(new Rect(20f, num + 3f, 150f, 30f), UCheatmenu.ARadius, 10f, 200f);
@@ -1984,9 +1986,9 @@ namespace UltimateCheatmenu
                         {
                             raycastHit.collider.GetComponent<TreesapSource>().AddTreesap(30f);
                         }
-                        else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<RabbitCage>() != null)
+                        else if (UCheatmenu.SphereHolders && raycastHit.collider.GetComponent<ACS::RabbitCage>() != null)
                         {
-                            raycastHit.collider.GetComponent<RabbitCage>().SendMessage("AddRabbit");
+                            raycastHit.collider.GetComponent<ACS::RabbitCage>().SendMessage("AddRabbit");
                         }
                     }
 
@@ -2740,8 +2742,8 @@ namespace UltimateCheatmenu
 
         private void _killclosestenemy()
         {
-            List<GameObject> list = new List<GameObject>(Scene.MutantControler.activeCannibals);
-            foreach (GameObject current in Scene.MutantControler.activeInstantSpawnedCannibals)
+            List<GameObject> list = new List<GameObject>(TheForest.Utils.Scene.MutantControler.activeCannibals);
+            foreach (GameObject current in TheForest.Utils.Scene.MutantControler.activeInstantSpawnedCannibals)
             {
                 if (!list.Contains(current))
                 {
@@ -2766,8 +2768,8 @@ namespace UltimateCheatmenu
             {
                 return;
             }
-            List<GameObject> list = new List<GameObject>(Scene.MutantControler.activeCannibals);
-            foreach (GameObject current in Scene.MutantControler.activeInstantSpawnedCannibals)
+            List<GameObject> list = new List<GameObject>(TheForest.Utils.Scene.MutantControler.activeCannibals);
+            foreach (GameObject current in TheForest.Utils.Scene.MutantControler.activeInstantSpawnedCannibals)
             {
                 if (!list.Contains(current))
                 {
@@ -2788,8 +2790,8 @@ namespace UltimateCheatmenu
 
         private void _knockDownclosestenemy()
         {
-            List<GameObject> list = new List<GameObject>(Scene.MutantControler.activeCannibals);
-            foreach (GameObject current in Scene.MutantControler.activeInstantSpawnedCannibals)
+            List<GameObject> list = new List<GameObject>(TheForest.Utils.Scene.MutantControler.activeCannibals);
+            foreach (GameObject current in TheForest.Utils.Scene.MutantControler.activeInstantSpawnedCannibals)
             {
                 if (!list.Contains(current))
                 {
@@ -2871,12 +2873,12 @@ namespace UltimateCheatmenu
         {
             if (UCheatmenu.MutantToggle)
             {
-                Scene.MutantControler.enabled = true;
-                Scene.MutantControler.startSetupFamilies();
+                TheForest.Utils.Scene.MutantControler.enabled = true;
+                TheForest.Utils.Scene.MutantControler.startSetupFamilies();
             }
             else
             {
-                Scene.MutantControler.StartCoroutine("removeAllEnemies");
+                TheForest.Utils.Scene.MutantControler.StartCoroutine("removeAllEnemies");
                 this.Invoke("disableMutantController", 0.5f);
             }
 
@@ -2884,7 +2886,7 @@ namespace UltimateCheatmenu
 
         private void disableMutantController()
         {
-            Scene.MutantControler.enabled = false;
+            TheForest.Utils.Scene.MutantControler.enabled = false;
         }
 
         private void _invisible()

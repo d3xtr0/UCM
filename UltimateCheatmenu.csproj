@@ -45,6 +45,18 @@
       <HintPath>../../../modlib/TheForest/TheForest_data/Managed/Assembly-UnityScript.dll</HintPath>
       <Private>False</Private>
     </Reference>
+<Reference Include="bolt">
+      <HintPath>../../../modlib/TheForest/TheForest_data/Managed/bolt.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+<Reference Include="bolt.user">
+      <HintPath>../../../modlib/TheForest/TheForest_data/Managed/bolt.user.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+<Reference Include="SteamworksManaged">
+      <HintPath>../../../modlib/TheForest/TheForest_data/Managed/SteamworksManaged.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
 <Reference Include="Boo.Lang">
       <HintPath>../../../modlib/TheForest/TheForest_data/Managed/Boo.Lang.dll</HintPath>
       <Private>False</Private>
@@ -63,14 +75,6 @@
     </Reference>
 <Reference Include="AmplifyMotion">
       <HintPath>../../../modlib/TheForest/TheForest_data/Managed/AmplifyMotion.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-<Reference Include="bolt">
-      <HintPath>../../../modlib/TheForest/TheForest_data/Managed/bolt.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-<Reference Include="bolt.user">
-      <HintPath>../../../modlib/TheForest/TheForest_data/Managed/bolt.user.dll</HintPath>
       <Private>False</Private>
     </Reference>
 <Reference Include="Boo.Lang">
@@ -111,10 +115,6 @@
     </Reference>
 <Reference Include="Rewired_Core">
       <HintPath>../../../modlib/TheForest/TheForest_data/Managed/Rewired_Core.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-<Reference Include="SteamworksManaged">
-      <HintPath>../../../modlib/TheForest/TheForest_data/Managed/SteamworksManaged.dll</HintPath>
       <Private>False</Private>
     </Reference>
 <Reference Include="System.Configuration">
