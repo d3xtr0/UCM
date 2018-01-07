@@ -1,5 +1,21 @@
 # Ultimate Cheatmenu
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
+http://modapi.survivetheforest.net/mod/7/ultimate-cheatmenu
+
+## v1.20.1
+- added Pause time
+- fixed player clothing
+- fixed torch
+
+## v1.20.0
+- added Crosshair (Tab "Game")
+- added UCM functions text to game tab
+
+## v1.19.2
+- added No Underwater Blur
+
+## v1.19.1
+- fixed muffled sound after exiting water
 
 ## v1.19.0
 - support for new modapi version

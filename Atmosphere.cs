@@ -14,6 +14,15 @@ namespace UltimateCheatmenu
             Shader.SetGlobalFloat("CaveAmount", UCheatmenu.CaveLight);
             Shader.SetGlobalFloat("_ForestCaveSetting", Mathf.Lerp(1f, -1f, UCheatmenu.CaveLight));
 
+            if (UCheatmenu.TimeToggle)
+            {
+                TheForestAtmosphere.Instance.RotationSpeed = 0.00001f;
+            }
+            else
+            {
+                TheForestAtmosphere.Instance.RotationSpeed = 0.13f;
+            }
+
 
             if (UCheatmenu.NightLightOriginal < this.MoonBrightness)
             {

@@ -48,23 +48,43 @@ namespace UltimateCheatmenu
                         {
                             if (LocalPlayer.Stats.BatteryCharge < 5f)
                             {
+                                if (LocalPlayer.Stats.BatteryCharge < 3f && Time.time > this._animCoolDown && !this._skipNoBatteryRoutine)
+                                {
+                                    LocalPlayer.Animator.SetBool("noBattery", true);
+                                    this._animCoolDown = Time.time + (float)UnityEngine.Random.Range(30, 60);
+                                    base.Invoke("resetBatteryBool", 1.5f);
+                                }
                                 if (LocalPlayer.Stats.BatteryCharge <= 0f)
                                 {
-                                    this._player.StashLeftHand();
+                                    if (this._skipNoBatteryRoutine)
+                                    {
+                                        this.SetEnabled(false);
+                                    }
+                                    else
+                                    {
+                                        if (!this._doingStash)
+                                        {
+                                            base.StartCoroutine("stashNoBatteryRoutine");
+                                        }
+                                        this._doingStash = true;
+                                    }
                                 }
                                 else
                                 {
                                     this.TorchLowerLightEvenMore();
+                                    this.SetEnabled(true);
                                 }
                             }
                             else
                             {
                                 this.TorchLowerLightMore();
+                                this.SetEnabled(true);
                             }
                         }
                         else
                         {
                             this.TorchLowerLight();
+                            this.SetEnabled(true);
                         }
                     }
                     if (BoltNetwork.isRunning)

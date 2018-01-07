@@ -209,6 +209,8 @@ namespace UltimateCheatmenu
         public static bool SurvivalToggle = false;
         public static bool NoUnderwaterBlur = false;
 
+        public static bool TimeToggle = false;
+
         public static Dictionary<string, GameObject> AnimalPrefabs = new Dictionary<string, GameObject>();
         public static List<string> AnimalNames = new List<string>();
 
@@ -560,6 +562,8 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Speed of time:", this.labelStyle);
                     TheForestAtmosphere.Instance.RotationSpeed = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), TheForestAtmosphere.Instance.RotationSpeed, 0.1f, 10f);
                     num += 30f; this.scroller += 30;
+                    UCheatmenu.TimeToggle = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.TimeToggle, "");
+                    UnityEngine.GUI.Label(new Rect(200f, num, 70f, 20f), "Pause time", this.labelStyle);
                     if (UnityEngine.GUI.Button(new Rect(280f, num, 100f, 20f), "Reset"))
                     {
                         TheForestAtmosphere.Instance.RotationSpeed = 0.13f;
@@ -1034,23 +1038,94 @@ namespace UltimateCheatmenu
                     catch (Exception e) { }
                     num += 30f; this.scroller += 30;
 
-                    /* T-shirt */
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Player Body:","Changes T-Shirt"), labelStyle);
+                    /* T-shirt Type */
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("T-Shirt Type:", "Changes T-Shirt Type"), labelStyle);
                     num += 30f; this.scroller += 30;
                     i = 0;
                     try
                     {
-                        foreach (var body in LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>().Variations[0].BodyMaterialsClean)
+                        for (int shirts = 0; shirts < LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>().TShirts.Length; shirts++)
                         {
-                            if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), body.name.ToString()))
+                            if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), shirts.ToString()))
                             {
-                                this._setPlayerBody(i.ToString());
+                                this._setPlayertypemat(shirts.ToString(), 1);
                             }
                             i++;
+                            if (i == 6)
+                            {
+                                num += 30f; this.scroller += 30; i = 0;
+                            }
                         }
                     }
                     catch (Exception e) { }
                     num += 30f; this.scroller += 30;
+
+                    /* T-shirt Mat */
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("T-Shirt Material:","Changes T-Shirt Material"), labelStyle);
+                    num += 30f; this.scroller += 30;
+                    i = 0;
+                    try
+                    {
+                        for (int shirts = 0; shirts < LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>().TShirts[TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType].Materials.Length; shirts++)
+                        {
+                            if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), shirts.ToString()))
+                            {
+                                this._setPlayertypemat(shirts.ToString(), 2);
+                            }
+                            i++;
+                            if (i == 6)
+                            {
+                                num += 30f; this.scroller += 30; i = 0;
+                            }
+                        }
+                    }
+                    catch (Exception e) { }
+                    num += 30f; this.scroller += 30;
+
+                    /* Pants Type */
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Pants Type:", "Changes Pants Type"), labelStyle);
+                    num += 30f; this.scroller += 30;
+                    i = 0;
+                    try
+                    {
+                        for (int shirts = 0; shirts < LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>().Pants.Length; shirts++)
+                        {
+                            if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), shirts.ToString()))
+                            {
+                                this._setPlayertypemat(shirts.ToString(), 3);
+                            }
+                            i++;
+                            if (i == 6)
+                            {
+                                num += 30f; this.scroller += 30; i = 0;
+                            }
+                        }
+                    }
+                    catch (Exception e) { }
+                    num += 30f; this.scroller += 30;
+
+                    /* Pants Mat */
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Pants Material:", "Changes Pants Material"), labelStyle);
+                    num += 30f; this.scroller += 30;
+                    i = 0;
+                    try
+                    {
+                        for (int shirts = 0; shirts < LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>().Pants[TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType].Materials.Length; shirts++)
+                        {
+                            if (UnityEngine.GUI.Button(new Rect(20f + (i * 110f), num, 100f, 20f), shirts.ToString()))
+                            {
+                                this._setPlayertypemat(i.ToString(), 4);
+                            }
+                            i++;
+                            if (i == 6)
+                            {
+                                num += 30f; this.scroller += 30; i = 0;
+                            }
+                        }
+                    }
+                    catch (Exception e) { }
+                    num += 30f; this.scroller += 30;
+
 
                     /* clothes */
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Player Clothing:", labelStyle);
@@ -2754,17 +2829,20 @@ namespace UltimateCheatmenu
             int num;
             if (int.TryParse(s, out num))
             {
-                CoopPlayerVariations component = LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>();
+                global::CoopPlayerVariations component = TheForest.Utils.LocalPlayer.GameObject.GetComponent<global::CoopPlayerVariations>();
                 try
                 {
-                    component.SetVariation(num, LocalPlayer.Stats.PlayerVariationBody, LocalPlayer.Stats.PlayerVariationHair, LocalPlayer.Stats.PlayerVariationExtras, LocalPlayer.Stats.PlayerClothingVariation);
-                    component.UpdateSkinVariation(LocalPlayer.Stats.IsBloody, LocalPlayer.Stats.IsMuddy, LocalPlayer.Stats.IsRed, LocalPlayer.Stats.IsCold);
-                    LocalPlayer.Stats.PlayerVariation = num;
+                    TheForest.Utils.LocalPlayer.Stats.PlayerVariation = num;
+                    component.SetVariation(TheForest.Utils.LocalPlayer.Stats.PlayerVariation, TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType, TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtMat, TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType, TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat, TheForest.Utils.LocalPlayer.Stats.PlayerVariationHair, TheForest.Utils.LocalPlayer.Stats.PlayerVariationExtras, TheForest.Utils.LocalPlayer.Stats.PlayerClothingVariation);
+                    component.UpdateSkinVariation(TheForest.Utils.LocalPlayer.Stats.IsBloody, TheForest.Utils.LocalPlayer.Stats.IsMuddy, TheForest.Utils.LocalPlayer.Stats.IsRed, TheForest.Utils.LocalPlayer.Stats.IsCold);
                     if (BoltNetwork.isRunning)
                     {
-                        IPlayerState state = LocalPlayer.Entity.GetState<IPlayerState>();
-                        state.PlayerVariation = LocalPlayer.Stats.PlayerVariation;
-                        state.PlayerVariationBody = LocalPlayer.Stats.PlayerVariationBody;
+                        IPlayerState state = TheForest.Utils.LocalPlayer.Entity.GetState<IPlayerState>();
+                        state.PlayerVariation = TheForest.Utils.LocalPlayer.Stats.PlayerVariation;
+                        state.PlayerVariationTShirtType = TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType;
+                        state.PlayerVariationTShirtMat = TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtMat;
+                        state.PlayerVariationPantsType = TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType;
+                        state.PlayerVariationPantsMat = TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat;
                     }
                 }
                 catch
@@ -2776,22 +2854,39 @@ namespace UltimateCheatmenu
             }
         }
 
-        private void _setPlayerBody(string s)
+        private void _setPlayertypemat(string s, int types)
         {
             int num;
             if (int.TryParse(s, out num))
             {
-                CoopPlayerVariations component = LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>();
+                global::CoopPlayerVariations component = TheForest.Utils.LocalPlayer.GameObject.GetComponent<global::CoopPlayerVariations>();
                 try
                 {
-                    component.SetVariation(LocalPlayer.Stats.PlayerVariation, num, LocalPlayer.Stats.PlayerVariationHair, LocalPlayer.Stats.PlayerVariationExtras, LocalPlayer.Stats.PlayerClothingVariation);
-                    component.UpdateSkinVariation(LocalPlayer.Stats.IsBloody, LocalPlayer.Stats.IsMuddy, LocalPlayer.Stats.IsRed, LocalPlayer.Stats.IsCold);
-                    LocalPlayer.Stats.PlayerVariationBody = num;
+                    switch (types)
+                    {
+                        case 1:
+                            TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType = num;
+                            break;
+                        case 2:
+                            TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtMat = num;
+                            break;
+                        case 3:
+                            TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType = num;
+                            break;
+                        case 4:
+                            TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat = num;
+                            break;
+                    }
+                    component.SetVariation(TheForest.Utils.LocalPlayer.Stats.PlayerVariation, TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType, TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtMat, TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType, TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat, TheForest.Utils.LocalPlayer.Stats.PlayerVariationHair, TheForest.Utils.LocalPlayer.Stats.PlayerVariationExtras, TheForest.Utils.LocalPlayer.Stats.PlayerClothingVariation);
+                    component.UpdateSkinVariation(TheForest.Utils.LocalPlayer.Stats.IsBloody, TheForest.Utils.LocalPlayer.Stats.IsMuddy, TheForest.Utils.LocalPlayer.Stats.IsRed, TheForest.Utils.LocalPlayer.Stats.IsCold);
                     if (BoltNetwork.isRunning)
                     {
-                        IPlayerState state = LocalPlayer.Entity.GetState<IPlayerState>();
-                        state.PlayerVariation = LocalPlayer.Stats.PlayerVariation;
-                        state.PlayerVariationBody = LocalPlayer.Stats.PlayerVariationBody;
+                        IPlayerState state = TheForest.Utils.LocalPlayer.Entity.GetState<IPlayerState>();
+                        state.PlayerVariation = TheForest.Utils.LocalPlayer.Stats.PlayerVariation;
+                        state.PlayerVariationTShirtType = TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType;
+                        state.PlayerVariationTShirtMat = TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtMat;
+                        state.PlayerVariationPantsType = TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType;
+                        state.PlayerVariationPantsMat = TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat;
                     }
                 }
                 catch
@@ -2802,25 +2897,29 @@ namespace UltimateCheatmenu
             {
             }
         }
+
 
         private void _setVariationExtra(string s)
         {
             try
             {
-                PlayerCloting playerCloting = (PlayerCloting)((int)Enum.Parse(typeof(PlayerCloting), s));
-                CoopPlayerVariations component = LocalPlayer.GameObject.GetComponent<CoopPlayerVariations>();
+                global::PlayerCloting playerCloting = (global::PlayerCloting)((int)Enum.Parse(typeof(global::PlayerCloting), s));
+                global::CoopPlayerVariations component = TheForest.Utils.LocalPlayer.GameObject.GetComponent<global::CoopPlayerVariations>();
                 try
                 {
-                    component.SetVariation(LocalPlayer.Stats.PlayerVariation, LocalPlayer.Stats.PlayerVariationBody, LocalPlayer.Stats.PlayerVariationHair, playerCloting, LocalPlayer.Stats.PlayerClothingVariation);
-                    component.UpdateSkinVariation(LocalPlayer.Stats.IsBloody, LocalPlayer.Stats.IsMuddy, LocalPlayer.Stats.IsRed, LocalPlayer.Stats.IsCold);
-                    LocalPlayer.Stats.PlayerVariationExtras = playerCloting;
+                    component.SetVariation(TheForest.Utils.LocalPlayer.Stats.PlayerVariation, TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType, TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtMat, TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType, TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat, TheForest.Utils.LocalPlayer.Stats.PlayerVariationHair, playerCloting, TheForest.Utils.LocalPlayer.Stats.PlayerClothingVariation);
+                    component.UpdateSkinVariation(TheForest.Utils.LocalPlayer.Stats.IsBloody, TheForest.Utils.LocalPlayer.Stats.IsMuddy, TheForest.Utils.LocalPlayer.Stats.IsRed, TheForest.Utils.LocalPlayer.Stats.IsCold);
+                    TheForest.Utils.LocalPlayer.Stats.PlayerVariationExtras = playerCloting;
                     if (BoltNetwork.isRunning)
                     {
-                        IPlayerState state = LocalPlayer.Entity.GetState<IPlayerState>();
-                        state.PlayerVariation = LocalPlayer.Stats.PlayerVariation;
-                        state.PlayerVariationBody = LocalPlayer.Stats.PlayerVariationBody;
-                        state.PlayerClothing = (int)LocalPlayer.Stats.PlayerVariationExtras;
-                        state.PlayerClothingVariation = LocalPlayer.Stats.PlayerClothingVariation;
+                        IPlayerState state = TheForest.Utils.LocalPlayer.Entity.GetState<IPlayerState>();
+                        state.PlayerVariation = TheForest.Utils.LocalPlayer.Stats.PlayerVariation;
+                        state.PlayerVariationTShirtType = TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType;
+                        state.PlayerVariationTShirtMat = TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtMat;
+                        state.PlayerVariationPantsType = TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType;
+                        state.PlayerVariationPantsMat = TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat;
+                        state.PlayerClothing = (int)TheForest.Utils.LocalPlayer.Stats.PlayerVariationExtras;
+                        state.PlayerClothingVariation = TheForest.Utils.LocalPlayer.Stats.PlayerClothingVariation;
                     }
                 }
                 catch
@@ -3320,6 +3419,7 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "CrosshairG",         UCheatmenu.CrosshairG.ToString());
             iniw.Write("UCM", "CrosshairB",         UCheatmenu.CrosshairB.ToString());
             iniw.Write("UCM", "CrosshairI",         UCheatmenu.CrosshairI.ToString());
+            iniw.Write("UCM", "TimeToggle",         UCheatmenu.TimeToggle.ToString());
         }
         private void readIni(string path)
         {
@@ -3443,6 +3543,8 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.CrosshairB = 0; }
             try { UCheatmenu.CrosshairI = Convert.ToSingle(inir.Read("UCM", "CrosshairI")); }
             catch { UCheatmenu.CrosshairI = 0.7f; }
+            try { UCheatmenu.TimeToggle = Convert.ToBoolean(inir.Read("UCM", "TimeToggle")); }
+            catch { UCheatmenu.TimeToggle = false; }
         }
 
         private void saveSettings()
