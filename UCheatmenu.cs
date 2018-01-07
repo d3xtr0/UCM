@@ -1,4 +1,4 @@
-﻿extern alias ACS;
+﻿extern alias ACS; /* Assembly-CSharp: Aliase: global,ACS */
 
 using ModAPI;
 using ModAPI.Attributes;
@@ -80,8 +80,10 @@ namespace UltimateCheatmenu
         public static bool SphereCrane = false;
         public static bool SphereHolders = false;
         public static int SphereHoldersType = 0;
+        public static int CrosshairType = 0;
 
         public string[] SphereHolderOptions = new string[] { "Log", "Rock", "Stick" };
+        public string[] CrosshairOptions = new string[] { "Cross"};
 
         public static bool SpawnLookAt = false;
 
@@ -104,8 +106,6 @@ namespace UltimateCheatmenu
         protected int Tab;
 
         public static bool InstaKill = false;
-
-        public static bool Rebreather = false;
 
         protected static bool FixHealth = false;
 
@@ -207,6 +207,7 @@ namespace UltimateCheatmenu
         public static bool MutantToggle = true;
         public static bool VeganmodeToggle = false;
         public static bool SurvivalToggle = false;
+        public static bool NoUnderwaterBlur = false;
 
         public static Dictionary<string, GameObject> AnimalPrefabs = new Dictionary<string, GameObject>();
         public static List<string> AnimalNames = new List<string>();
@@ -242,6 +243,13 @@ namespace UltimateCheatmenu
         public static int TorchB = 1;
         public static float TorchI = 1.0f;
 
+        public static bool CrosshairToggle = false;
+        public static int CrosshairR = 0;
+        public static int CrosshairG = 255;
+        public static int CrosshairB = 0;
+        public static float CrosshairI = 0.7f;
+        public static float CrosshairSize = 10;
+
         public static float WaterLevel = 41.5f;
 
         public static bool UnlimitedUpgrade = false;
@@ -251,6 +259,8 @@ namespace UltimateCheatmenu
         public static bool ItemConsume = false;
 
         public static int gstats;
+
+        private GUIStyle crossStyle = null;
 
 
         [ExecuteOnGameStart]
@@ -294,6 +304,59 @@ namespace UltimateCheatmenu
                 labelStylePos = new GUIStyle(UnityEngine.GUI.skin.label);
                 labelStylePos.fontSize = 12;
                 labelStylePos.normal.textColor = Color.white;
+            }
+
+            if (UCheatmenu.CrosshairToggle)
+            {
+                if (LocalPlayer.Inventory._inventoryGO.tag == "closed" && !LocalPlayer.Animator.GetBool("bookHeld"))
+                {
+
+                    if (crossStyle == null)
+                    {
+                        Texture2D t = new Texture2D(1, 1);
+                        t.SetPixel(0, 0, new Color(CrosshairR, CrosshairG, CrosshairB, CrosshairI));
+                        t.Apply();
+
+                        crossStyle = new GUIStyle();
+                        crossStyle.normal.background = t;
+                    }
+
+                    switch (CrosshairType)
+                    {
+                        case 0:
+                        default:
+                            int space = 3;
+                            // top
+                            GUI.Box(new Rect(
+                                    (Screen.width / 2) - 1,
+                                    (Screen.height / 2) - CrosshairSize - space,
+                                    2,
+                                    CrosshairSize)
+                                , "", crossStyle);
+                            // bottom
+                            GUI.Box(new Rect(
+                                    (Screen.width / 2) - 1,
+                                    (Screen.height / 2) + space,
+                                    2,
+                                    CrosshairSize)
+                                , "", crossStyle);
+                            // left
+                            GUI.Box(new Rect(
+                                    (Screen.width / 2) - CrosshairSize - space,
+                                    (Screen.height / 2) - 1,
+                                    CrosshairSize,
+                                    2)
+                                , "", crossStyle);
+                            // right
+                            GUI.Box(new Rect(
+                                    (Screen.width / 2) + space,
+                                    (Screen.height / 2) - 1,
+                                    CrosshairSize,
+                                    2)
+                                , "", crossStyle);
+                            break;
+                    }
+                }
             }
 
             if (this.visible)
@@ -355,11 +418,11 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Instant Kill:", "Kill enemies with 1 hit"), this.labelStyle);
                     UCheatmenu.InstaKill = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InstaKill, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Use Rebreather:", this.labelStyle);
-                    UCheatmenu.Rebreather = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.Rebreather, "");
-                    num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Unlimited Fuel:", "Unlimited fuel for the chainsaw"), this.labelStyle);
                     UCheatmenu.UnlimitedFuel = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.UnlimitedFuel, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("No Underwater Blur:", "Removes the blur when swimming underwater"), this.labelStyle);
+                    UCheatmenu.NoUnderwaterBlur = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.NoUnderwaterBlur, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Infinite Fire:", "Never ending fire for fireplaces and effigies"), this.labelStyle);
                     UCheatmenu.InfFire = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.InfFire, "");
@@ -1490,23 +1553,27 @@ namespace UltimateCheatmenu
                 }
                 if (this.Tab == 9) // Game
                 {
+                    this.scrollPosition = UnityEngine.GUI.BeginScrollView(new Rect(10f, 50f, 690f, 540f), this.scrollPosition, new Rect(0f, 0f, 670f, this.scroller));
+                    this.scroller = 25;
+                    num = 10;
+
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Save Game"))
                     {
                         this.visible = false;
                         LocalPlayer.Stats.JustSave();
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Veganmode", labelStyle);
                     Cheats.NoEnemies = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), Cheats.NoEnemies, "");
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "No survival features", labelStyle);
                     Cheats.NoSurvival = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), Cheats.NoSurvival, "");
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Game Mode ("+ GameSetup.Game.ToString() + ")", labelStyle);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Standard"))
                     {
                         this._setGameMode("standard");
@@ -1519,10 +1586,10 @@ namespace UltimateCheatmenu
                     {
                         this._setGameMode("mod");
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Difficulty Mode (" + GameSetup.Difficulty.ToString() + ")", labelStyle);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Peaceful"))
                     {
                         this._setDifficultyMode("peaceful");
@@ -1544,11 +1611,38 @@ namespace UltimateCheatmenu
                         TheForest.Utils.Settings.GameSettings.Animals.Refresh();
                         TheForest.Utils.Settings.GameSettings.Ai.Refresh();
                     }
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
+
+
+
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Crosshair:", "If the crosshair does not appear, open and close your inventory and survival book"), this.labelStyle);
+                    UCheatmenu.CrosshairToggle = UnityEngine.GUI.Toggle(new Rect(170f, num, 20f, 30f), UCheatmenu.CrosshairToggle, "");
+                    num += 30f; this.scroller += 30;
+                    /*
+                    UCheatmenu.CrosshairType = UnityEngine.GUI.SelectionGrid(new Rect(20f, num, 300f, 30f), UCheatmenu.CrosshairType, CrosshairOptions, CrosshairOptions.Length, UnityEngine.GUI.skin.toggle);
+                    num += 30f; this.scroller += 30;
+                    */
+                    UnityEngine.GUI.Label(new Rect(20f, num, 50f, 20f), "R", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(80f, num, 50f, 20f), "G", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(140f, num, 50f, 20f), "B", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(200f, num, 100f, 20f), "Opacity (" + UCheatmenu.CrosshairI.ToString("0.0") + ")", this.labelStyle);
+                    UnityEngine.GUI.Label(new Rect(360f, num, 100f, 20f), "Size (" + UCheatmenu.CrosshairSize.ToString("0") + ")", this.labelStyle);
+                    num += 30f; this.scroller += 30;
+                    UCheatmenu.CrosshairR = Convert.ToInt32(UnityEngine.GUI.TextField(new Rect(20f, num, 50f, 30f), UCheatmenu.CrosshairR.ToString(), UnityEngine.GUI.skin.textField));
+                    UCheatmenu.CrosshairG = Convert.ToInt32(UnityEngine.GUI.TextField(new Rect(80f, num, 50f, 30f), UCheatmenu.CrosshairG.ToString(), UnityEngine.GUI.skin.textField));
+                    UCheatmenu.CrosshairB = Convert.ToInt32(UnityEngine.GUI.TextField(new Rect(140f, num, 50f, 30f), UCheatmenu.CrosshairB.ToString(), UnityEngine.GUI.skin.textField));
+                    UCheatmenu.CrosshairI = UnityEngine.GUI.HorizontalSlider(new Rect(200f, num + 3f, 150f, 30f), UCheatmenu.CrosshairI, 0f, 1f);
+                    UCheatmenu.CrosshairSize = UnityEngine.GUI.HorizontalSlider(new Rect(360f, num + 3f, 150f, 30f), UCheatmenu.CrosshairSize, 0f, 100f);
+                    num += 30f; this.scroller += 30;
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Apply"))
+                    {
+                        crossStyle = null;
+                    }
+                    num += 50f; this.scroller += 50;
 
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Ultimate Cheatmenu", labelStyle);
-                    num += 30f;
+                    num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Save"))
                     {
                         saveSettings();
@@ -1561,9 +1655,19 @@ namespace UltimateCheatmenu
                     {
                         resetSettings();
                     }
-                    num += 30f;
+                    num += 50f; this.scroller += 30;
 
+                    UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "More UCM Functions:", this.labelStyle);
+                    num += 20f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 200f, 20f), "- Infinite garden size", this.labelStyle);
+                    num += 20f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 200f, 20f), "- Infinite building height", this.labelStyle);
+                    num += 20f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(20f, num, 300f, 20f), "- Use scrollwheel with hole cutter to change the size", this.labelStyle);
+                    num += 20f; this.scroller += 30;
 
+                    UnityEngine.GUI.EndScrollView();
+                    UnityEngine.GUI.matrix = matrix;
 
                 }
                 /* Tooltips */
@@ -3153,7 +3257,6 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "FreezeWeather",      UCheatmenu.FreezeWeather.ToString());
             iniw.Write("UCM", "AutoBuild",          UCheatmenu.AutoBuild.ToString());
             iniw.Write("UCM", "InstaKill",          UCheatmenu.InstaKill.ToString());
-            iniw.Write("UCM", "Rebreather",         UCheatmenu.Rebreather.ToString());
             iniw.Write("UCM", "FixHealth",          UCheatmenu.FixHealth.ToString());
             iniw.Write("UCM", "FixBatteryCharge",   UCheatmenu.FixBatteryCharge.ToString());
             iniw.Write("UCM", "FixFullness",        UCheatmenu.FixFullness.ToString());
@@ -3209,6 +3312,14 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "TorchI",             UCheatmenu.TorchI.ToString());
             iniw.Write("UCM", "BuildingCollision",  UCheatmenu.BuildingCollision.ToString());
             iniw.Write("UCM", "ItemConsume",        UCheatmenu.ItemConsume.ToString());
+            iniw.Write("UCM", "NoUnderwaterBlur",   UCheatmenu.NoUnderwaterBlur.ToString());
+            iniw.Write("UCM", "CrosshairToggle",    UCheatmenu.CrosshairToggle.ToString());
+            iniw.Write("UCM", "CrosshairType",      UCheatmenu.CrosshairType.ToString());
+            iniw.Write("UCM", "CrosshairSize",      UCheatmenu.CrosshairSize.ToString());
+            iniw.Write("UCM", "CrosshairR",         UCheatmenu.CrosshairR.ToString());
+            iniw.Write("UCM", "CrosshairG",         UCheatmenu.CrosshairG.ToString());
+            iniw.Write("UCM", "CrosshairB",         UCheatmenu.CrosshairB.ToString());
+            iniw.Write("UCM", "CrosshairI",         UCheatmenu.CrosshairI.ToString());
         }
         private void readIni(string path)
         {
@@ -3228,7 +3339,6 @@ namespace UltimateCheatmenu
             UCheatmenu.FreezeWeather = Convert.ToBoolean(inir.Read("UCM", "FreezeWeather"));
             UCheatmenu.AutoBuild = Convert.ToBoolean(inir.Read("UCM", "AutoBuild"));
             UCheatmenu.InstaKill = Convert.ToBoolean(inir.Read("UCM", "InstaKill"));
-            UCheatmenu.Rebreather = Convert.ToBoolean(inir.Read("UCM", "Rebreather"));
             UCheatmenu.FixHealth = Convert.ToBoolean(inir.Read("UCM", "FixHealth"));
             UCheatmenu.FixBatteryCharge = Convert.ToBoolean(inir.Read("UCM", "FixBatteryCharge"));
             UCheatmenu.FixFullness = Convert.ToBoolean(inir.Read("UCM", "FixFullness"));
@@ -3317,6 +3427,22 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.BuildingCollision = true; }
             try { UCheatmenu.ItemConsume = Convert.ToBoolean(inir.Read("UCM", "ItemConsume")); }
             catch { UCheatmenu.ItemConsume = false; }
+            try { UCheatmenu.NoUnderwaterBlur = Convert.ToBoolean(inir.Read("UCM", "NoUnderwaterBlur")); }
+            catch { UCheatmenu.NoUnderwaterBlur = false; }
+            try { UCheatmenu.CrosshairToggle = Convert.ToBoolean(inir.Read("UCM", "CrosshairToggle")); }
+            catch { UCheatmenu.CrosshairToggle = false; }
+            try { UCheatmenu.CrosshairType = Convert.ToInt32(inir.Read("UCM", "CrosshairType")); }
+            catch { UCheatmenu.CrosshairType = 0; }
+            try { UCheatmenu.CrosshairSize = Convert.ToSingle(inir.Read("UCM", "CrosshairSize")); }
+            catch { UCheatmenu.CrosshairSize = 10; }
+            try { UCheatmenu.CrosshairR = Convert.ToInt32(inir.Read("UCM", "CrosshairR")); }
+            catch { UCheatmenu.CrosshairR = 0; }
+            try { UCheatmenu.CrosshairG = Convert.ToInt32(inir.Read("UCM", "CrosshairG")); }
+            catch { UCheatmenu.CrosshairG = 255; }
+            try { UCheatmenu.CrosshairB = Convert.ToInt32(inir.Read("UCM", "CrosshairB")); }
+            catch { UCheatmenu.CrosshairB = 0; }
+            try { UCheatmenu.CrosshairI = Convert.ToSingle(inir.Read("UCM", "CrosshairI")); }
+            catch { UCheatmenu.CrosshairI = 0.7f; }
         }
 
         private void saveSettings()

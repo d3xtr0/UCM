@@ -189,7 +189,7 @@
 <Compile Include="Torch.cs"  />
 <Compile Include="TreeHealthOv.cs"  />
 <Compile Include="UCheatmenu.cs"  />
-<Compile Include="WaterWiz.cs"  />
+<Compile Include="Water.cs"  />
 <Compile Include="ZiplineCrane.cs"  />
 
   </ItemGroup>

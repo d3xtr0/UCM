@@ -151,9 +151,6 @@ namespace UltimateCheatmenu
                 this.Hunger = 0;
                 this.Thirst = 0f;
                 this.Starvation = 0f;
-            }
-            if (UCheatmenu.Rebreather)
-            {
                 this.AirBreathing.CurrentLungAir = 300f;
             }
             if (UCheatmenu.UnlimitedFuel)
