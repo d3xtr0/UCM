@@ -30,6 +30,17 @@ namespace UltimateCheatmenu
                 return base.RemoveItem(itemId, amount, allowAmountOverflow, shouldEquipPrevious);
             }
         }
+
+        public override void Attack()
+        {
+            // Only handle our player
+            if (this == LocalPlayer.Inventory && UCheatmenu.visible)
+            {
+                return;
+            }
+
+            base.Attack();
+        }
     }
     
 }

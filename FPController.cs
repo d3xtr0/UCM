@@ -76,6 +76,9 @@ namespace UltimateCheatmenu
 
         protected override void FixedUpdate()
         {
+            allowFallDamage = !UCheatmenu.GodMode;
+            fallShakeBlock = UCheatmenu.GodMode;
+
             this.walkSpeed = this.baseWalkSpeed * UCheatmenu.SpeedMultiplier;
             this.runSpeed = this.baseRunSpeed * UCheatmenu.SpeedMultiplier;
             this.jumpHeight = this.baseJumpHeight * UCheatmenu.JumpMultiplier;
@@ -183,5 +186,18 @@ namespace UltimateCheatmenu
         }
 
     }
+
+    public class PlayerHitReactionsEx : playerHitReactions
+    {
+        public override void enableExplodeShake(float dist)
+        {
+            if (!UCheatmenu.GodMode)
+            {
+                base.enableExplodeShake(dist);
+            }
+        }
+    }
+
+
 }
 

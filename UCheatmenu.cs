@@ -29,7 +29,7 @@ namespace UltimateCheatmenu
 {
     public class UCheatmenu : MonoBehaviour
     {
-        protected bool visible;
+        public static bool visible;
 
         protected bool firsttime = true;
 
@@ -329,28 +329,28 @@ namespace UltimateCheatmenu
                         default:
                             int space = 3;
                             // top
-                            GUI.Box(new Rect(
+                            UnityEngine.GUI.Box(new Rect(
                                     (Screen.width / 2) - 1,
                                     (Screen.height / 2) - CrosshairSize - space,
                                     2,
                                     CrosshairSize)
                                 , "", crossStyle);
                             // bottom
-                            GUI.Box(new Rect(
+                            UnityEngine.GUI.Box(new Rect(
                                     (Screen.width / 2) - 1,
                                     (Screen.height / 2) + space,
                                     2,
                                     CrosshairSize)
                                 , "", crossStyle);
                             // left
-                            GUI.Box(new Rect(
+                            UnityEngine.GUI.Box(new Rect(
                                     (Screen.width / 2) - CrosshairSize - space,
                                     (Screen.height / 2) - 1,
                                     CrosshairSize,
                                     2)
                                 , "", crossStyle);
                             // right
-                            GUI.Box(new Rect(
+                            UnityEngine.GUI.Box(new Rect(
                                     (Screen.width / 2) + space,
                                     (Screen.height / 2) - 1,
                                     CrosshairSize,
@@ -361,7 +361,7 @@ namespace UltimateCheatmenu
                 }
             }
 
-            if (this.visible)
+            if (UCheatmenu.visible)
             {
                 string posX = LocalPlayer.GameObject.transform.position.x.ToString();
                 string posY = LocalPlayer.GameObject.transform.position.y.ToString();
@@ -438,13 +438,13 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Sleep :", this.labelStyle);
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 150f, 20f), "Sleep"))
                     {
-                        this.visible = false;
+                        UCheatmenu.visible = false;
                         LocalPlayer.FpCharacter.UnLockView();
                         UCheatmenu.SleepTimer = true;
                     }
                     if (UnityEngine.GUI.Button(new Rect(340f, num, 150f, 20f), "Sleep & Save"))
                     {
-                        this.visible = false;
+                        UCheatmenu.visible = false;
                         LocalPlayer.FpCharacter.UnLockView();
                         UCheatmenu.SleepTimer = true;
                         LocalPlayer.Stats.Invoke("JustSave",3.5f);
@@ -1634,7 +1634,7 @@ namespace UltimateCheatmenu
 
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), "Save Game"))
                     {
-                        this.visible = false;
+                        UCheatmenu.visible = false;
                         LocalPlayer.Stats.JustSave();
                     }
                     num += 30f; this.scroller += 30;
@@ -1803,7 +1803,6 @@ namespace UltimateCheatmenu
 
         private void Update()
         {
-
             if (UCheatmenu.FreezeTime && !this.LastFreezeTime)
             {
                 Time.timeScale = 0f;
@@ -2233,7 +2232,7 @@ namespace UltimateCheatmenu
                     this.firsttime = false;
                 }
 
-                if (this.visible)
+                if (UCheatmenu.visible)
                 {
                     LocalPlayer.FpCharacter.UnLockView();
                 }
@@ -2241,7 +2240,7 @@ namespace UltimateCheatmenu
                 {
                     LocalPlayer.FpCharacter.LockView(true);
                 }
-                this.visible = !this.visible;
+                UCheatmenu.visible = !UCheatmenu.visible;
             }
             if (ModAPI.Input.GetButtonDown("FreezeTime"))
             {

@@ -2,6 +2,11 @@
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/
 http://modapi.survivetheforest.net/mod/7/ultimate-cheatmenu
 
+## v1.20.2
+- support for new ModAPI version
+- stopped attacking while having menu open
+- fixed some god mode related stuff
+
 ## v1.20.1
 - added Pause time
 - fixed player clothing

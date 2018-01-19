@@ -183,6 +183,23 @@ namespace UltimateCheatmenu
                 base.HitFoodDelayed(damage);
             }
         }
+
+        protected override void Explosion(float dist)
+        {
+            if (!UCheatmenu.GodMode)
+            {
+                base.Explosion(dist);
+            }
+        }
+
+        protected override void Burn()
+        {
+            if (!UCheatmenu.GodMode)
+            {
+                base.Burn();
+            }
+        }
+
     }
 
 }
