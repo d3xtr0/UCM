@@ -69,10 +69,6 @@
       <HintPath>../../../modlib/TheForest/TheForest_data/Managed/UnityScript.Lang.dll</HintPath>
       <Private>False</Private>
     </Reference>
-<Reference Include="AmplifyMotion">
-      <HintPath>../../../modlib/TheForest/TheForest_data/Managed/AmplifyMotion.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
 <Reference Include="Boo.Lang">
       <HintPath>../../../modlib/TheForest/TheForest_data/Managed/Boo.Lang.dll</HintPath>
       <Private>False</Private>
@@ -143,10 +139,6 @@
     </Reference>
 <Reference Include="UnityEngine">
       <HintPath>../../../modlib/TheForest/TheForest_data/Managed/UnityEngine.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-<Reference Include="UnityEngine.Analytics">
-      <HintPath>../../../modlib/TheForest/TheForest_data/Managed/UnityEngine.Analytics.dll</HintPath>
       <Private>False</Private>
     </Reference>
 <Reference Include="UnityEngine.Networking">

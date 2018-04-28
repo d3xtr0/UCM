@@ -1039,6 +1039,7 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
 
                     /* T-shirt Type */
+                    /*
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("T-Shirt Type:", "Changes T-Shirt Type"), labelStyle);
                     num += 30f; this.scroller += 30;
                     i = 0;
@@ -1059,8 +1060,10 @@ namespace UltimateCheatmenu
                     }
                     catch (Exception e) { }
                     num += 30f; this.scroller += 30;
+                    */
 
                     /* T-shirt Mat */
+                    /*
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("T-Shirt Material:","Changes T-Shirt Material"), labelStyle);
                     num += 30f; this.scroller += 30;
                     i = 0;
@@ -1081,8 +1084,10 @@ namespace UltimateCheatmenu
                     }
                     catch (Exception e) { }
                     num += 30f; this.scroller += 30;
+                    */
 
                     /* Pants Type */
+                    /*
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Pants Type:", "Changes Pants Type"), labelStyle);
                     num += 30f; this.scroller += 30;
                     i = 0;
@@ -1103,8 +1108,10 @@ namespace UltimateCheatmenu
                     }
                     catch (Exception e) { }
                     num += 30f; this.scroller += 30;
+                    */
 
                     /* Pants Mat */
+                    /*
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), new GUIContent("Pants Material:", "Changes Pants Material"), labelStyle);
                     num += 30f; this.scroller += 30;
                     i = 0;
@@ -1125,6 +1132,7 @@ namespace UltimateCheatmenu
                     }
                     catch (Exception e) { }
                     num += 30f; this.scroller += 30;
+                    */
 
 
                     /* clothes */
@@ -2825,6 +2833,7 @@ namespace UltimateCheatmenu
 
         private void _setPlayerVariation(string s)
         {
+            /*
             int num;
             if (int.TryParse(s, out num))
             {
@@ -2851,6 +2860,7 @@ namespace UltimateCheatmenu
             else
             {
             }
+            */
         }
 
         private void _setPlayertypemat(string s, int types)
@@ -2861,6 +2871,7 @@ namespace UltimateCheatmenu
                 global::CoopPlayerVariations component = TheForest.Utils.LocalPlayer.GameObject.GetComponent<global::CoopPlayerVariations>();
                 try
                 {
+                    /*
                     switch (types)
                     {
                         case 1:
@@ -2887,6 +2898,7 @@ namespace UltimateCheatmenu
                         state.PlayerVariationPantsType = TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType;
                         state.PlayerVariationPantsMat = TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat;
                     }
+                    */
                 }
                 catch
                 {
@@ -2906,6 +2918,7 @@ namespace UltimateCheatmenu
                 global::CoopPlayerVariations component = TheForest.Utils.LocalPlayer.GameObject.GetComponent<global::CoopPlayerVariations>();
                 try
                 {
+                    /*
                     component.SetVariation(TheForest.Utils.LocalPlayer.Stats.PlayerVariation, TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtType, TheForest.Utils.LocalPlayer.Stats.PlayerVariationTShirtMat, TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsType, TheForest.Utils.LocalPlayer.Stats.PlayerVariationPantsMat, TheForest.Utils.LocalPlayer.Stats.PlayerVariationHair, playerCloting, TheForest.Utils.LocalPlayer.Stats.PlayerClothingVariation);
                     component.UpdateSkinVariation(TheForest.Utils.LocalPlayer.Stats.IsBloody, TheForest.Utils.LocalPlayer.Stats.IsMuddy, TheForest.Utils.LocalPlayer.Stats.IsRed, TheForest.Utils.LocalPlayer.Stats.IsCold);
                     TheForest.Utils.LocalPlayer.Stats.PlayerVariationExtras = playerCloting;
@@ -2920,6 +2933,7 @@ namespace UltimateCheatmenu
                         state.PlayerClothing = (int)TheForest.Utils.LocalPlayer.Stats.PlayerVariationExtras;
                         state.PlayerClothingVariation = TheForest.Utils.LocalPlayer.Stats.PlayerClothingVariation;
                     }
+                    */
                 }
                 catch
                 {
