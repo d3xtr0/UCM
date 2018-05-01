@@ -2,6 +2,16 @@
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/  
 http://modapi.survivetheforest.net/mod/7/ultimate-cheatmenu
 
+## v1.22.0
+- Inventory added Modifier
+- Inventory added remove option
+- fixed FreeCam with menu open
+
+## v1.21.0
+- Change clothing (visit https://theforestmap.com/wiki/playerclothing/ )
+- Unlimited hairspray 
+- Added "Enable Developer Console" to Dev-Tab
+
 ## v1.20.3
 - support for ModAPI version 1.0.5
 - disabled player clothing

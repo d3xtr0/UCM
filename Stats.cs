@@ -157,6 +157,14 @@ namespace UltimateCheatmenu
             {
                 this.Fuel.CurrentFuel = 120f;
             }
+            if (UCheatmenu.UnlimitedHairspray)
+            {
+                global::Cheats.UnlimitedHairspray = true;
+            }
+            else
+            {
+                global::Cheats.UnlimitedHairspray = false;
+            }
             base.Update();
         }
 
