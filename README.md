@@ -1,6 +1,24 @@
-# Ultimate Cheatmenu
+# Ultimate Cheatmenu for ModAPI
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/  
 http://modapi.survivetheforest.net/mod/7/ultimate-cheatmenu
+
+## v2.1.0
+- added objects to respawn key
+- sorted item lists
+- L18n: Added Simplified Chinese, partially Portuguese
+- added max spawned logs
+- disabled animal spawn in MP
+
+## v2.0.0
+- Localization! (currently English, German, Polish, Dutch)
+- Switched toggle+label position, so text can be longer
+
+## v1.23.0
+- Added Enable Effigies
+- Added Enable Endgame (unlocks more effigies)
+- Added more objects to Spawn-Tab
+- Added dev option (scenetracker)
+- fixed game time scale
 
 ## v1.22.0
 - Inventory added Modifier

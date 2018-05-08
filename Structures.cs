@@ -49,4 +49,20 @@ namespace UltimateCheatmenu
             base.LateUpdate();
         }
     }
+
+    class LogCounter : sceneTracker
+    {
+        protected override void Update()
+        {
+            if (UCheatmenu.InfiniteSpawnedLogs)
+            {
+                this.maxSpawnedLogs = 5000;
+            }
+            else
+            {
+                this.maxSpawnedLogs = 50;
+            }
+            base.Update();
+        }
+    }
 }

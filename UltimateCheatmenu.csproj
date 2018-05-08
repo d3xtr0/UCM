@@ -177,6 +177,7 @@
     <Compile Include="IniHelper.cs" />
     <Compile Include="InstaBuild.cs" />
     <Compile Include="LightableOv.cs" />
+    <Compile Include="Localization.cs" />
     <Compile Include="NewWeatherSystem.cs" />
     <Compile Include="Players.cs" />
     <Compile Include="Stats.cs" />

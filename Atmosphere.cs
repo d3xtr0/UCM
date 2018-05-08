@@ -16,11 +16,7 @@ namespace UltimateCheatmenu
 
             if (UCheatmenu.TimeToggle)
             {
-                TheForestAtmosphere.Instance.RotationSpeed = 0.00001f;
-            }
-            else
-            {
-                TheForestAtmosphere.Instance.RotationSpeed = 0.13f;
+                TheForestAtmosphere.GameTimeScale = 0.00001f;
             }
 
 
@@ -86,7 +82,7 @@ namespace UltimateCheatmenu
         }
 
         [ModAPI.Attributes.Priority(200)]
-        override protected void ChangeFogAmount()
+        protected override void ChangeFogAmount()
         {
             if (!UCheatmenu.Fog)
             {
