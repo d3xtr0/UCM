@@ -2,10 +2,13 @@
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/  
 http://modapi.survivetheforest.net/mod/7/ultimate-cheatmenu
 
+## v2.1.1
+- L18n: Added Spanish, Korean, Japanese
+
 ## v2.1.0
 - added objects to respawn key
 - sorted item lists
-- L18n: Added Simplified Chinese, partially Portuguese
+- L18n: Added Simplified Chinese, Portuguese
 - added max spawned logs
 - disabled animal spawn in MP
 

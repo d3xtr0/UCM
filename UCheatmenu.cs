@@ -44,8 +44,8 @@ namespace UltimateCheatmenu
         protected bool firsttime = true;
         private static bool firsttimeLanguageDownload = true;
 
-        public string[] LanguageLocaleOptions = new string[] { "English", "German", "Polish", "Dutch", "Portuguese", "S. Chinese" };
-        public static string[] LanguageCodesOptions = new string[] { "en", "de", "pl", "nl", "pt", "zh-CN" };
+        public string[] LanguageLocaleOptions = new string[] { "English", "German", "Polish", "Dutch", "Portuguese", "Spanish", "S. Chinese", "Korean", "Japanese" };
+        public static string[] LanguageCodesOptions = new string[] { "en", "de", "pl", "nl", "pt", "es", "zh-CN", "ko", "ja" };
 
         public static bool GodMode = false;
         public static bool UnlimitedFuel = false;
