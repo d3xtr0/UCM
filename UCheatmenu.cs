@@ -44,8 +44,8 @@ namespace UltimateCheatmenu
         protected bool firsttime = true;
         private static bool firsttimeLanguageDownload = true;
 
-        public string[] LanguageLocaleOptions = new string[] { "English", "German", "Polish", "Dutch", "Portuguese", "Spanish", "S. Chinese", "Korean", "Japanese" };
-        public static string[] LanguageCodesOptions = new string[] { "en", "de", "pl", "nl", "pt", "es", "zh-CN", "ko", "ja" };
+        public string[] LanguageLocaleOptions = new string[] { "English", "German", "Polish", "Dutch", "Portuguese", "Spanish", "S. Chinese", "T. Chinese", "Korean", "Japanese" };
+        public static string[] LanguageCodesOptions = new string[] { "en", "de", "pl", "nl", "pt", "es", "zh-CN", "zh-CHT", "ko", "ja" };
 
         public static bool GodMode = false;
         public static bool UnlimitedFuel = false;
@@ -74,6 +74,7 @@ namespace UltimateCheatmenu
         public static bool SphereSuitcases = false;
         public static bool SphereFires = false;
         public static bool SphereTraps = false;
+        public static bool SphereGreeble = false;
         public static bool SphereCrane = false;
         public static bool SphereHolders = false;
         public static int SphereHoldersType = 0;
@@ -374,44 +375,44 @@ namespace UltimateCheatmenu
                     num = 10;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("GodMode"), this.labelStyle);
-                    UCheatmenu.GodMode = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.GodMode, "");
+                    UCheatmenu.GodMode = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.GodMode, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("Flymode"), ln.GetText("Default")+": F6"), this.labelStyle);
-                    UCheatmenu.FlyMode = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.FlyMode, "");
+                    UCheatmenu.FlyMode = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.FlyMode, "");
                     num += 30f; this.scroller += 30;
                     if (UCheatmenu.FlyMode)
                     {
                         UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("Noclip"), ln.GetText("Default")+": F7"), this.labelStyle);
-                        UCheatmenu.NoClip = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.NoClip, "");
+                        UCheatmenu.NoClip = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.NoClip, "");
                         num += 30f; this.scroller += 30;
                     }
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("InstantTree"), ln.GetText("InstantTreeDesc")), this.labelStyle);
-                    UCheatmenu.InstantTree = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.InstantTree, "");
+                    UCheatmenu.InstantTree = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.InstantTree, "");
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("InstantBuildingDestroy"), ln.GetText("InstantBuildingDestroyDesc")), this.labelStyle);
-                    UCheatmenu.DestroyBuildings = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.DestroyBuildings, "");
+                    UCheatmenu.DestroyBuildings = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.DestroyBuildings, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("InstantKill"), ln.GetText("InstantKillDesc")), this.labelStyle);
-                    UCheatmenu.InstaKill = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.InstaKill, "");
+                    UCheatmenu.InstaKill = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.InstaKill, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("UnlimitedFuel"), ln.GetText("UnlimitedFuelDesc")), this.labelStyle);
-                    UCheatmenu.UnlimitedFuel = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.UnlimitedFuel, "");
+                    UCheatmenu.UnlimitedFuel = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.UnlimitedFuel, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("UnlimitedHairspray"), ln.GetText("UnlimitedHairsprayDesc")), this.labelStyle);
-                    UCheatmenu.UnlimitedHairspray = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.UnlimitedHairspray, "");
+                    UCheatmenu.UnlimitedHairspray = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.UnlimitedHairspray, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("NoUnderwaterBlur"), ln.GetText("NoUnderwaterBlurDesc")), this.labelStyle);
-                    UCheatmenu.NoUnderwaterBlur = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.NoUnderwaterBlur, "");
+                    UCheatmenu.NoUnderwaterBlur = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.NoUnderwaterBlur, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("InfiniteFire"), ln.GetText("InfiniteFireDesc")), this.labelStyle);
-                    UCheatmenu.InfFire = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.InfFire, "");
+                    UCheatmenu.InfFire = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.InfFire, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("AutoLighter"), ln.GetText("AutoLighterDesc")), this.labelStyle);
-                    UCheatmenu.InstLighter = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.InstLighter, "");
+                    UCheatmenu.InstLighter = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.InstLighter, "");
                     num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("FastFlintlockBow"), ln.GetText("FastFlintlockBow")), this.labelStyle);
-                    UCheatmenu.FastFlint = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.FastFlint, "");
+                    UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("FastFlintlockBow"), ln.GetText("FastFlintlockBowDesc")), this.labelStyle);
+                    UCheatmenu.FastFlint = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.FastFlint, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), ln.GetText("Sleep"), this.labelStyle);
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 150f, 20f), ln.GetText("Sleep")))
@@ -430,10 +431,10 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("FreeCam"), ln.GetText("Default")+": F3"), this.labelStyle);
-                    UCheatmenu.FreeCam = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.FreeCam, "");
+                    UCheatmenu.FreeCam = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.FreeCam, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("FreezeTime"), ln.GetText("Default") + ": F4"), this.labelStyle);
-                    UCheatmenu.FreezeTime = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.FreezeTime, "");
+                    UCheatmenu.FreezeTime = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.FreezeTime, "");
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 500f, 20f), new GUIContent(ln.GetText("ExplosionRadius")+" (" + System.Math.Round(UCheatmenu.ExplosionRadius).ToString() + "m)", ln.GetText("ExplosionRadiusDesc")), this.labelStyle);
@@ -461,36 +462,37 @@ namespace UltimateCheatmenu
                     {
                         InstaBuild.repairAll();
                     }
-                    UnityEngine.GUI.Label(new Rect(500f, num, 70f, 20f), new GUIContent(ln.GetText("Collision"), ln.GetText("CollisionDesc")), this.labelStyle);
-                    UCheatmenu.BuildingCollision = UnityEngine.GUI.Toggle(new Rect(580f, num, 20f, 30f), UCheatmenu.BuildingCollision, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("Buildings") + " " + ln.GetText("Collision"), ln.GetText("CollisionDesc")), this.labelStyle);
+                    UCheatmenu.BuildingCollision = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.BuildingCollision, "");
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("EnableEffigies"), ln.GetText("EnableEffigiesDesc")), labelStyle);
-                    UCheatmenu.EnableEffigies = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.EnableEffigies, "");
+                    UCheatmenu.EnableEffigies = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.EnableEffigies, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("EnableEndgame"), ln.GetText("EnableEndgameDesc")), labelStyle);
-                    UCheatmenu.EnableEndgame = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.EnableEndgame, "");
+                    UCheatmenu.EnableEndgame = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.EnableEndgame, "");
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("LogHack"), ln.GetText("LogHackDesc")), labelStyle);
-                    if(UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), LocalPlayer.Inventory.Logs._infiniteLogHack, "") != LocalPlayer.Inventory.Logs._infiniteLogHack)
+                    if(UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), LocalPlayer.Inventory.Logs._infiniteLogHack, "") != LocalPlayer.Inventory.Logs._infiniteLogHack)
                     {
                         LocalPlayer.Inventory.Logs._infiniteLogHack = !LocalPlayer.Inventory.Logs._infiniteLogHack;
                         this._loghack();
                     }
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("InfiniteSpawnedLogs"), ln.GetText("InfiniteSpawnedLogsDesc")), labelStyle);
-                    UCheatmenu.InfiniteSpawnedLogs = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.InfiniteSpawnedLogs, "");
+                    UCheatmenu.InfiniteSpawnedLogs = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.InfiniteSpawnedLogs, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("ItemHack"), ln.GetText("ItemHackDesc")), labelStyle);
-                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.ItemHack, "") != UCheatmenu.ItemHack)
+                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.ItemHack, "") != UCheatmenu.ItemHack)
                     {
                         UCheatmenu.ItemHack = !UCheatmenu.ItemHack;
                         this._itemhack();
                     }
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("NoItemConsume"), ln.GetText("NoItemConsumeDesc")), labelStyle);
-                    UCheatmenu.ItemConsume = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.ItemConsume, "");
+                    UCheatmenu.ItemConsume = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.ItemConsume, "");
                     num += 30f; this.scroller += 30;
                     /*
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent("Unlimited Craft Upgrade", "Unlimited amount of items can be used for item upgrades"), labelStyle);
@@ -498,41 +500,61 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
                     */              
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("BuildHack"), ln.GetText("BuildHackDesc")), labelStyle);
-                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.BuildHack, "") != UCheatmenu.BuildHack)
+                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.BuildHack, "") != UCheatmenu.BuildHack)
                     {
                         UCheatmenu.BuildHack = !UCheatmenu.BuildHack;
                         this._buildhack();
                     }
                     num += 30f; this.scroller += 30;
-                    
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 200f, 20f), new GUIContent(ln.GetText("RespawnGreeble"), ln.GetText("RespawnGreebleDesc"))))
+                    {
+                        var greeble = GameObject.FindObjectsOfType<GreebleZone>();
+                        foreach (var g in greeble)
+                        {
+                            g.Refresh();
+                        }
+                    }
+                    if (UnityEngine.GUI.Button(new Rect(240f, num, 200f, 20f), new GUIContent(ln.GetText("ResetSuitcases"), ln.GetText("ResetSuitcasesDesc"))))
+                    {
+                        var greeble = GameObject.FindObjectsOfType<CustomActiveValueGreeble>();
+                        foreach (var g in greeble)
+                        {
+                            g.UpdateGreebleData();
+                        }
+                    }
+                    num += 30f; this.scroller += 30;
+
                     UnityEngine.GUI.Label(new Rect(20f, num, 410f, 20f), new GUIContent(ln.GetText("Sphere"), ln.GetText("SphereDesc")), this.labelStyle);
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("CutTrees"), this.labelStyle);
-                    UCheatmenu.SphereTreeCut = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereTreeCut, "");
+                    UCheatmenu.SphereTreeCut = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereTreeCut, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("CutTreeStumps"), this.labelStyle);
-                    UCheatmenu.SphereTreeStumps = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereTreeStumps, "");
+                    UCheatmenu.SphereTreeStumps = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereTreeStumps, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("CutBushes"), ln.GetText("CutBushesDesc")), this.labelStyle);
-                    UCheatmenu.SphereBushes = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereBushes, "");
+                    UCheatmenu.SphereBushes = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereBushes, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("BreakCrates"), this.labelStyle);
-                    UCheatmenu.SphereCrates = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereCrates, "");
+                    UCheatmenu.SphereCrates = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereCrates, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("OpenSuitcases"), this.labelStyle);
-                    UCheatmenu.SphereSuitcases = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereSuitcases, "");
+                    UCheatmenu.SphereSuitcases = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereSuitcases, "");
+                    num += 30f; this.scroller += 30;
+                    UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("ResetSuitcases"), this.labelStyle);
+                    UCheatmenu.SphereGreeble = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereGreeble, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("LightFires"), this.labelStyle);
-                    UCheatmenu.SphereFires = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereFires, "");
+                    UCheatmenu.SphereFires = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereFires, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("ResetTraps"), this.labelStyle);
-                    UCheatmenu.SphereTraps = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereTraps, "");
+                    UCheatmenu.SphereTraps = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereTraps, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("CallCrane"), ln.GetText("CallCraneDesc")), this.labelStyle);
-                    UCheatmenu.SphereCrane = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereCrane, "");
+                    UCheatmenu.SphereCrane = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.SphereCrane, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 150f, 20f), new GUIContent(ln.GetText("FillHolder"), ln.GetText("FillHolderDesc")), this.labelStyle);
-                    UCheatmenu.SphereHolders = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SphereHolders, "");
+                    UCheatmenu.SphereHolders = UnityEngine.GUI.Toggle(new Rect(20f, num, 120f, 30f), UCheatmenu.SphereHolders, "");
                     //num += 30f; this.scroller += 30;
                     UCheatmenu.SphereHoldersType = UnityEngine.GUI.SelectionGrid(new Rect(200f, num, 300f, 30f), UCheatmenu.SphereHoldersType, SphereHolderOptions, SphereHolderOptions.Length, UnityEngine.GUI.skin.toggle);
                     num += 30f; this.scroller += 30;
@@ -550,7 +572,7 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), ln.GetText("SpeedOfTime")+" (" + TheForestAtmosphere.GameTimeScale + ")", this.labelStyle);
                     TheForestAtmosphere.GameTimeScale = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), TheForestAtmosphere.GameTimeScale, 0.1f, 50f);
                     num += 30f; this.scroller += 30;
-                    UCheatmenu.TimeToggle = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.TimeToggle, "");
+                    UCheatmenu.TimeToggle = UnityEngine.GUI.Toggle(new Rect(20f, num, 120f, 30f), UCheatmenu.TimeToggle, "");
                     UnityEngine.GUI.Label(new Rect(50f, num, 200f, 20f), ln.GetText("PauseTime"), this.labelStyle);
                     if (UnityEngine.GUI.Button(new Rect(280f, num, 100f, 20f), ln.GetText("Reset")))
                     {
@@ -568,7 +590,7 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("Torch"), ln.GetText("TorchDesc")), this.labelStyle);
-                    UCheatmenu.TorchToggle = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.TorchToggle, "");
+                    UCheatmenu.TorchToggle = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.TorchToggle, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 50f, 20f), "R", this.labelStyle);
                     UnityEngine.GUI.Label(new Rect(80f, num, 50f, 20f), "G", this.labelStyle);
@@ -582,10 +604,10 @@ namespace UltimateCheatmenu
                     num += 40f; this.scroller += 40;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Fog"), this.labelStyle);
-                    UCheatmenu.Fog = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.Fog, "");
+                    UCheatmenu.Fog = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.Fog, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("FreezeWeather"), this.labelStyle);
-                    UCheatmenu.FreezeWeather = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.FreezeWeather, "");
+                    UCheatmenu.FreezeWeather = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.FreezeWeather, "");
                     num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 180f, 20f), ln.GetText("ClearWeather")))
                     {
@@ -982,7 +1004,7 @@ namespace UltimateCheatmenu
                     UCheatmenu.JumpMultiplier = UnityEngine.GUI.HorizontalSlider(new Rect(170f, num + 3f, 210f, 30f), UCheatmenu.JumpMultiplier, 1f, 10f);
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 150f, 20f), new GUIContent(ln.GetText("Invisible"), ln.GetText("InvisibleDesc")), this.labelStyle);
-                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.InvisibleToggle, "") != UCheatmenu.InvisibleToggle)
+                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.InvisibleToggle, "") != UCheatmenu.InvisibleToggle)
                     {
                         UCheatmenu.InvisibleToggle = !UCheatmenu.InvisibleToggle;
                         this._invisible();
@@ -1031,7 +1053,7 @@ namespace UltimateCheatmenu
 
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("ToggleAnimals"), this.labelStyle);
-                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.AnimalToggle, "") != UCheatmenu.AnimalToggle)
+                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.AnimalToggle, "") != UCheatmenu.AnimalToggle)
                     {
                         UCheatmenu.AnimalToggle = !UCheatmenu.AnimalToggle;
                         this._animals();
@@ -1039,7 +1061,7 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("ToggleBirds"), this.labelStyle);
-                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.BirdToggle, "") != UCheatmenu.BirdToggle)
+                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.BirdToggle, "") != UCheatmenu.BirdToggle)
                     {
                         UCheatmenu.BirdToggle = !UCheatmenu.BirdToggle;
                         this._birds();
@@ -1132,7 +1154,7 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Toggle") + " " + ln.GetText("Enemies"), this.labelStyle);
-                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.MutantToggle, "") != UCheatmenu.MutantToggle)
+                    if (UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.MutantToggle, "") != UCheatmenu.MutantToggle)
                     {
                         UCheatmenu.MutantToggle = !UCheatmenu.MutantToggle;
                         this._enemies();
@@ -1145,25 +1167,25 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Skinned"), this.labelStyle);
-                    UCheatmenu.Mutant_Skinned = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.Mutant_Skinned, "");
+                    UCheatmenu.Mutant_Skinned = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.Mutant_Skinned, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Leader"), this.labelStyle);
-                    UCheatmenu.Mutant_Leader = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.Mutant_Leader, "");
+                    UCheatmenu.Mutant_Leader = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.Mutant_Leader, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Painted"), this.labelStyle);
-                    UCheatmenu.Mutant_Painted = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.Mutant_Painted, "");
+                    UCheatmenu.Mutant_Painted = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.Mutant_Painted, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Pale"), this.labelStyle);
-                    UCheatmenu.Mutant_Pale = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.Mutant_Pale, "");
+                    UCheatmenu.Mutant_Pale = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.Mutant_Pale, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Old"), this.labelStyle);
-                    UCheatmenu.Mutant_Old = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.Mutant_Old, "");
+                    UCheatmenu.Mutant_Old = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.Mutant_Old, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Dynamite"), this.labelStyle);
-                    UCheatmenu.Mutant_Dynamite = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.Mutant_Dynamite, "");
+                    UCheatmenu.Mutant_Dynamite = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.Mutant_Dynamite, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("BossBaby"), this.labelStyle);
-                    UCheatmenu.Mutant_BBaby = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.Mutant_BBaby, "");
+                    UCheatmenu.Mutant_BBaby = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.Mutant_BBaby, "");
                     num += 30f; this.scroller += 30;
 
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 200f, 20f), ln.GetText("Male"))){ this._spawnmutant("male");}
@@ -1277,10 +1299,10 @@ namespace UltimateCheatmenu
                     num += 40f; this.scroller2 += 40;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 200f, 20f), ln.GetText("SpawnLookingAt"), labelStyle);
-                    UCheatmenu.SpawnLookAt = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.SpawnLookAt, "");
+                    UCheatmenu.SpawnLookAt = UnityEngine.GUI.Toggle(new Rect(20f, num, 220f, 30f), UCheatmenu.SpawnLookAt, "");
                     num += 30f; this.scroller2 += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 200f, 20f), ln.GetText("ShowObjects"), labelStyle);
-                    toggleobj = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), toggleobj, "");
+                    toggleobj = UnityEngine.GUI.Toggle(new Rect(20f, num, 220f, 30f), toggleobj, "");
                     num += 30f; this.scroller2 += 30;
                     /*
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), "Show Picked", labelStyle);
@@ -1703,11 +1725,11 @@ namespace UltimateCheatmenu
                     num += 40f; this.scroller += 40;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("Veganmode"), labelStyle);
-                    Cheats.NoEnemies = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), Cheats.NoEnemies, "");
+                    Cheats.NoEnemies = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), Cheats.NoEnemies, "");
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), ln.GetText("NoSurvivalFeatures"), labelStyle);
-                    Cheats.NoSurvival = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), Cheats.NoSurvival, "");
+                    Cheats.NoSurvival = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), Cheats.NoSurvival, "");
                     num += 30f; this.scroller += 30;
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 500f, 20f), ln.GetText("GameMode")+" (" + GameSetup.Game.ToString() + ")", labelStyle);
@@ -1754,7 +1776,7 @@ namespace UltimateCheatmenu
 
 
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("Crosshair"), ln.GetText("CrosshairDesc")), this.labelStyle);
-                    UCheatmenu.CrosshairToggle = UnityEngine.GUI.Toggle(new Rect(20f, num, 20f, 30f), UCheatmenu.CrosshairToggle, "");
+                    UCheatmenu.CrosshairToggle = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.CrosshairToggle, "");
                     num += 30f; this.scroller += 30;
                     /*
                     UCheatmenu.CrosshairType = UnityEngine.GUI.SelectionGrid(new Rect(20f, num, 300f, 30f), UCheatmenu.CrosshairType, CrosshairOptions, CrosshairOptions.Length, UnityEngine.GUI.skin.toggle);
@@ -1772,7 +1794,7 @@ namespace UltimateCheatmenu
                     UCheatmenu.CrosshairI = UnityEngine.GUI.HorizontalSlider(new Rect(200f, num + 3f, 150f, 30f), UCheatmenu.CrosshairI, 0f, 1f);
                     UCheatmenu.CrosshairSize = UnityEngine.GUI.HorizontalSlider(new Rect(360f, num + 3f, 150f, 30f), UCheatmenu.CrosshairSize, 0f, 100f);
                     num += 30f; this.scroller += 30;
-                    if (UnityEngine.GUI.Button(new Rect(20f, num, 150f, 20f), ln.GetText("Apply")))
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 170f, 20f), ln.GetText("Apply")))
                     {
                         crossStyle = null;
                     }
@@ -2027,6 +2049,11 @@ namespace UltimateCheatmenu
                             {
                                 raycastHit.collider.GetComponentInParent<ResetTraps>().RestoreSafe();
                             }
+                        }
+                        /* SphereGreeble */
+                        else if (UCheatmenu.SphereGreeble && raycastHit.collider.GetComponent<CustomActiveValueGreeble>() != null)
+                        {
+                            raycastHit.collider.GetComponent<CustomActiveValueGreeble>().UpdateGreebleData();
                         }
                         /* SphereCrane */
                         else if (UCheatmenu.SphereCrane && raycastHit.collider.GetComponent<CraneTrigger>() != null)
@@ -3549,6 +3576,7 @@ namespace UltimateCheatmenu
             iniw.Write("UCM", "SphereSuitcases",    UCheatmenu.SphereSuitcases.ToString());
             iniw.Write("UCM", "SphereFires",        UCheatmenu.SphereFires.ToString());
             iniw.Write("UCM", "SphereTraps",        UCheatmenu.SphereTraps.ToString());
+            iniw.Write("UCM", "SphereGreeble",      UCheatmenu.SphereGreeble.ToString());
             iniw.Write("UCM", "SphereCrane",        UCheatmenu.SphereCrane.ToString());
             iniw.Write("UCM", "SphereHolders",      UCheatmenu.SphereHolders.ToString());
             iniw.Write("UCM", "SphereHoldersType",  UCheatmenu.SphereHoldersType.ToString());
@@ -3646,6 +3674,8 @@ namespace UltimateCheatmenu
             catch { UCheatmenu.SphereFires = false; }
             try { UCheatmenu.SphereTraps = Convert.ToBoolean(inir.Read("UCM", "SphereTraps")); }
             catch { UCheatmenu.SphereTraps = false; }
+            try { UCheatmenu.SphereGreeble = Convert.ToBoolean(inir.Read("UCM", "SphereGreeble")); }
+            catch { UCheatmenu.SphereGreeble = false; }
             try { UCheatmenu.SphereCrane = Convert.ToBoolean(inir.Read("UCM", "SphereCrane")); }
             catch { UCheatmenu.SphereCrane = false; }
             try { UCheatmenu.SphereHolders = Convert.ToBoolean(inir.Read("UCM", "SphereHolders")); }

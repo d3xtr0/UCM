@@ -2,6 +2,14 @@
 http://www.modapi.cc/mods/index.php/Entry/60-Ultimate-Cheatmenu/  
 http://modapi.survivetheforest.net/mod/7/ultimate-cheatmenu
 
+## v2.2.0
+- L18n: Added Traditional Chinese
+- Fixed description
+- Added Respawn Greeble
+- Added Reset Suitcases
+- Added Reset Suitcases Sphere
+- Made label clickable
+
 ## v2.1.1
 - L18n: Added Spanish, Korean, Japanese
 
