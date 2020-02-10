@@ -44,8 +44,8 @@ namespace UltimateCheatmenu
         protected bool firsttime = true;
         private static bool firsttimeLanguageDownload = true;
 
-        public string[] LanguageLocaleOptions = new string[] { "English", "German", "Polish", "Dutch", "Portuguese", "Spanish", "S. Chinese", "T. Chinese", "Korean", "Japanese" };
-        public static string[] LanguageCodesOptions = new string[] { "en", "de", "pl", "nl", "pt", "es", "zh-CN", "zh-CHT", "ko", "ja" };
+        public string[] LanguageLocaleOptions = new string[] { "English", "German", "Polish", "Dutch", "Portuguese", "Spanish", "S. Chinese", "T. Chinese", "Korean", "Japanese", "Russian", "French", "Turkish" };
+        public static string[] LanguageCodesOptions = new string[] { "en", "de", "pl", "nl", "pt", "es", "zh-CN", "zh-CHT", "ko", "ja", "ru", "fr", "tr" };
 
         public static bool GodMode = false;
         public static bool UnlimitedFuel = false;
@@ -410,9 +410,6 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("AutoLighter"), ln.GetText("AutoLighterDesc")), this.labelStyle);
                     UCheatmenu.InstLighter = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.InstLighter, "");
-                    num += 30f; this.scroller += 30;
-                    UnityEngine.GUI.Label(new Rect(50f, num, 500f, 20f), new GUIContent(ln.GetText("FastFlintlockBow"), ln.GetText("FastFlintlockBowDesc")), this.labelStyle);
-                    UCheatmenu.FastFlint = UnityEngine.GUI.Toggle(new Rect(20f, num, 520f, 30f), UCheatmenu.FastFlint, "");
                     num += 30f; this.scroller += 30;
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), ln.GetText("Sleep"), this.labelStyle);
                     if (UnityEngine.GUI.Button(new Rect(170f, num, 150f, 20f), ln.GetText("Sleep")))
@@ -1215,7 +1212,11 @@ namespace UltimateCheatmenu
                     num += 30f; this.scroller += 30;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 200f, 20f), ln.GetText("Fat"))) { this._spawnmutant("fat"); }
                     num += 30f; this.scroller += 30;
-                    
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 200f, 20f), ln.GetText("Girl"))) { this._spawnmutant("girl"); }
+                    num += 30f; this.scroller += 30;
+                    if (UnityEngine.GUI.Button(new Rect(20f, num, 200f, 20f), ln.GetText("Worm"))) { this._spawnmutant("worm"); }
+                    num += 30f; this.scroller += 30;
+
 
                     UnityEngine.GUI.Label(new Rect(20f, num, 500f, 20f), ln.GetText("SpawnMutantFamilies"), labelStyle);
                     num += 30f; this.scroller += 30;
@@ -2563,6 +2564,11 @@ namespace UltimateCheatmenu
         {
             UCheatmenu.lastObjectType = "mutant";
             UCheatmenu.lastObject = type;
+            if (type == "worm")
+            {
+                GameObject gameObjectWorm = UnityEngine.Object.Instantiate<GameObject>(UnityEngine.Resources.Load<GameObject>("worm_SPAWNER"), LocalPlayer.Transform.position + new Vector3(0f, 1f, 2f), Quaternion.identity);
+                return;
+            }
             GameObject gameObject = UnityEngine.Object.Instantiate(UnityEngine.Resources.Load<GameObject>("instantMutantSpawner"), LocalPlayer.Transform.position + new Vector3(0f, 1f, 2f), Quaternion.identity) as GameObject;
             switch (type)
             {
@@ -2603,6 +2609,9 @@ namespace UltimateCheatmenu
                     gameObject.GetComponent<spawnMutants>().amount_pale = 1;
                     gameObject.GetComponent<spawnMutants>().skinnedTribe = true;
                     gameObject.GetComponent<spawnMutants>().pale = true;
+                    break;
+                case "girl":
+                    gameObject.GetComponent<spawnMutants>().amount_girl = 1;
                     break;
             }
             if (Mutant_Skinned) gameObject.GetComponent<spawnMutants>().skinnedTribe = true;
