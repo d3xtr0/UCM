@@ -44,8 +44,8 @@ namespace UltimateCheatmenu
         protected bool firsttime = true;
         private static bool firsttimeLanguageDownload = true;
 
-        public string[] LanguageLocaleOptions = new string[] { "English", "German", "Polish", "Dutch", "Portuguese", "Spanish", "S. Chinese", "T. Chinese", "Korean", "Japanese", "Russian", "French", "Turkish", "Thai", "Hungarian" };
-        public static string[] LanguageCodesOptions = new string[] { "en", "de", "pl", "nl", "pt", "es", "zh-CN", "zh-CHT", "ko", "ja", "ru", "fr", "tr", "th", "hu" };
+        public string[] LanguageLocaleOptions = new string[] { "English", "German", "Polish", "Dutch", "Portuguese", "Spanish", "S. Chinese", "T. Chinese", "Korean", "Japanese", "Russian", "French", "Turkish", "Thai", "Hungarian", "Italian" };
+        public static string[] LanguageCodesOptions = new string[] { "en", "de", "pl", "nl", "pt", "es", "zh-CN", "zh-CHT", "ko", "ja", "ru", "fr", "tr", "th", "hu", "it" };
 
         public static bool GodMode = false;
         public static bool UnlimitedFuel = false;
@@ -1717,8 +1717,8 @@ namespace UltimateCheatmenu
                     UnityEngine.GUI.Label(new Rect(20f, num, 150f, 20f), "Language", labelStyle);
                     num += 30f; this.scroller += 30;
                     int lnlength = 5;
-                    UCheatmenu.LanguageLocale = UnityEngine.GUI.SelectionGrid(new Rect(20f, num, 500f, 60f), UCheatmenu.LanguageLocale, LanguageLocaleOptions, lnlength, UnityEngine.GUI.skin.toggle);
-                    num += 70f; this.scroller += 70;
+                    UCheatmenu.LanguageLocale = UnityEngine.GUI.SelectionGrid(new Rect(20f, num, 500f, 80f), UCheatmenu.LanguageLocale, LanguageLocaleOptions, lnlength, UnityEngine.GUI.skin.toggle);
+                    num += 90f; this.scroller += 90;
                     if (UnityEngine.GUI.Button(new Rect(20f, num, 200f, 20f), "Set Language"))
                     {
                         initl18n();

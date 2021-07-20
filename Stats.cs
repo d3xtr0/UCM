@@ -200,7 +200,7 @@ namespace UltimateCheatmenu
             }
         }
 
-        protected override void Burn()
+        public override void Burn()
         {
             if (!UCheatmenu.GodMode)
             {
