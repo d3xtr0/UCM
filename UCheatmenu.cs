@@ -240,6 +240,9 @@ namespace UltimateCheatmenu
 
         public static Localization ln = new Localization();
 
+        private Vector2 scale = new Vector2(2, 2);
+        private Vector2 pivotPoint = new Vector2(10f, 10f);
+
 
         [ExecuteOnGameStart]
         private static void AddMeToScene()
@@ -339,6 +342,22 @@ namespace UltimateCheatmenu
 
             if (UCheatmenu.visible)
             {
+                // 640 - 1920 : 0.7 - 1
+                // 1921 - 3840 : 1 - 2
+                int s_width = Screen.width;
+                float scaler = 1f;
+                if(s_width <= 1920)
+                {
+                    scaler = (s_width - 640) * (1f - 0.7f) / (1920 - 640) + 0.7f;
+                }
+                else
+                {
+                    scaler = (s_width - 1921) * (2.0f - 1.0f) / (3840 - 1921) + 1.0f;
+                }
+                
+                GUIUtility.ScaleAroundPivot(new Vector2(scaler, scaler), pivotPoint);
+
+
                 string posX = LocalPlayer.GameObject.transform.position.x.ToString();
                 string posY = LocalPlayer.GameObject.transform.position.y.ToString();
                 string posZ = LocalPlayer.GameObject.transform.position.z.ToString();
